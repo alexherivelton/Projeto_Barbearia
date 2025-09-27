@@ -1,0 +1,24 @@
+package xela.chris.barbearia.Repositorios;
+
+import xela.chris.barbearia.models.Funcionario;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class FuncionarioJson {
+    private RepositorioJson<Funcionario> repo = new RepositorioJson<>(Funcionario.class, "funcionarios.json");
+
+    public void adicionar(Funcionario funcionario) {
+        List<Funcionario> funcionarios = listar();
+        funcionarios.add(funcionario);
+        repo.salvarTodos(funcionarios);
+    }
+
+    public List<Funcionario> listar() {
+        return repo.buscarTodos();
+    }
+
+    public void limpar() {
+        repo.salvarTodos(new ArrayList<>());
+    }
+}
