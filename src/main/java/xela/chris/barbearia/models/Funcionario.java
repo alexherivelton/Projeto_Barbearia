@@ -1,19 +1,33 @@
 package xela.chris.barbearia.models;
 
+import xela.chris.barbearia.enums.PermissoesEnum;
+
+import java.util.List;
+
 public class Funcionario extends Pessoa {
 
     private String cargo;
     private String usuario;
     private String senha;
+    private List<PermissoesEnum> permissoes;
 
     public Funcionario() {
     }
 
-    public Funcionario(String nome, String cpf, String telefone, String cargo, String usuario, String senha) {
+    public Funcionario(String nome, String cpf, String telefone, String cargo, List<PermissoesEnum> permissoes) {
+        super(nome, cpf, telefone);
+        this.cargo = cargo;
+        this.permissoes = permissoes;
+        this.usuario = "";
+        this.senha = "";
+    }
+
+    public Funcionario(String nome, String cpf, String telefone, String cargo, String usuario, String senha, List<PermissoesEnum> permissoes) {
         super(nome, cpf, telefone);
         this.cargo = cargo;
         this.usuario = usuario;
         this.senha = senha;
+        this.permissoes = permissoes;
     }
 
     public String getCargo() {
@@ -38,5 +52,23 @@ public class Funcionario extends Pessoa {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public List<PermissoesEnum> getPermissoes() {
+        return permissoes;
+    }
+
+    public void setPermissoes(List<PermissoesEnum> permissoes) {
+        this.permissoes = permissoes;
+    }
+
+    @Override
+    public String toString() {
+        return "\n ===============" +
+                "\n Nome:" +getNome() +
+                "\n Cpf: " +getCpf() +
+                "\n Telefone: " +getTelefone() +
+                "\n Cargo: " + getCargo() +
+                "\n";
     }
 }
