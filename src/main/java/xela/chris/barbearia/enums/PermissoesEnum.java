@@ -8,4 +8,5 @@ public enum PermissoesEnum {
     CRIAR_AGENDAMENTO,
     VERIFICAR_AGENDA,
     VERIFICAR_CLIENTE,
+    GERAR_NOTA
 }
