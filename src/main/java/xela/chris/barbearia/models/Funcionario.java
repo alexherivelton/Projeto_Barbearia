@@ -22,14 +22,6 @@ public class Funcionario extends Pessoa {
         this.senha = "";
     }
 
-    public Funcionario(String nome, String cpf, String telefone, String cargo, String usuario, String senha, List<PermissoesEnum> permissoes) {
-        super(nome, cpf, telefone);
-        this.cargo = cargo;
-        this.usuario = usuario;
-        this.senha = senha;
-        this.permissoes = permissoes;
-    }
-
     public String getCargo() {
         return cargo;
     }

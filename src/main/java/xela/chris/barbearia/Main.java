@@ -30,9 +30,6 @@ public class Main {
         funcionarioJson.adicionar(funcionario1);
 
         System.out.println("Clientes: " + clienteJson.listar());
-        System.out.println("Funcionarios: " + funcionarioJson.listar());
-
-        System.out.println("Arquivo de clientes existe: " + new File("jsons/clientes.json").exists());
-        System.out.println("Arquivo de funcionarios existe: " + new File("jsons/funcionarios.json").exists());
+        System.out.println("Funcionarios: " + funcionarioJson.listar());;
     }
 }
