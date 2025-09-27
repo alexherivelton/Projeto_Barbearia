@@ -8,7 +8,6 @@ public class NotaFiscal {
     private int id;
     private Date dataEmissao;
     private Agendamento origem;
-    private List<NotaItem> itens;
 
     public Date getDataEmissao() {
         return dataEmissao;
