@@ -25,7 +25,7 @@ public class Main {
         produtoJson.limpar();
 
         Cliente cliente1 = new Cliente("Christian", "1908635986235", "193847-6543689", StatusAtendimentoCliente.EM_ESPERA);
-        Cliente cliente2 = new Cliente("xela", "1908635986235", "193847-6543689", StatusAtendimentoCliente.EM_ESPERA);
+        Cliente cliente2 = new Cliente("xela", "14027245601", "193847-6543689", StatusAtendimentoCliente.EM_ESPERA);
         Funcionario funcionario1 = new Funcionario("Maria", "3498754367", "45986745", "Atendente",
                 List.of(PermissoesEnum.CADASTRAR_CLIENTE, PermissoesEnum.GERAR_NOTA));
 
@@ -39,5 +39,9 @@ public class Main {
         System.out.println("Clientes: " + clienteJson.listar());
         System.out.println("Funcionarios: " + funcionarioJson.listar());;
         System.out.println("Produtos: " + produtoJson.listar());
+        System.out.println("=================================================================");
+
+        clienteJson.removerPorCpf("14027245601");
+        System.out.println(clienteJson.listar());
     }
 }

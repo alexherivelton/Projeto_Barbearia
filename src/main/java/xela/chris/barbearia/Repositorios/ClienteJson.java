@@ -14,6 +14,15 @@ public class ClienteJson {
         repo.salvarTodos(clientes);
     }
 
+    public boolean removerPorCpf(String cpf) {
+        List<Cliente> clientes = listar();
+        boolean removido = clientes.removeIf(c -> cpf.equals(c.getCpf()));
+        if (removido) {
+            repo.salvarTodos(clientes);
+        }
+        return removido;
+    }
+
     public List<Cliente> listar() {
 
         return repo.buscarTodos();
