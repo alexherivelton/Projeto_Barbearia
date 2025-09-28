@@ -22,7 +22,7 @@ public class Cliente extends Pessoa {
     @Override
     public String toString() {
         return "\n ===============" +
-                "\n id=" + id +
+                "\n id=" + getId() +
                 "\n Nome:" +getNome()+
                 "\n Cpf: " +getCpf()+
                 "\n Telefone: " +getTelefone() +
@@ -42,7 +42,7 @@ public class Cliente extends Pessoa {
         return id;
     }
 
-    public void setId(String id) {
+    private void setId(String id) {
         this.id = id;
     }
 }

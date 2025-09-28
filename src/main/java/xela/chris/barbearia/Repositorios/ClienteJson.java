@@ -15,10 +15,12 @@ public class ClienteJson {
     }
 
     public List<Cliente> listar() {
+
         return repo.buscarTodos();
     }
 
     public void limpar() {
+
         repo.salvarTodos(new ArrayList<>());
     }
 }

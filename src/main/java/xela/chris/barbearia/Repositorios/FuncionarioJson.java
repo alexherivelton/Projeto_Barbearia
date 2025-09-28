@@ -15,10 +15,12 @@ public class FuncionarioJson {
     }
 
     public List<Funcionario> listar() {
+
         return repo.buscarTodos();
     }
 
     public void limpar() {
+
         repo.salvarTodos(new ArrayList<>());
     }
 }

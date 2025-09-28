@@ -6,6 +6,9 @@ public class Produto {
     private double valor;
     private int quantidade;
 
+    public Produto() {
+    }
+
     public Produto(int id, String nome, double valor, int quantidade) {
         this.id = id;
         this.nome = nome;
@@ -43,5 +46,15 @@ public class Produto {
 
     public void setValor(double valor) {
         this.valor = valor;
+    }
+
+    @Override
+    public String toString() {
+        return "\n ===============" +
+                "\n id=" + id +
+                "\n  nome='" + nome + '\'' +
+                "\n  valor=" + valor +
+                "\n  quantidade=" + quantidade +
+                "\n ";
     }
 }
