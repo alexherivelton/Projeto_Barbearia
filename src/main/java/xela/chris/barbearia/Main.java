@@ -24,9 +24,9 @@ public class Main {
         funcionarioJson.limpar();
         produtoJson.limpar();
 
-        Cliente cliente1 = new Cliente("Christian", "1908635986235", "193847-6543689", StatusAtendimentoCliente.EM_ESPERA);
-        Cliente cliente2 = new Cliente("xela", "14027245601", "193847-6543689", StatusAtendimentoCliente.EM_ESPERA);
-        Funcionario funcionario1 = new Funcionario("Maria", "3498754367", "45986745", "Atendente",
+        Cliente cliente1 = new Cliente("Christian", "17600724600", "33998642761", StatusAtendimentoCliente.EM_ESPERA);
+        Cliente cliente2 = new Cliente("xela", "14027245601", "122234589090", StatusAtendimentoCliente.EM_ESPERA);
+        Funcionario funcionario1 = new Funcionario("Maria", "12345678900", "45986745", "Atendente",
                 List.of(PermissoesEnum.CADASTRAR_CLIENTE, PermissoesEnum.GERAR_NOTA));
 
         Produto p1 = new Produto(1, "Shampoo", 14.5, 10);
@@ -36,9 +36,26 @@ public class Main {
         funcionarioJson.adicionar(funcionario1);
         produtoJson.adicionar(p1);
 
-        System.out.println("Clientes: " + clienteJson.listar());
-        System.out.println("Funcionarios: " + funcionarioJson.listar());;
+        System.out.println("\nClientes:");
+        for (Cliente c : clienteJson.listar()) {
+            System.out.println("Id: " + c.getId() +
+                    " | Nome: " + c.getNome() +
+                    " | CPF: " + c.cpfPseudoAnonimizado() +
+                    " | Telefone: " + c.telefoneCorreto());
+        }
+
+        System.out.println("=================================================================");
+
+        System.out.println("Funcionarios: ");
+        for (Funcionario f : funcionarioJson.listar()) {
+            System.out.println("Nome: " + f.getNome() +
+                    " | CPF: " + f.cpfPseudoAnonimizado() +
+                    " | Telefone: " + f.telefoneCorreto());
+        }
+
         System.out.println("Produtos: " + produtoJson.listar());
+
+
         System.out.println("=================================================================");
 
         clienteJson.removerPorCpf("14027245601");
