@@ -6,11 +6,21 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *
+ * @param <T>
+ */
 public class RepositorioJson<T> {
+
     private final Class<T> tipo;
     private final File arquivo;
     private final ObjectMapper mapper = new ObjectMapper();
 
+    /**
+     *
+     * @param tipo
+     * @param nomeArquivo
+     */
     public RepositorioJson(Class<T> tipo, String nomeArquivo) {
         String caminhoPasta = "src" + File.separator + "main" + File.separator + "java" + File.separator +
                 "xela" + File.separator + "chris" + File.separator + "barbearia" + File.separator + "jsons";
@@ -23,6 +33,10 @@ public class RepositorioJson<T> {
         this.arquivo = new File(pasta, nomeArquivo);
     }
 
+    /**
+     *
+     * @return
+     */
     public synchronized List<T> buscarTodos() {
         try {
             if (!this.arquivo.exists() || arquivo.length() == 0) {
@@ -40,6 +54,10 @@ public class RepositorioJson<T> {
         }
     }
 
+    /**
+     *
+     * @param dados
+     */
     public synchronized void salvarTodos(List<T> dados) {
         try {
             mapper.writeValue(arquivo, dados);

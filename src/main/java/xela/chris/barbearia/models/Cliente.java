@@ -25,8 +25,8 @@ public class Cliente extends Pessoa {
         return "\n ===============" +
                 "\n id=" + getId() +
                 "\n Nome:" +getNome()+
-                "\n Cpf: " +getCpf()+
-                "\n Telefone: " +getTelefone() +
+                "\n Cpf: " + cpfPseudoAnonimizado()+
+                "\n Telefone: " +telefoneCorreto() +
                 "\n Status:" +statusAtendimentoCliente +
                 "\n";
     }

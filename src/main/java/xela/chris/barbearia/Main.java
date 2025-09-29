@@ -12,6 +12,8 @@ import xela.chris.barbearia.models.Produto;
 import java.io.File;
 import java.util.List;
 
+
+
 public class Main {
     public static void main(String[] args) {
         ClienteJson clienteJson = new ClienteJson();
@@ -38,19 +40,14 @@ public class Main {
 
         System.out.println("\nClientes:");
         for (Cliente c : clienteJson.listar()) {
-            System.out.println("Id: " + c.getId() +
-                    " | Nome: " + c.getNome() +
-                    " | CPF: " + c.cpfPseudoAnonimizado() +
-                    " | Telefone: " + c.telefoneCorreto());
+            System.out.println(c);
         }
 
         System.out.println("=================================================================");
 
         System.out.println("Funcionarios: ");
         for (Funcionario f : funcionarioJson.listar()) {
-            System.out.println("Nome: " + f.getNome() +
-                    " | CPF: " + f.cpfPseudoAnonimizado() +
-                    " | Telefone: " + f.telefoneCorreto());
+            System.out.println(f);
         }
 
         System.out.println("Produtos: " + produtoJson.listar());
