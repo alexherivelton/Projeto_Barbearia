@@ -1,22 +1,23 @@
 package xela.chris.barbearia.models;
 
 import xela.chris.barbearia.enums.StatusAtendimentoCliente;
+import xela.chris.barbearia.negocio.GeradoraDeIds;
 
 import java.util.UUID;
 
 public class Cliente extends Pessoa {
 
     private StatusAtendimentoCliente statusAtendimentoCliente;
-    private String id;
+    private int id;
 
     public Cliente(){
-        this.id = UUID.randomUUID().toString();
+
     }
 
     public Cliente(String nome, String cpf, String telefone, StatusAtendimentoCliente statusAtendimentoCliente) {
         super(nome, cpf, telefone);
         this.statusAtendimentoCliente = statusAtendimentoCliente;
-        this.id = UUID.randomUUID().toString();
+        this.id = GeradoraDeIds.nextId();
     }
 
     @Override
@@ -38,11 +39,11 @@ public class Cliente extends Pessoa {
         this.statusAtendimentoCliente = statusAtendimentoCliente;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    private void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 }

@@ -1,5 +1,7 @@
 package xela.chris.barbearia.models;
 
+import xela.chris.barbearia.negocio.GeradoraDeIds;
+
 public class Produto {
     private int id;
     private String nome;
@@ -10,7 +12,7 @@ public class Produto {
     }
 
     public Produto(int id, String nome, double valor, int quantidade) {
-        this.id = id;
+        this.id = GeradoraDeIds.nextId();
         this.nome = nome;
         this.valor = valor;
         this.quantidade = quantidade;
