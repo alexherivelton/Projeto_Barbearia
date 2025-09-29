@@ -4,6 +4,7 @@ public class Servico {
     private int id;
     private String nome;
     private double preco;
+    private String descricao;
 
 
     public Servico(int id, String nome, double preco) {
@@ -34,5 +35,13 @@ public class Servico {
 
     public void setPreco(double preco) {
         this.preco = preco;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 }
