@@ -31,7 +31,7 @@ public class Main {
         Funcionario funcionario1 = new Funcionario("Maria", "12345678900", "45986745", "Atendente",
                 List.of(PermissoesEnum.CADASTRAR_CLIENTE, PermissoesEnum.GERAR_NOTA));
 
-        Produto p1 = new Produto(1, "Shampoo", 14.5, 10);
+        Produto p1 = new Produto("Shampoo", 14.5, 10);
 
         clienteJson.adicionar(cliente1);
         clienteJson.adicionar(cliente2);

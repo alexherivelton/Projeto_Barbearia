@@ -1,5 +1,6 @@
 package xela.chris.barbearia.Repositorios;
 
+import xela.chris.barbearia.models.Cliente;
 import xela.chris.barbearia.models.Funcionario;
 
 import java.util.ArrayList;
@@ -12,6 +13,15 @@ public class FuncionarioJson {
         List<Funcionario> funcionarios = listar();
         funcionarios.add(funcionario);
         repo.salvarTodos(funcionarios);
+    }
+
+    public boolean removerPorCpf(String cpf) {
+        List<Funcionario> funcionarios = listar();
+        boolean removido = funcionarios.removeIf(f -> cpf.equals(f.getCpf()));
+        if (removido) {
+            repo.salvarTodos(funcionarios);
+        }
+        return removido;
     }
 
     public List<Funcionario> listar() {

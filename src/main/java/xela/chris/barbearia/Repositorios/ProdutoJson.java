@@ -1,5 +1,6 @@
 package xela.chris.barbearia.Repositorios;
 
+import xela.chris.barbearia.models.Funcionario;
 import xela.chris.barbearia.models.Produto;
 
 import java.util.ArrayList;
@@ -13,6 +14,15 @@ public class ProdutoJson {
         List<Produto> produtos = listar();
         produtos.add(produto);
         repo.salvarTodos(produtos);
+    }
+
+    public boolean removerPorCpf(String id) {
+        List<Produto> produtos = listar();
+        boolean removido = produtos.removeIf(p -> id.equals(p.getId()));
+        if (removido) {
+            repo.salvarTodos(produtos);
+        }
+        return removido;
     }
 
     public List<Produto> listar() {

@@ -11,7 +11,7 @@ public class Produto {
     public Produto() {
     }
 
-    public Produto(int id, String nome, double valor, int quantidade) {
+    public Produto(String nome, double valor, int quantidade) {
         this.id = GeradoraDeIds.nextId();
         this.nome = nome;
         this.valor = valor;
