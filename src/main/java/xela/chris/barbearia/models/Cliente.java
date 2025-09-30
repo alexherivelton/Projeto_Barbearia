@@ -27,7 +27,7 @@ public class Cliente extends Pessoa {
                 "\n Nome:" +getNome()+
                 "\n Cpf: " + cpfPseudoAnonimizado()+
                 "\n Telefone: " +telefoneCorreto() +
-                "\n Status:" +statusAtendimentoCliente +
+                "\n Status:" + statusAtendimentoCliente +
                 "\n";
     }
 
