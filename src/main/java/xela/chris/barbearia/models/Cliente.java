@@ -1,13 +1,12 @@
 package xela.chris.barbearia.models;
 
 import xela.chris.barbearia.enums.StatusAtendimentoCliente;
-import xela.chris.barbearia.negocio.GeradoraDeIds;
-
-import java.util.UUID;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Cliente extends Pessoa {
 
     private StatusAtendimentoCliente statusAtendimentoCliente;
+    private static final AtomicInteger contador = new AtomicInteger(0);
     private int id;
 
     public Cliente(){
@@ -17,7 +16,7 @@ public class Cliente extends Pessoa {
     public Cliente(String nome, String cpf, String telefone, StatusAtendimentoCliente statusAtendimentoCliente) {
         super(nome, cpf, telefone);
         this.statusAtendimentoCliente = statusAtendimentoCliente;
-        this.id = GeradoraDeIds.nextId();
+        this.id = contador.incrementAndGet();
     }
 
     @Override

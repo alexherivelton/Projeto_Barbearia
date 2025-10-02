@@ -1,18 +1,20 @@
 package xela.chris.barbearia.models;
 
-import xela.chris.barbearia.negocio.GeradoraDeIds;
+
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Produto {
     private int id;
     private String nome;
     private double valor;
     private int quantidade;
+    private static final AtomicInteger contador = new AtomicInteger(0);
 
     public Produto() {
     }
 
     public Produto(String nome, double valor, int quantidade) {
-        this.id = GeradoraDeIds.nextId();
+        this.id = contador.incrementAndGet();
         this.nome = nome;
         this.valor = valor;
         this.quantidade = quantidade;

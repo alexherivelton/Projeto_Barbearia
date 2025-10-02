@@ -30,12 +30,15 @@ public class Main {
         Cliente cliente2 = new Cliente("xela", "14027245601", "122234589090", StatusAtendimentoCliente.EM_ESPERA);
         Funcionario funcionario1 = new Funcionario("Maria", "12345678900", "45986745", "Atendente",
                 List.of(PermissoesEnum.CADASTRAR_CLIENTE, PermissoesEnum.GERAR_NOTA));
+        Funcionario f2 = new Funcionario("Alberto", "87654571232", "45986745", "Atendente",
+                List.of(PermissoesEnum.CADASTRAR_CLIENTE, PermissoesEnum.GERAR_NOTA));
 
         Produto p1 = new Produto("Shampoo", 14.5, 10);
 
         clienteJson.adicionar(cliente1);
         clienteJson.adicionar(cliente2);
         funcionarioJson.adicionar(funcionario1);
+        funcionarioJson.adicionar(f2);
         produtoJson.adicionar(p1);
 
         System.out.println("\nClientes:");
@@ -45,10 +48,12 @@ public class Main {
 
         System.out.println("=================================================================");
 
-        System.out.println("Funcionarios: ");
-        for (Funcionario f : funcionarioJson.listar()) {
-            System.out.println(f);
-        }
+//        System.out.println("Funcionarios: ");
+//        for (Funcionario f : funcionarioJson.listar()) {
+//            System.out.println(f);
+//        }
+
+        System.out.println("Funcionarios: " + funcionarioJson.listar());
 
         System.out.println("Produtos: " + produtoJson.listar());
 
