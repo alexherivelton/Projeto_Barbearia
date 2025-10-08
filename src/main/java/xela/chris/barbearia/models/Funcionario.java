@@ -1,6 +1,9 @@
 package xela.chris.barbearia.models;
 
 import xela.chris.barbearia.enums.PermissoesEnum;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -23,10 +26,25 @@ public class Funcionario extends Pessoa {
     /**
      * Construtor padrão da classe {@code Funcionario}.
      * <p>
-     * Utilizado principalmente por frameworks de serialização e desserialização JSON.
+     * Inicializa a lista de permissões do funcionário com um conjunto padrão de ações,
+     * garantindo que todo funcionário criado com este construtor possa:
+     * </p>
+     * <ul>
+     *   <li>Gerar notas fiscais ({@link PermissoesEnum#GERAR_NOTA})</li>
+     *   <li>Cadastrar clientes ({@link PermissoesEnum#CADASTRAR_CLIENTE})</li>
+     *   <li>Verificar clientes ({@link PermissoesEnum#VERIFICAR_CLIENTE})</li>
+     *   <li>Criar agendamentos ({@link PermissoesEnum#CRIAR_AGENDAMENTO})</li>
+     * </ul>
+     * <p>
+     * Este construtor é especialmente útil para frameworks de serialização e desserialização JSON.
      * </p>
      */
     public Funcionario() {
+        this.permissoes = new ArrayList<>();
+        this.permissoes.add(PermissoesEnum.GERAR_NOTA);
+        this.permissoes.add(PermissoesEnum.CADASTRAR_CLIENTE);
+        this.permissoes.add(PermissoesEnum.VERIFICAR_CLIENTE);
+        this.permissoes.add(PermissoesEnum.CRIAR_AGENDAMENTO);
     }
 
     /**
@@ -102,21 +120,26 @@ public class Funcionario extends Pessoa {
     }
 
     /**
-     * Retorna a lista de permissões associadas ao funcionário.
+     * Retorna uma cópia da lista de permissões associadas ao funcionário.
+     * <p>
+     * A lista retornada é uma nova instância, garantindo que alterações feitas fora
+     * da classe não afetem a lista interna de permissões do funcionário.
+     * </p>
      *
-     * @return lista de permissões
+     * @return uma {@link List} contendo as permissões do funcionário
      */
     public List<PermissoesEnum> getPermissoes() {
-        return permissoes;
+        return new ArrayList<>(permissoes);
     }
 
     /**
-     * Define as permissões do funcionário.
+     * Verifica se o funcionário possui uma permissão específica.
      *
-     * @param permissoes lista de permissões
+     * @param permissao a permissão a ser verificada
+     * @return {@code true} se o funcionário possui a permissão; {@code false} caso contrário
      */
-    public void setPermissoes(List<PermissoesEnum> permissoes) {
-        this.permissoes = permissoes;
+    public boolean temPermissao(PermissoesEnum permissao) {
+        return permissoes.contains(permissao);
     }
 
     /**
