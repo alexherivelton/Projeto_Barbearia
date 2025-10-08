@@ -1,24 +1,26 @@
-package xela.chris.barbearia.Repositorios;
+package xela.chris.barbearia.Gerenciadores;
 
-import xela.chris.barbearia.models.Funcionario;
 import xela.chris.barbearia.models.Produto;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class ProdutoJson {
+public class GerenciadorProduto {
+    private List<Produto> produtos = new ArrayList<>();
     private RepositorioJson<Produto> repo = new RepositorioJson<>(Produto.class, "produtos.json");
 
+    public void carregar (){
+        produtos = repo.buscarTodos();
+    }
+
     public void adicionar(Produto produto) {
-        List<Produto> produtos = listar();
-        produtos.add(produto);
+        this.produtos.add(produto);
         repo.salvarTodos(produtos);
     }
 
     public boolean removerPorCpf(String id) {
-        List<Produto> produtos = listar();
-        boolean removido = produtos.removeIf(p -> id.equals(p.getId()));
+        boolean removido = this.produtos.removeIf(p -> id.equals(p.getId()));
         if (removido) {
             repo.salvarTodos(produtos);
         }
@@ -27,11 +29,11 @@ public class ProdutoJson {
 
     public List<Produto> listar() {
 
-        return repo.buscarTodos();
+        return produtos;
     }
 
     public void limpar() {
-
+        produtos = new ArrayList<>();
         repo.salvarTodos(new ArrayList<>());
     }
 }

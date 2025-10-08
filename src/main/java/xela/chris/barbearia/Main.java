@@ -2,9 +2,9 @@ package xela.chris.barbearia;
 
 import xela.chris.barbearia.enums.PermissoesEnum;
 import xela.chris.barbearia.enums.StatusAtendimentoCliente;
-import xela.chris.barbearia.Repositorios.ClienteJson;
-import xela.chris.barbearia.Repositorios.FuncionarioJson;
-import xela.chris.barbearia.Repositorios.ProdutoJson;
+import xela.chris.barbearia.Gerenciadores.GerenciarCliente;
+import xela.chris.barbearia.Gerenciadores.GerenciadorFuncionario;
+import xela.chris.barbearia.Gerenciadores.GerenciadorProduto;
 import xela.chris.barbearia.models.Cliente;
 import xela.chris.barbearia.models.Funcionario;
 import xela.chris.barbearia.models.Produto;
@@ -16,15 +16,15 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        ClienteJson clienteJson = new ClienteJson();
-        FuncionarioJson funcionarioJson = new FuncionarioJson();
-        ProdutoJson produtoJson = new ProdutoJson();
+        GerenciarCliente gerenciarCliente = new GerenciarCliente();
+        GerenciadorFuncionario gerenciadorFuncionario = new GerenciadorFuncionario();
+        GerenciadorProduto gerenciadorProduto = new GerenciadorProduto();
 
         System.out.println("Pasta dos JSONs: " + new File("jsons").getAbsolutePath());
 
-        clienteJson.limpar();
-        funcionarioJson.limpar();
-        produtoJson.limpar();
+        gerenciarCliente.limpar();
+        gerenciadorFuncionario.limpar();
+        gerenciadorProduto.limpar();
 
         Cliente cliente1 = new Cliente("Christian", "17600724600", "33998642761", StatusAtendimentoCliente.EM_ESPERA);
         Cliente cliente2 = new Cliente("xela", "14027245601", "122234589090", StatusAtendimentoCliente.EM_ESPERA);
@@ -35,32 +35,25 @@ public class Main {
 
         Produto p1 = new Produto("Shampoo", 14.5, 10);
 
-        clienteJson.adicionar(cliente1);
-        clienteJson.adicionar(cliente2);
-        funcionarioJson.adicionar(funcionario1);
-        funcionarioJson.adicionar(f2);
-        produtoJson.adicionar(p1);
+        gerenciarCliente.adicionar(cliente1);
+        gerenciarCliente.adicionar(cliente2);
+        gerenciadorFuncionario.adicionar(funcionario1);
+        gerenciadorFuncionario.adicionar(f2);
+        gerenciadorProduto.adicionar(p1);
 
-        System.out.println("\nClientes:");
-        for (Cliente c : clienteJson.listar()) {
-            System.out.println(c);
-        }
+        System.out.println("\nClientes: "  + gerenciarCliente.listar());
 
         System.out.println("=================================================================");
 
-//        System.out.println("Funcionarios: ");
-//        for (Funcionario f : funcionarioJson.listar()) {
-//            System.out.println(f);
-//        }
+        System.out.println("Funcionarios: " + gerenciadorFuncionario.listar());
 
-        System.out.println("Funcionarios: " + funcionarioJson.listar());
-
-        System.out.println("Produtos: " + produtoJson.listar());
-
+        System.out.println("Produtos: " + gerenciadorProduto.listar());
 
         System.out.println("=================================================================");
 
-        clienteJson.removerPorCpf("14027245601");
-        System.out.println(clienteJson.listar());
+//        clienteJson.removerPorCpf("14027245601");
+//        System.out.println(clienteJson.listar());
+
+
     }
 }

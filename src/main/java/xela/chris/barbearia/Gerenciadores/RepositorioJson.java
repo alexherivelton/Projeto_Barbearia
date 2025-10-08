@@ -1,4 +1,4 @@
-package xela.chris.barbearia.Repositorios;
+package xela.chris.barbearia.Gerenciadores;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;

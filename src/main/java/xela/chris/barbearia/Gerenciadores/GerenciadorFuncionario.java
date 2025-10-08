@@ -1,23 +1,25 @@
-package xela.chris.barbearia.Repositorios;
+package xela.chris.barbearia.Gerenciadores;
 
-import xela.chris.barbearia.models.Cliente;
 import xela.chris.barbearia.models.Funcionario;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class FuncionarioJson {
+public class GerenciadorFuncionario {
+    private List<Funcionario> funcionarios = new ArrayList<>();
     private RepositorioJson<Funcionario> repo = new RepositorioJson<>(Funcionario.class, "funcionarios.json");
 
+    public void carregar (){
+        funcionarios = repo.buscarTodos();
+    }
+
     public void adicionar(Funcionario funcionario) {
-        List<Funcionario> funcionarios = listar();
-        funcionarios.add(funcionario);
+        this.funcionarios.add(funcionario);
         repo.salvarTodos(funcionarios);
     }
 
     public boolean removerPorCpf(String cpf) {
-        List<Funcionario> funcionarios = listar();
-        boolean removido = funcionarios.removeIf(f -> cpf.equals(f.getCpf()));
+        boolean removido = this.funcionarios.removeIf(f -> cpf.equals(f.getCpf()));
         if (removido) {
             repo.salvarTodos(funcionarios);
         }
@@ -25,12 +27,11 @@ public class FuncionarioJson {
     }
 
     public List<Funcionario> listar() {
-
-        return repo.buscarTodos();
+        return funcionarios;
     }
 
     public void limpar() {
-
+        funcionarios = new ArrayList<>();
         repo.salvarTodos(new ArrayList<>());
     }
 }
