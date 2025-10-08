@@ -7,8 +7,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Repositório genérico para persistência de objetos em arquivos JSON.
  *
- * @param <T>
+ * <p>Permite salvar e recuperar listas de objetos de qualquer tipo usando
+ * a biblioteca Jackson. Os dados são armazenados em uma pasta específica
+ * dentro do projeto.</p>
+ *
+ * @param <T> Tipo de objeto que será persistido no arquivo JSON.
  */
 public class RepositorioJson<T> {
 
@@ -17,9 +22,13 @@ public class RepositorioJson<T> {
     private final ObjectMapper mapper = new ObjectMapper();
 
     /**
+     * Construtor do repositório JSON.
      *
-     * @param tipo
-     * @param nomeArquivo
+     * <p>Cria a pasta de armazenamento caso não exista e define o arquivo
+     * onde os objetos serão salvos.</p>
+     *
+     * @param tipo Classe do tipo de objeto que será persistido.
+     * @param nomeArquivo Nome do arquivo JSON onde os dados serão armazenados.
      */
     public RepositorioJson(Class<T> tipo, String nomeArquivo) {
         String caminhoPasta = "src" + File.separator + "main" + File.separator + "java" + File.separator +
@@ -34,8 +43,11 @@ public class RepositorioJson<T> {
     }
 
     /**
+     * Busca todos os objetos salvos no arquivo JSON.
      *
-     * @return
+     * <p>Se o arquivo não existir ou estiver vazio, retorna uma lista vazia.</p>
+     *
+     * @return Lista de objetos do tipo {@code T} encontrados no arquivo JSON.
      */
     public synchronized List<T> buscarTodos() {
         try {
@@ -55,8 +67,9 @@ public class RepositorioJson<T> {
     }
 
     /**
+     * Salva todos os objetos fornecidos no arquivo JSON, sobrescrevendo os dados existentes.
      *
-     * @param dados
+     * @param dados Lista de objetos do tipo {@code T} a ser salva no arquivo JSON.
      */
     public synchronized void salvarTodos(List<T> dados) {
         try {
@@ -66,6 +79,11 @@ public class RepositorioJson<T> {
         }
     }
 
+    /**
+     * Retorna o caminho absoluto do arquivo JSON onde os dados estão sendo armazenados.
+     *
+     * @return Caminho absoluto do arquivo JSON.
+     */
     public String getCaminhoArquivo() {
         return this.arquivo.getAbsolutePath();
     }
