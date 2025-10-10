@@ -1,1 +1,1 @@
-[{"nome":"Maria","cpf":"12345678900","telefone":"45986745","cargo":"Atendente","usuario":"","id":1,"senha":"","permissoes":["CADASTRAR_CLIENTE","GERAR_NOTA"]},{"nome":"Alberto","cpf":"87654571232","telefone":"45986745","cargo":"Atendente","usuario":"","id":2,"senha":"","permissoes":["CADASTRAR_CLIENTE","GERAR_NOTA"]}]
+[{"nome":"Christian","cpf":"17600724600","telefone":"33998642761","cargo":"Barbeiro","usuario":"chris","id":1,"senha":"1234","permissoes":["CADASTRAR_CLIENTE"]}]
