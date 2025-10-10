@@ -45,6 +45,26 @@ public class GerenciadorProduto {
         return removido;
     }
 
+    public Produto buscarPorId(int id) {
+        for (Produto p : produtos) {
+            if (p.getId() == id) {
+                return p;
+            }
+        }
+        return null;
+    }
+
+    public boolean atualizarEstoque(int produtoId, int quantidadeVendida) {
+        Produto p = buscarPorId(produtoId);
+        if (p != null && p.getQuantidade() >= quantidadeVendida) {
+            p.setQuantidade(p.getQuantidade() - quantidadeVendida);
+            repo.salvarTodos(produtos); // persistir a lista atualizada
+            return true;
+        }
+        return false;
+    }
+
+
     /**
      * Retorna a lista de todos os produtos atualmente gerenciados.
      *
