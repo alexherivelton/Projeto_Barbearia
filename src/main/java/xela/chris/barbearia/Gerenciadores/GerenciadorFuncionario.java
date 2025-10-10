@@ -1,73 +1,72 @@
 package xela.chris.barbearia.Gerenciadores;
 
 import xela.chris.barbearia.models.Funcionario;
+import xela.chris.barbearia.security.TokenService;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Classe responsável pelo gerenciamento de funcionários da barbearia.
- * <p>
- * Permite realizar operações básicas como carregar, adicionar, remover,
- * listar e limpar funcionários, utilizando um repositório baseado em JSON
- * para persistência de dados.
- * </p>
+ * Classe responsável por gerenciar os funcionários do sistema.
  */
 public class GerenciadorFuncionario {
 
-    private List<Funcionario> funcionarios = new ArrayList<>();
-    private final RepositorioJson<Funcionario> repo = new RepositorioJson<>(Funcionario.class, "funcionarios.json");
+    private final RepositorioJson<Funcionario> repoFuncionarios;
 
-    /**
-     * Carrega os funcionários do arquivo JSON para a lista em memória.
-     * <p>
-     * Caso o arquivo não exista ou esteja vazio, a lista permanecerá vazia.
-     * </p>
-     */
-    public void carregar() {
-        funcionarios = repo.buscarTodos();
+    public GerenciadorFuncionario() {
+        this.repoFuncionarios = new RepositorioJson<>(Funcionario.class, "funcionarios.json");
     }
 
     /**
-     * Adiciona um novo funcionário à lista e salva as alterações no arquivo JSON.
-     *
-     * @param funcionario o funcionário a ser adicionado
+     * Adiciona um novo funcionário (somente quem tiver permissão de administrador pode).
      */
-    public void adicionar(Funcionario funcionario) {
-        this.funcionarios.add(funcionario);
-        repo.salvarTodos(funcionarios);
-    }
+    public synchronized void adicionarFuncionario(Funcionario funcionario, String token) {
+        List<String> permissoes = TokenService.getPermissoesDoToken(token);
 
-    /**
-     * Remove um funcionário da lista com base no CPF informado.
-     * <p>
-     * Caso o funcionário seja removido, o arquivo JSON é atualizado automaticamente.
-     * </p>
-     *
-     * @param cpf o CPF do funcionário a ser removido
-     * @return {@code true} se o funcionário foi removido com sucesso, {@code false} caso contrário
-     */
-    public boolean removerPorCpf(String cpf) {
-        boolean removido = this.funcionarios.removeIf(f -> cpf.equals(f.getCpf()));
-        if (removido) {
-            repo.salvarTodos(funcionarios);
+        // Só deixa adicionar se tiver a permissão de ADMINISTRAR_USUARIOS (ou outra que vc definir)
+        if (permissoes == null || !permissoes.contains("GERENCIAR_FUNCIONARIOS")) {
+            throw new SecurityException("Você não tem permissão para adicionar funcionários.");
         }
-        return removido;
+
+        List<Funcionario> funcionarios = repoFuncionarios.listar();
+        funcionarios.add(funcionario);
+        repoFuncionarios.salvarTodos(funcionarios);
     }
 
     /**
-     * Retorna a lista de todos os funcionários atualmente carregados na memória.
-     *
-     * @return uma lista de objetos {@link Funcionario}
+     * Lista todos os funcionários (somente administrador).
      */
+    public List<Funcionario> listarFuncionarios(String token) {
+        List<String> permissoes = TokenService.getPermissoesDoToken(token);
+
+        if (permissoes == null || !permissoes.contains("GERENCIAR_FUNCIONARIOS")) {
+            throw new SecurityException("Você não tem permissão para listar funcionários.");
+        }
+
+        return repoFuncionarios.listar();
+    }
+
+    /**
+     * Remove um funcionário (somente administrador).
+     */
+    public void removerFuncionario(int id, String token) {
+        List<String> permissoes = TokenService.getPermissoesDoToken(token);
+
+        if (permissoes == null || !permissoes.contains("GERENCIAR_FUNCIONARIOS")) {
+            throw new SecurityException("Você não tem permissão para remover funcionários.");
+        }
+
+        List<Funcionario> funcionarios = repoFuncionarios.listar();
+        funcionarios.removeIf(f -> f.getId() == id);
+        repoFuncionarios.salvarTodos(funcionarios);
+    }
+
+
     public List<Funcionario> listar() {
-        return funcionarios;
+        return repoFuncionarios.buscarTodos();
     }
 
-    /**
-     * Remove todos os funcionários da lista e limpa o conteúdo do arquivo JSON.
-     */
     public void limpar() {
-        funcionarios = new ArrayList<>();
-        repo.salvarTodos(new ArrayList<>());
+        repoFuncionarios.salvarTodos(new ArrayList<>());
     }
+
 }
