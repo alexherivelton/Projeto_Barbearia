@@ -67,6 +67,18 @@ public class RepositorioJson<T> {
     }
 
     /**
+     * Retorna uma lista de todos os objetos armazenados.
+     *
+     * <p>Este método é um alias para {@link #buscarTodos()}, criado
+     * para simplificar chamadas em outras classes, como o {@code GerenciadorLogin}.</p>
+     *
+     * @return Lista de objetos do tipo {@code T} atualmente salvos no repositório.
+     */
+    public synchronized List<T> listar() {
+        return buscarTodos();
+    }
+
+    /**
      * Salva todos os objetos fornecidos no arquivo JSON, sobrescrevendo os dados existentes.
      *
      * @param dados Lista de objetos do tipo {@code T} a ser salva no arquivo JSON.

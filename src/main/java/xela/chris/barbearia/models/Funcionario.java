@@ -56,12 +56,12 @@ public class Funcionario extends Pessoa {
      * @param cargo       o cargo ocupado (ex: barbeiro, gerente)
      * @param permissoes  a lista de permissões associadas ao funcionário
      */
-    public Funcionario(String nome, String cpf, String telefone, String cargo, List<PermissoesEnum> permissoes) {
+    public Funcionario(String nome, String cpf, String telefone, String cargo, String usuario , String senha,List<PermissoesEnum> permissoes) {
         super(nome, cpf, telefone);
         this.cargo = cargo;
         this.permissoes = permissoes;
-        this.usuario = "";
-        this.senha = "";
+        this.usuario = usuario;
+        this.senha = senha;
         this.id = contador.incrementAndGet();
     }
 

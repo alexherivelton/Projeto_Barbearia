@@ -5,6 +5,7 @@ target/
 
 ### IntelliJ IDEA ###
 .idea/
+src/main/java/xela/chris/barbearia/jsons
 
 ### Eclipse ###
 .apt_generated
