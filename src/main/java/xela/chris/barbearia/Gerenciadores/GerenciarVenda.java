@@ -1,5 +1,6 @@
 package xela.chris.barbearia.Gerenciadores;
 
+import xela.chris.barbearia.models.Produto;
 import xela.chris.barbearia.models.Venda;
 
 import java.util.ArrayList;
@@ -85,4 +86,20 @@ public class GerenciarVenda {
     public double calcularTotalVendas() {
         return vendas.stream().mapToDouble(Venda::getValorTotal).sum();
     }
+
+    /**
+     * Busca venda pelo id da mesma
+     * @param id
+     * @return retorna uma mensagem caso encontre e tambem caso nao encontrar
+     */
+    public String buscarVendaPorId(int id) {
+        for (Venda p : vendas) {
+            if (p.getId() == id) {
+                return "Venda(s) encontrada(s): " + p.toString();
+            }
+        }
+        return "Venda(s) não encontrada!";
+    }
+
+
 }
