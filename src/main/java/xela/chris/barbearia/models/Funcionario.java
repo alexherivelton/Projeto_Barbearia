@@ -41,10 +41,6 @@ public class Funcionario extends Pessoa {
      */
     public Funcionario() {
         this.permissoes = new ArrayList<>();
-        this.permissoes.add(PermissoesEnum.GERAR_NOTA);
-        this.permissoes.add(PermissoesEnum.CADASTRAR_CLIENTE);
-        this.permissoes.add(PermissoesEnum.VERIFICAR_CLIENTE);
-        this.permissoes.add(PermissoesEnum.CRIAR_AGENDAMENTO);
     }
 
     /**
@@ -54,15 +50,40 @@ public class Funcionario extends Pessoa {
      * @param cpf         o CPF do funcionário
      * @param telefone    o telefone do funcionário
      * @param cargo       o cargo ocupado (ex: barbeiro, gerente)
-     * @param permissoes  a lista de permissões associadas ao funcionário
      */
-    public Funcionario(String nome, String cpf, String telefone, String cargo, String usuario , String senha,List<PermissoesEnum> permissoes) {
+    public Funcionario(String nome, String cpf, String telefone, String cargo, String usuario , String senha) {
         super(nome, cpf, telefone);
+        this.id = contador.incrementAndGet();
         this.cargo = cargo;
-        this.permissoes = permissoes;
+        this.permissoes = definirPermissoesPorCargo(cargo);
         this.usuario = usuario;
         this.senha = senha;
-        this.id = contador.incrementAndGet();
+    }
+
+    public List<PermissoesEnum> definirPermissoesPorCargo(String cargo) {
+        List<PermissoesEnum> lista = new ArrayList<>();
+
+        switch (cargo.toLowerCase()) {
+            case "atendente":
+                lista.add(PermissoesEnum.CADASTRAR_CLIENTE);
+                lista.add(PermissoesEnum.VERIFICAR_CLIENTE);
+                lista.add(PermissoesEnum.CRIAR_AGENDAMENTO);
+                lista.add(PermissoesEnum.GERAR_NOTA);
+                lista.add(PermissoesEnum.GERAR_BALANCO_MENSAL);
+                break;
+
+            case "barbeiro":
+                lista.add(PermissoesEnum.VERIFICAR_CLIENTE);
+                lista.add(PermissoesEnum.CRIAR_AGENDAMENTO);
+                break;
+
+            case "administrador":
+                lista.addAll(List.of(
+                        PermissoesEnum.values()
+                ));
+                break;
+        }
+        return lista;
     }
 
     /**
@@ -177,6 +198,7 @@ public class Funcionario extends Pessoa {
                 "\n Cpf: " + cpfPseudoAnonimizado() +
                 "\n Telefone: " + telefoneCorreto() +
                 "\n Cargo: " + getCargo() +
+                "\n Permissoes: " + definirPermissoesPorCargo(getCargo()) +
                 "\n";
     }
 }
