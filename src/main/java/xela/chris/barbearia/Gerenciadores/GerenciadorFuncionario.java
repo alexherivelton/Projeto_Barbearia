@@ -1,7 +1,6 @@
 package xela.chris.barbearia.Gerenciadores;
 
 import xela.chris.barbearia.models.Funcionario;
-import xela.chris.barbearia.security.TokenService;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,13 +18,7 @@ public class GerenciadorFuncionario {
     /**
      * Adiciona um novo funcionário (somente quem tiver permissão de administrador pode).
      */
-    public synchronized void adicionarFuncionario(Funcionario funcionario, String token) {
-        List<String> permissoes = TokenService.getPermissoesDoToken(token);
-
-        // Só deixa adicionar se tiver a permissão de ADMINISTRAR_USUARIOS (ou outra que vc definir)
-        if (permissoes == null || !permissoes.contains("GERENCIAR_FUNCIONARIOS")) {
-            throw new SecurityException("Você não tem permissão para adicionar funcionários.");
-        }
+    public synchronized void adicionarFuncionario(Funcionario funcionario) {
 
         List<Funcionario> funcionarios = repoFuncionarios.listar();
         funcionarios.add(funcionario);
@@ -36,11 +29,6 @@ public class GerenciadorFuncionario {
      * Lista todos os funcionários (somente administrador).
      */
     public List<Funcionario> listarFuncionarios(String token) {
-        List<String> permissoes = TokenService.getPermissoesDoToken(token);
-
-        if (permissoes == null || !permissoes.contains("GERENCIAR_FUNCIONARIOS")) {
-            throw new SecurityException("Você não tem permissão para listar funcionários.");
-        }
 
         return repoFuncionarios.listar();
     }
@@ -49,11 +37,6 @@ public class GerenciadorFuncionario {
      * Remove um funcionário (somente administrador).
      */
     public void removerFuncionario(int id, String token) {
-        List<String> permissoes = TokenService.getPermissoesDoToken(token);
-
-        if (permissoes == null || !permissoes.contains("GERENCIAR_FUNCIONARIOS")) {
-            throw new SecurityException("Você não tem permissão para remover funcionários.");
-        }
 
         List<Funcionario> funcionarios = repoFuncionarios.listar();
         funcionarios.removeIf(f -> f.getId() == id);
