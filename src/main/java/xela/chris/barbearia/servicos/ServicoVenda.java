@@ -4,6 +4,7 @@ import xela.chris.barbearia.Gerenciadores.GerenciadorProduto;
 import xela.chris.barbearia.Gerenciadores.GerenciarVenda;
 import xela.chris.barbearia.models.Produto;
 import xela.chris.barbearia.models.Venda;
+import java.time.LocalDate;
 
 public class ServicoVenda {
 
@@ -20,7 +21,7 @@ public class ServicoVenda {
         this.gerenciarVenda = gerenciarVenda;
     }
 
-    public boolean efetuarVenda(int produtoId, int quantidade, String data) {
+    public boolean efetuarVenda(int produtoId, int quantidade, String dataVenda) {
         gerenciadorProduto.carregar();
         Produto produto = gerenciadorProduto.buscarPorId(produtoId);
         if (produto == null) {
@@ -30,7 +31,7 @@ public class ServicoVenda {
             return false;
         }
         gerenciarVenda.carregar();
-        Venda venda = new Venda(produto, quantidade, data);
+        Venda venda = new Venda(produto, quantidade, dataVenda);
         gerenciarVenda.adicionar(venda);
         return true;
     }

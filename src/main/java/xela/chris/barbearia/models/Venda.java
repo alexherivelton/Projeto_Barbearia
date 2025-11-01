@@ -1,5 +1,6 @@
 package xela.chris.barbearia.models;
 
+import java.time.LocalDate;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -17,7 +18,7 @@ public class Venda {
     private int quantidade;
     private double valorUnitario;
     private double valorTotal;
-    private String data;
+    private String dataVenda;
 
     /**
      * Construtor padrão necessário para serialização JSON.
@@ -31,15 +32,15 @@ public class Venda {
      *
      * @param produto    objeto Produto vendido (já validado no GerenciadorProduto)
      * @param quantidade quantidade vendida
-     * @param data       data da venda
+     * @param dataVenda       data da venda
      */
-    public Venda(Produto produto, int quantidade, String data) {
+    public Venda(Produto produto, int quantidade, String dataVenda) {
         this.id = contador.incrementAndGet();
         this.produto = produto;
         this.quantidade = quantidade;
         this.valorUnitario = produto.getValor();
         this.valorTotal = quantidade * this.valorUnitario;
-        this.data = data;
+        this.dataVenda = dataVenda;
     }
 
     public int getId() {
@@ -77,12 +78,12 @@ public class Venda {
         return valorTotal;
     }
 
-    public String getData() {
-        return data;
+    public String getDataVenda() {
+        return dataVenda;
     }
 
-    public void setData(String data) {
-        this.data = data;
+    public void setDataVenda(String dataVenda) {
+        this.dataVenda = dataVenda;
     }
 
     @Override
@@ -93,7 +94,7 @@ public class Venda {
                 "\n Quantidade: " + quantidade +
                 "\n Valor Unitário: " + valorUnitario +
                 "\n Valor Total: " + valorTotal +
-                "\n Data: " + data +
+                "\n Data: " + dataVenda +
                 "\n";
     }
 }
