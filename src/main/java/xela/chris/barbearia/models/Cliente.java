@@ -46,8 +46,8 @@ public class Cliente extends Pessoa {
      */
     public Cliente(String nome, String cpf, String telefone, StatusAtendimentoCliente statusAtendimentoCliente) {
         super(nome, cpf, telefone);
-        this.statusAtendimentoCliente = statusAtendimentoCliente;
         this.id = contador.incrementAndGet();
+        this.statusAtendimentoCliente = statusAtendimentoCliente;
     }
 
     /**
