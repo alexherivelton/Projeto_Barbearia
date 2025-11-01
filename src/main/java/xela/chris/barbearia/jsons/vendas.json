@@ -1,1 +1,217 @@
-[{"id":1,"produto":{"id":1,"nome":"Shampoo","valor":14.5,"quantidade":8},"quantidade":2,"valorUnitario":14.5,"valorTotal":29.0,"data":"25102025"}]
+[ {
+  "id" : 1,
+  "produto" : {
+    "id" : 1,
+    "nome" : "Shampoo",
+    "valor" : 14.5,
+    "quantidade" : 33
+  },
+  "quantidade" : 2,
+  "valorUnitario" : 14.5,
+  "valorTotal" : 29.0,
+  "dataVenda" : "01/11/2025"
+}, {
+  "id" : 2,
+  "produto" : {
+    "id" : 1,
+    "nome" : "Shampoo",
+    "valor" : 14.5,
+    "quantidade" : 31
+  },
+  "quantidade" : 2,
+  "valorUnitario" : 14.5,
+  "valorTotal" : 29.0,
+  "dataVenda" : "01/11/2025"
+}, {
+  "id" : 1,
+  "produto" : {
+    "id" : 1,
+    "nome" : "Shampoo",
+    "valor" : 14.5,
+    "quantidade" : 33
+  },
+  "quantidade" : 2,
+  "valorUnitario" : 14.5,
+  "valorTotal" : 29.0,
+  "dataVenda" : "01/11/2025"
+}, {
+  "id" : 2,
+  "produto" : {
+    "id" : 1,
+    "nome" : "Shampoo",
+    "valor" : 14.5,
+    "quantidade" : 31
+  },
+  "quantidade" : 2,
+  "valorUnitario" : 14.5,
+  "valorTotal" : 29.0,
+  "dataVenda" : "01/11/2025"
+}, {
+  "id" : 1,
+  "produto" : {
+    "id" : 1,
+    "nome" : "Shampoo",
+    "valor" : 14.5,
+    "quantidade" : 33
+  },
+  "quantidade" : 2,
+  "valorUnitario" : 14.5,
+  "valorTotal" : 29.0,
+  "dataVenda" : "01/11/2025"
+}, {
+  "id" : 2,
+  "produto" : {
+    "id" : 1,
+    "nome" : "Shampoo",
+    "valor" : 14.5,
+    "quantidade" : 31
+  },
+  "quantidade" : 2,
+  "valorUnitario" : 14.5,
+  "valorTotal" : 29.0,
+  "dataVenda" : "01/11/2025"
+}, {
+  "id" : 1,
+  "produto" : {
+    "id" : 1,
+    "nome" : "Shampoo",
+    "valor" : 14.5,
+    "quantidade" : 33
+  },
+  "quantidade" : 2,
+  "valorUnitario" : 14.5,
+  "valorTotal" : 29.0,
+  "dataVenda" : "01/11/2025"
+}, {
+  "id" : 2,
+  "produto" : {
+    "id" : 1,
+    "nome" : "Shampoo",
+    "valor" : 14.5,
+    "quantidade" : 31
+  },
+  "quantidade" : 2,
+  "valorUnitario" : 14.5,
+  "valorTotal" : 29.0,
+  "dataVenda" : "01/11/2025"
+}, {
+  "id" : 1,
+  "produto" : {
+    "id" : 1,
+    "nome" : "Shampoo",
+    "valor" : 14.5,
+    "quantidade" : 33
+  },
+  "quantidade" : 2,
+  "valorUnitario" : 14.5,
+  "valorTotal" : 29.0,
+  "dataVenda" : "01/11/2025"
+}, {
+  "id" : 2,
+  "produto" : {
+    "id" : 2,
+    "nome" : "Gel de cabelo",
+    "valor" : 12.5,
+    "quantidade" : 33
+  },
+  "quantidade" : 2,
+  "valorUnitario" : 12.5,
+  "valorTotal" : 25.0,
+  "dataVenda" : "01/11/2025"
+}, {
+  "id" : 1,
+  "produto" : {
+    "id" : 1,
+    "nome" : "Shampoo",
+    "valor" : 14.5,
+    "quantidade" : 33
+  },
+  "quantidade" : 2,
+  "valorUnitario" : 14.5,
+  "valorTotal" : 29.0,
+  "dataVenda" : "01/11/2025"
+}, {
+  "id" : 2,
+  "produto" : {
+    "id" : 2,
+    "nome" : "Gel de cabelo",
+    "valor" : 12.5,
+    "quantidade" : 33
+  },
+  "quantidade" : 2,
+  "valorUnitario" : 12.5,
+  "valorTotal" : 25.0,
+  "dataVenda" : "01/11/2025"
+}, {
+  "id" : 1,
+  "produto" : {
+    "id" : 1,
+    "nome" : "Shampoo",
+    "valor" : 14.5,
+    "quantidade" : 33
+  },
+  "quantidade" : 2,
+  "valorUnitario" : 14.5,
+  "valorTotal" : 29.0,
+  "dataVenda" : "01/11/2025"
+}, {
+  "id" : 2,
+  "produto" : {
+    "id" : 2,
+    "nome" : "Gel de cabelo",
+    "valor" : 12.5,
+    "quantidade" : 33
+  },
+  "quantidade" : 2,
+  "valorUnitario" : 12.5,
+  "valorTotal" : 25.0,
+  "dataVenda" : "01/11/2025"
+}, {
+  "id" : 1,
+  "produto" : {
+    "id" : 1,
+    "nome" : "Shampoo",
+    "valor" : 14.5,
+    "quantidade" : 33
+  },
+  "quantidade" : 2,
+  "valorUnitario" : 14.5,
+  "valorTotal" : 29.0,
+  "dataVenda" : "01/11/2025"
+}, {
+  "id" : 2,
+  "produto" : {
+    "id" : 2,
+    "nome" : "Gel de cabelo",
+    "valor" : 12.5,
+    "quantidade" : 33
+  },
+  "quantidade" : 2,
+  "valorUnitario" : 12.5,
+  "valorTotal" : 25.0,
+  "dataVenda" : "01/11/2025"
+}, {
+  "id" : 1,
+  "produto" : {
+    "id" : 1,
+    "nome" : "Shampoo",
+    "valor" : 14.5,
+    "quantidade" : 33
+  },
+  "quantidade" : 2,
+  "valorUnitario" : 14.5,
+  "valorTotal" : 29.0,
+  "dataVenda" : "01/11/2025"
+}, {
+  "id" : 2,
+  "produto" : {
+    "id" : 2,
+    "nome" : "Gel de cabelo",
+    "valor" : 12.5,
+    "quantidade" : 33
+  },
+  "quantidade" : 2,
+  "valorUnitario" : 12.5,
+  "valorTotal" : 25.0,
+  "dataVenda" : "01/11/2025"
+} ]
