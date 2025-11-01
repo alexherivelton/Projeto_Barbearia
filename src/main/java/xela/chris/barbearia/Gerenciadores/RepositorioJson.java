@@ -2,6 +2,7 @@ package xela.chris.barbearia.Gerenciadores;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,9 +10,11 @@ import java.util.List;
 /**
  * Repositório genérico para persistência de objetos em arquivos JSON.
  *
- * <p>Permite salvar e recuperar listas de objetos de qualquer tipo usando
+ * <p>
+ * Permite salvar e recuperar listas de objetos de qualquer tipo usando
  * a biblioteca Jackson. Os dados são armazenados em uma pasta específica
- * dentro do projeto.</p>
+ * dentro do projeto. Agora com JSON formatado (pretty-print) para melhor leitura.
+ * </p>
  *
  * @param <T> Tipo de objeto que será persistido no arquivo JSON.
  */
@@ -24,10 +27,12 @@ public class RepositorioJson<T> {
     /**
      * Construtor do repositório JSON.
      *
-     * <p>Cria a pasta de armazenamento caso não exista e define o arquivo
-     * onde os objetos serão salvos.</p>
+     * <p>
+     * Cria a pasta de armazenamento caso não exista e define o arquivo
+     * onde os objetos serão salvos.
+     * </p>
      *
-     * @param tipo Classe do tipo de objeto que será persistido.
+     * @param tipo        Classe do tipo de objeto que será persistido.
      * @param nomeArquivo Nome do arquivo JSON onde os dados serão armazenados.
      */
     public RepositorioJson(Class<T> tipo, String nomeArquivo) {
@@ -38,6 +43,7 @@ public class RepositorioJson<T> {
         if (!pasta.exists()) {
             pasta.mkdirs();
         }
+
         this.tipo = tipo;
         this.arquivo = new File(pasta, nomeArquivo);
     }
@@ -45,7 +51,9 @@ public class RepositorioJson<T> {
     /**
      * Busca todos os objetos salvos no arquivo JSON.
      *
-     * <p>Se o arquivo não existir ou estiver vazio, retorna uma lista vazia.</p>
+     * <p>
+     * Se o arquivo não existir ou estiver vazio, retorna uma lista vazia.
+     * </p>
      *
      * @return Lista de objetos do tipo {@code T} encontrados no arquivo JSON.
      */
@@ -69,8 +77,10 @@ public class RepositorioJson<T> {
     /**
      * Retorna uma lista de todos os objetos armazenados.
      *
-     * <p>Este método é um alias para {@link #buscarTodos()}, criado
-     * para simplificar chamadas em outras classes, como o {@code GerenciadorLogin}.</p>
+     * <p>
+     * Este método é um alias para {@link #buscarTodos()}, criado
+     * para simplificar chamadas em outras classes, como o {@code GerenciadorLogin}.
+     * </p>
      *
      * @return Lista de objetos do tipo {@code T} atualmente salvos no repositório.
      */
@@ -81,11 +91,16 @@ public class RepositorioJson<T> {
     /**
      * Salva todos os objetos fornecidos no arquivo JSON, sobrescrevendo os dados existentes.
      *
+     * <p>
+     * Agora o JSON é salvo com formatação legível (pretty-print).
+     * </p>
+     *
      * @param dados Lista de objetos do tipo {@code T} a ser salva no arquivo JSON.
      */
     public synchronized void salvarTodos(List<T> dados) {
         try {
-            mapper.writeValue(arquivo, dados);
+            // Escreve JSON formatado para melhor leitura
+            mapper.writerWithDefaultPrettyPrinter().writeValue(arquivo, dados);
         } catch (Exception e) {
             e.printStackTrace();
         }
