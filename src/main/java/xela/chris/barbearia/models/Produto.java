@@ -127,6 +127,16 @@ public class Produto {
     }
 
     /**
+     * Atualiza o contador de IDs para garantir que os próximos registros
+     * continuem a sequência a partir do último ID existente.
+     *
+     * @param ultimoId maior ID encontrado ao carregar os dados
+     */
+    public static void atualizarContador(int ultimoId) {
+        contador.set(ultimoId);
+    }
+
+    /**
      * Retorna uma representação textual do produto.
      *
      * <p>

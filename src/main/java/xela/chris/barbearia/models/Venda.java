@@ -1,6 +1,5 @@
 package xela.chris.barbearia.models;
 
-import java.time.LocalDate;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -8,6 +7,11 @@ import java.util.concurrent.atomic.AtomicInteger;
  *
  * O construtor recebe um objeto Produto e a quantidade vendida, calculando
  * automaticamente o valor unitário e o total com base no produto fornecido.
+ * <p>
+ * Esta classe também possui um contador estático de IDs, que é atualizado
+ * automaticamente conforme novas vendas são criadas. O contador pode ser
+ * sincronizado com o maior ID existente ao carregar vendas do armazenamento
+ * JSON, garantindo que os IDs não sejam reiniciados após reiniciar o sistema.
  */
 public class Venda {
 
@@ -32,7 +36,7 @@ public class Venda {
      *
      * @param produto    objeto Produto vendido (já validado no GerenciadorProduto)
      * @param quantidade quantidade vendida
-     * @param dataVenda       data da venda
+     * @param dataVenda  data da venda no formato "dd/MM/yyyy"
      */
     public Venda(Produto produto, int quantidade, String dataVenda) {
         this.id = contador.incrementAndGet();
@@ -84,6 +88,16 @@ public class Venda {
 
     public void setDataVenda(String dataVenda) {
         this.dataVenda = dataVenda;
+    }
+
+    /**
+     * Atualiza o contador de IDs para garantir que os próximos registros
+     * continuem a sequência a partir do último ID existente.
+     *
+     * @param ultimoId maior ID encontrado ao carregar os dados
+     */
+    public static void atualizarContador(int ultimoId) {
+        contador.set(ultimoId);
     }
 
     @Override
