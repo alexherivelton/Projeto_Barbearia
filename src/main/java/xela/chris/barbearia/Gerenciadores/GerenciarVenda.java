@@ -33,6 +33,13 @@ public class GerenciarVenda {
      */
     public void carregar() {
         vendas = repo.buscarTodos();
+        if (!vendas.isEmpty()) {
+            int maiorId = vendas.stream()
+                    .mapToInt(Venda::getId)
+                    .max()
+                    .orElse(0);
+            Venda.atualizarContador(maiorId);
+        }
     }
 
     /**

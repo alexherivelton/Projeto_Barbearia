@@ -19,6 +19,13 @@ public class GerenciarCliente {
      */
     public void carregar() {
         clientes = repo.buscarTodos();
+        if (!clientes.isEmpty()) {
+            int maiorId = clientes.stream()
+                    .mapToInt(Cliente::getId)
+                    .max()
+                    .orElse(0);
+            Cliente.atualizarContador(maiorId);
+        }
     }
 
     /**

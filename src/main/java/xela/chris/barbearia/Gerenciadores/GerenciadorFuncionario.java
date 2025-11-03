@@ -15,6 +15,17 @@ public class GerenciadorFuncionario {
         this.repoFuncionarios = new RepositorioJson<>(Funcionario.class, "funcionarios.json");
     }
 
+    public void carregar() {
+        List<Funcionario> funcionarios = repoFuncionarios.buscarTodos();
+        if (!funcionarios.isEmpty()) {
+            int maiorId = funcionarios.stream()
+                    .mapToInt(Funcionario::getId)
+                    .max()
+                    .orElse(0);
+            Funcionario.atualizarContador(maiorId);
+        }
+    }
+
     /**
      * Adiciona um novo funcionário (somente quem tiver permissão de administrador pode).
      */
@@ -24,11 +35,10 @@ public class GerenciadorFuncionario {
         funcionarios.add(funcionario);
         repoFuncionarios.salvarTodos(funcionarios);
     }
-
     /**
      * Lista todos os funcionários (somente administrador).
      */
-    public List<Funcionario> listarFuncionarios(String token) {
+    public List<Funcionario> listarFuncionarios() {
 
         return repoFuncionarios.listar();
     }

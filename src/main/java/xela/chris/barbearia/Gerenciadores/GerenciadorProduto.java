@@ -19,6 +19,13 @@ public class GerenciadorProduto {
      */
     public void carregar() {
         produtos = repo.buscarTodos();
+        if(!produtos.isEmpty()) {
+            int maiorId = produtos.stream()
+                    .mapToInt(Produto::getId)
+                    .max()
+                    .orElse(0);
+            Produto.atualizarContador(maiorId);
+        }
     }
 
     /**
