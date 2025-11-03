@@ -2,10 +2,10 @@
   "id" : 1,
   "nome" : "Shampoo",
   "valor" : 14.5,
-  "quantidade" : 33
+  "quantidade" : 27
 }, {
   "id" : 2,
   "nome" : "Gel de cabelo",
   "valor" : 12.5,
-  "quantidade" : 33
+  "quantidade" : 11
 } ]

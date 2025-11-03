@@ -22,20 +22,20 @@ public class TestProdutoVenda {
         Produto p1 = new Produto("Shampoo", 14.5, 35);
         Produto p2 = new Produto("Gel de cabelo", 12.5, 35);
 
-        gp.adicionar(p1);
-        gp.adicionar(p2);
+//        gp.adicionar(p1);
+//        gp.adicionar(p2);
 
         System.out.println("Produtos: " + gp.listar());
 
         System.out.println("=================================================================");
 
         sv.efetuarVenda(1, 2, dataFormatada);
-        sv.efetuarVenda(2, 2, dataFormatada);
+        sv.efetuarVenda(2, 10, dataFormatada);
 
 
         System.out.println("=================================================================");
         System.out.println(gv.buscarVendaPorId(1));
-        System.out.println(gv.buscarVendaPorId(2));
+        System.out.println(gv.buscarVendaPorId(6));
 
     }
 }
