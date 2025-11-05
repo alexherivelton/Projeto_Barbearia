@@ -46,7 +46,7 @@ public class GerenciadorFuncionario {
     /**
      * Remove um funcionário (somente administrador).
      */
-    public void removerFuncionario(int id, String token) {
+    public void removerFuncionario(int id) {
 
         List<Funcionario> funcionarios = repoFuncionarios.listar();
         funcionarios.removeIf(f -> f.getId() == id);

@@ -34,4 +34,13 @@
   "id" : 4,
   "senha" : "tomanocuminhamaevai",
   "permissoes" : [ "VERIFICAR_CLIENTE", "CRIAR_AGENDAMENTO" ]
+}, {
+  "nome" : "Jose du mamaBola",
+  "cpf" : "12312312322",
+  "telefone" : "33998642761",
+  "cargo" : "Barbeiro",
+  "usuario" : "mamaBolas",
+  "id" : 5,
+  "senha" : "tomanocuminhamaevai",
+  "permissoes" : [ "VERIFICAR_CLIENTE", "CRIAR_AGENDAMENTO" ]
 } ]

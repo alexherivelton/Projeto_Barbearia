@@ -47,6 +47,13 @@ public class PessoaTest {
 
         System.out.println("\nClientes: "  + gerenciarCliente.listar());
 
+        System.out.println("=================================================================");
+        System.out.println("=================================================================");
+
+        Funcionario f5 = new Funcionario("Jose du mamaBola", "12312312322", "33998642761", "Barbeiro", "mamaBolas", "tomanocuminhamaevai");
+        gerenciadorFuncionario.adicionarFuncionario(f5);
+        System.out.println("\nFuncionarios: "  + gerenciadorFuncionario.listar());
+
 
     }
 }
