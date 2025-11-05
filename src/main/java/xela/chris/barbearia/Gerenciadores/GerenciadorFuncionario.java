@@ -1,5 +1,6 @@
 package xela.chris.barbearia.Gerenciadores;
 
+import xela.chris.barbearia.models.Cliente;
 import xela.chris.barbearia.models.Funcionario;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,14 +10,13 @@ import java.util.List;
  */
 public class GerenciadorFuncionario {
 
-    private final RepositorioJson<Funcionario> repoFuncionarios;
+    private List<Funcionario> funcionarios = new ArrayList<>();
+    private final RepositorioJson<Funcionario> repo = new RepositorioJson<>(Funcionario.class, "funcionarios.json");;
 
-    public GerenciadorFuncionario() {
-        this.repoFuncionarios = new RepositorioJson<>(Funcionario.class, "funcionarios.json");
-    }
+
 
     public void carregar() {
-        List<Funcionario> funcionarios = repoFuncionarios.buscarTodos();
+        funcionarios = repo.buscarTodos();
         if (!funcionarios.isEmpty()) {
             int maiorId = funcionarios.stream()
                     .mapToInt(Funcionario::getId)
@@ -31,16 +31,16 @@ public class GerenciadorFuncionario {
      */
     public synchronized void adicionarFuncionario(Funcionario funcionario) {
 
-        List<Funcionario> funcionarios = repoFuncionarios.listar();
+        List<Funcionario> funcionarios = repo.listar();
         funcionarios.add(funcionario);
-        repoFuncionarios.salvarTodos(funcionarios);
+        repo.salvarTodos(funcionarios);
     }
     /**
      * Lista todos os funcionários (somente administrador).
      */
     public List<Funcionario> listarFuncionarios() {
 
-        return repoFuncionarios.listar();
+        return funcionarios;
     }
 
     /**
@@ -48,18 +48,27 @@ public class GerenciadorFuncionario {
      */
     public void removerFuncionario(int id) {
 
-        List<Funcionario> funcionarios = repoFuncionarios.listar();
+        List<Funcionario> funcionarios = repo.listar();
         funcionarios.removeIf(f -> f.getId() == id);
-        repoFuncionarios.salvarTodos(funcionarios);
+        repo.salvarTodos(funcionarios);
+    }
+
+    public Funcionario buscarFuncionario(int id) {
+        for (Funcionario c : funcionarios) {
+            if (c.getId() == id) {
+                return c;
+            }
+        }
+        return null;
     }
 
 
     public List<Funcionario> listar() {
-        return repoFuncionarios.buscarTodos();
+        return repo.buscarTodos();
     }
 
     public void limpar() {
-        repoFuncionarios.salvarTodos(new ArrayList<>());
+        repo.salvarTodos(new ArrayList<>());
     }
 
 }

@@ -25,6 +25,8 @@ public class TestProdutoVenda {
 //        gp.adicionar(p1);
 //        gp.adicionar(p2);
 
+        gp.carregar();
+
         System.out.println("Produtos: " + gp.listar());
 
         System.out.println("=================================================================");

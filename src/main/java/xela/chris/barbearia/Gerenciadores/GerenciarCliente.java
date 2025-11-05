@@ -1,6 +1,7 @@
 package xela.chris.barbearia.Gerenciadores;
 
 import xela.chris.barbearia.models.Cliente;
+import xela.chris.barbearia.models.Servico;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +27,15 @@ public class GerenciarCliente {
                     .orElse(0);
             Cliente.atualizarContador(maiorId);
         }
+    }
+
+    public Cliente buscarCliente(int id) {
+        for (Cliente c : clientes) {
+            if (c.getId() == id) {
+                return c;
+            }
+        }
+        return null;
     }
 
     /**
@@ -58,7 +68,11 @@ public class GerenciarCliente {
      * @return Lista de clientes.
      */
     public List<Cliente> listar() {
-        return clientes;
+        System.out.println("➡ Serviços carregados: " + clientes.size());
+        for (Cliente c : clientes) {
+            System.out.println(c);
+        }
+        return List.of();
     }
 
     /**

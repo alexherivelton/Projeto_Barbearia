@@ -1,5 +1,6 @@
 package xela.chris.barbearia.Gerenciadores;
 
+import xela.chris.barbearia.models.Cliente;
 import xela.chris.barbearia.models.Funcionario;
 import xela.chris.barbearia.negocio.Agendamento;
 
@@ -14,7 +15,7 @@ public class GerenciarAgendamento {
 
 
 
-    public void carregarAgendamento(){
+    public void carregar(){
         agendamentos = repo.buscarTodos();
         if(!agendamentos.isEmpty()){
             int maiorId = agendamentos.stream()
@@ -66,7 +67,11 @@ public class GerenciarAgendamento {
     }
 
     public List<Agendamento> listarAgendamentos(){
-        return agendamentos;
+        System.out.println("➡ Agedamentos carregados: " + agendamentos.size());
+        for (Agendamento a : agendamentos) {
+            System.out.println(a);
+        }
+        return List.of();
     }
 
     public void limparAgendamentos(){

@@ -83,7 +83,7 @@ public class Agendamento {
                 "\n Data/Hora: " + getDataHora() +
                 "\n Cliente: " + (cliente != null ? cliente.getNome() : "N/A") +
                 "\n Funcionário: " + (funcionario != null ? funcionario.getNome() : "N/A") +
-                "\n Quantidade de Serviços: " + (servicos != null ? servicos.size() : 0) +
+                "\n Quantidade de Serviços: " + servicos +
                 "\n Status: " + (statusCliente != null ? statusCliente : "N/A") +
                 "\n";
     }
