@@ -1,136 +1,60 @@
 package xela.chris.barbearia.models;
 
+import xela.chris.barbearia.enums.ServicosEnum;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Representa um serviço oferecido pela barbearia.
- *
- * <p>
- * Cada serviço possui um identificador único gerado automaticamente,
- * além de informações como nome, preço e descrição.
- * </p>
- *
- * <p>
- * A classe utiliza um contador estático ({@link AtomicInteger})
- * para garantir que cada serviço receba um ID único de forma sequencial.
- * </p>
  */
 public class Servico {
-    /**
-     * Contador estático responsável por gerar IDs únicos.
-     */
     private static final AtomicInteger contador = new AtomicInteger(0);
-
-    /**
-     * Identificador único do serviço.
-     */
     private int id;
+    private ServicosEnum servico;
 
-    /**
-     * Nome do serviço.
-     */
-    private String nome;
-
-    /**
-     * Preço do serviço.
-     */
-    private double preco;
-
-    /**
-     * Descrição detalhada do serviço (opcional).
-     */
-    private String descricao;
-
-    /**
-     * Construtor da classe {@code Servico}.
-     *
-     * <p>
-     * O ID é gerado automaticamente de forma incremental.
-     * </p>
-     *
-     * @param nome  o nome do serviço
-     * @param preco o preço do serviço
-     */
-    public Servico(String nome, double preco) {
+    public Servico(ServicosEnum servico) {
         this.id = contador.incrementAndGet();
-        this.nome = nome;
-        this.preco = preco;
+        this.servico = servico;
     }
 
-    /**
-     * Retorna o identificador único do serviço.
-     *
-     * @return o ID do serviço
-     */
     public int getId() {
         return id;
     }
 
-    /**
-     * Define o identificador único do serviço.
-     *
-     * <p>
-     * Este método deve ser usado com cuidado, pois o ID normalmente
-     * é gerado automaticamente.
-     * </p>
-     *
-     * @param id o novo ID do serviço
-     */
     public void setId(int id) {
         this.id = id;
     }
 
-    /**
-     * Retorna o nome do serviço.
-     *
-     * @return o nome do serviço
-     */
+    public ServicosEnum getServico() {
+        return servico;
+    }
+
+    public void setServico(ServicosEnum servico) {
+        this.servico = servico;
+    }
+
     public String getNome() {
-        return nome;
+        return servico.getNome();
     }
 
-    /**
-     * Define o nome do serviço.
-     *
-     * @param nome o novo nome do serviço
-     */
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    /**
-     * Retorna o preço do serviço.
-     *
-     * @return o preço do serviço
-     */
     public double getPreco() {
-        return preco;
+        return servico.getPreco();
     }
 
-    /**
-     * Define o preço do serviço.
-     *
-     * @param preco o novo preço do serviço
-     */
-    public void setPreco(double preco) {
-        this.preco = preco;
-    }
-
-    /**
-     * Retorna a descrição detalhada do serviço.
-     *
-     * @return a descrição do serviço
-     */
     public String getDescricao() {
-        return descricao;
+        return servico.getDescricao();
     }
 
-    /**
-     * Define a descrição do serviço.
-     *
-     * @param descricao a nova descrição do serviço
-     */
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
+    public static void atualizarContador(int ultimoId){
+        contador.set(ultimoId);
+    }
+
+    @Override
+    public String toString() {
+        return "\n===============" +
+                "\n ID: " + id +
+                "\n Nome: " + getNome() +
+                "\n Preço: R$ " + getPreco() +
+                "\n Descrição: " + getDescricao() +
+                "\n===============";
     }
 }
