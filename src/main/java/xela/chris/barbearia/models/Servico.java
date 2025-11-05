@@ -1,6 +1,5 @@
 package xela.chris.barbearia.models;
 
-import xela.chris.barbearia.enums.ServicosEnum;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -9,11 +8,20 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class Servico {
     private static final AtomicInteger contador = new AtomicInteger(0);
     private int id;
-    private ServicosEnum servico;
+    private String nome;
+    private double preco;
+    private String descricao;
 
-    public Servico(ServicosEnum servico) {
+    // 🔹 Construtor padrão obrigatório para o Jackson (desserialização)
+    public Servico() {
+    }
+
+    // 🔹 Construtor usado para criar novos serviços manualmente
+    public Servico(String nome, double preco, String descricao) {
         this.id = contador.incrementAndGet();
-        this.servico = servico;
+        this.nome = nome;
+        this.preco = preco;
+        this.descricao = descricao;
     }
 
     public int getId() {
@@ -24,27 +32,31 @@ public class Servico {
         this.id = id;
     }
 
-    public ServicosEnum getServico() {
-        return servico;
-    }
-
-    public void setServico(ServicosEnum servico) {
-        this.servico = servico;
-    }
-
     public String getNome() {
-        return servico.getNome();
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public double getPreco() {
-        return servico.getPreco();
+        return preco;
+    }
+
+    public void setPreco(double preco) {
+        this.preco = preco;
     }
 
     public String getDescricao() {
-        return servico.getDescricao();
+        return descricao;
     }
 
-    public static void atualizarContador(int ultimoId){
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public static void atualizarContador(int ultimoId) {
         contador.set(ultimoId);
     }
 
@@ -52,9 +64,9 @@ public class Servico {
     public String toString() {
         return "\n===============" +
                 "\n ID: " + id +
-                "\n Nome: " + getNome() +
-                "\n Preço: R$ " + getPreco() +
-                "\n Descrição: " + getDescricao() +
+                "\n Nome: " + nome +
+                "\n Preço: R$ " + preco +
+                "\n Descrição: " + descricao +
                 "\n===============";
     }
 }
