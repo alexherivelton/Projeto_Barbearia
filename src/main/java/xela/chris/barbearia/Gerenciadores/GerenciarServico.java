@@ -1,7 +1,9 @@
 package xela.chris.barbearia.Gerenciadores;
 
+import xela.chris.barbearia.models.Cliente;
 import xela.chris.barbearia.models.Servico;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -12,6 +14,10 @@ public class GerenciarServico {
 
     private List<Servico> servicos = new ArrayList<>();
     private final RepositorioJson<Servico> repo = new RepositorioJson<>(Servico.class, "servicos.json");
+
+    public GerenciarServico() {
+        this.carregar();
+    }
 
     /**
      * Carrega todos os serviços do arquivo JSON para a lista interna.
@@ -58,11 +64,14 @@ public class GerenciarServico {
      * @return O serviço encontrado ou null se não existir.
      */
     public Servico buscarPorId(int id) {
-        for (Servico s : servicos) {
-            if (s.getId() == id) {
-                return s;
+        Iterator<Servico> iterator = servicos.iterator();
+        while(iterator.hasNext()){
+            Servico servico = iterator.next();
+            if(servico.getId() == id){
+                return servico;
             }
         }
+        System.out.println("Diabo nao encontrado!");
         return null;
     }
 

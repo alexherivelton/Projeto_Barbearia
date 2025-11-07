@@ -2,8 +2,10 @@ package xela.chris.barbearia.Gerenciadores;
 
 import xela.chris.barbearia.models.Cliente;
 import xela.chris.barbearia.models.Servico;
+import xela.chris.barbearia.negocio.Agendamento;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -14,6 +16,12 @@ public class GerenciarCliente {
 
     private List<Cliente> clientes = new ArrayList<>();
     private RepositorioJson<Cliente> repo = new RepositorioJson<>(Cliente.class, "clientes.json");
+
+
+    public GerenciarCliente() {
+        this.carregar();
+    }
+
 
     /**
      * Carrega todos os clientes do arquivo JSON para a lista interna.
@@ -30,11 +38,14 @@ public class GerenciarCliente {
     }
 
     public Cliente buscarCliente(int id) {
-        for (Cliente c : clientes) {
-            if (c.getId() == id) {
-                return c;
+        Iterator<Cliente> iterator = clientes.iterator();
+        while(iterator.hasNext()){
+            Cliente cliente = iterator.next();
+            if(cliente.getId() == id){
+                return cliente;
             }
         }
+        System.out.println("Diabo nao encontrado!");
         return null;
     }
 

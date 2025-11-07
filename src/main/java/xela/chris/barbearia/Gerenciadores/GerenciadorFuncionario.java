@@ -3,6 +3,7 @@ package xela.chris.barbearia.Gerenciadores;
 import xela.chris.barbearia.models.Cliente;
 import xela.chris.barbearia.models.Funcionario;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -13,7 +14,9 @@ public class GerenciadorFuncionario {
     private List<Funcionario> funcionarios = new ArrayList<>();
     private final RepositorioJson<Funcionario> repo = new RepositorioJson<>(Funcionario.class, "funcionarios.json");;
 
-
+    public GerenciadorFuncionario() {
+        this.carregar();
+    }
 
     public void carregar() {
         funcionarios = repo.buscarTodos();
@@ -54,11 +57,14 @@ public class GerenciadorFuncionario {
     }
 
     public Funcionario buscarFuncionario(int id) {
-        for (Funcionario c : funcionarios) {
-            if (c.getId() == id) {
-                return c;
+        Iterator<Funcionario> iterator = funcionarios.iterator();
+        while(iterator.hasNext()){
+            Funcionario funcionario = iterator.next();
+            if(funcionario.getId() == id){
+                return funcionario;
             }
         }
+        System.out.println("Diabo nao encontrado!");
         return null;
     }
 
