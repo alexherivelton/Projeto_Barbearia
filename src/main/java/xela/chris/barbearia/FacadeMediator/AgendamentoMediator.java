@@ -7,6 +7,9 @@ import xela.chris.barbearia.Gerenciadores.GerenciarServico;
 import xela.chris.barbearia.enums.StatusAtendimentoCliente;
 import xela.chris.barbearia.models.Cliente;
 import xela.chris.barbearia.models.Funcionario;
+import xela.chris.barbearia.Gerenciadores.GerenciarCadeira;
+import xela.chris.barbearia.enums.TipoCadeira;
+import xela.chris.barbearia.models.Cadeira;
 import xela.chris.barbearia.models.Servico;
 import xela.chris.barbearia.negocio.Agendamento;
 
@@ -20,13 +23,25 @@ public class AgendamentoMediator {
     private final GerenciarCliente gc;
     private final GerenciadorFuncionario gf;
     private final GerenciarServico gs;
+    private final GerenciarCadeira gca;
     private final GerenciarAgendamento ga;
 
-    public AgendamentoMediator(GerenciarCliente gc, GerenciadorFuncionario gf, GerenciarServico gs, GerenciarAgendamento ga) {
+    public AgendamentoMediator(GerenciarCliente gc, GerenciadorFuncionario gf, GerenciarServico gs, GerenciarAgendamento ga, GerenciarCadeira gca) {
         this.gc = gc;
         this.gf = gf;
         this.gs = gs;
+        this.gca = gca;
         this.ga = ga;
+    }
+
+    private TipoCadeira determinarTipoCadeira(List<Servico> servicos) {
+        for (Servico servico : servicos) {
+            // Assumindo que "lavar" ou "secar" no nome do serviço indica a necessidade da cadeira de lavar/secar
+            if (servico.getNome().toLowerCase().contains("lavagem") || servico.getNome().toLowerCase().contains("secar")) {
+                return TipoCadeira.LAVAR_SECAR;
+            }
+        }
+        return TipoCadeira.SERVICO_CORRIQUEIRO;
     }
 
     public boolean agendarPorIds(int idC, int idF, int idS, String dataHora) {
@@ -52,7 +67,25 @@ public class AgendamentoMediator {
             return false;
         }
 
-        Agendamento ag = new Agendamento(dataHora, cliente, funcionario, List.of(servico), StatusAtendimentoCliente.AGENDADO);
+        // Lógica da Cadeira
+        TipoCadeira tipoCadeiraNecessaria = determinarTipoCadeira(List.of(servico));
+        List<Cadeira> cadeirasDisponiveis = gca.buscarPorTipo(tipoCadeiraNecessaria);
+        int idCadeiraSelecionada = -1;
+
+        for (Cadeira cadeira : cadeirasDisponiveis) {
+            if (ga.verificarDisponibilidadeCadeira(dataHora, cadeira.getId())) {
+                idCadeiraSelecionada = cadeira.getId();
+                System.out.println( cadeira.getNome() + " disponível para agendamento.");
+                break;
+            }
+        }
+
+        if (idCadeiraSelecionada == -1) {
+            System.out.println("Nenhuma cadeira do tipo " + tipoCadeiraNecessaria + " disponível neste horário.");
+            return false;
+        }
+
+        Agendamento ag = new Agendamento(dataHora, cliente, funcionario, List.of(servico), StatusAtendimentoCliente.AGENDADO, idCadeiraSelecionada);
 
         ga.criarAgendamento(ag);
         System.out.println("Agendamento criado pelo Mediator: " + cliente.getNome() + " - " + dataHora);
@@ -75,6 +108,33 @@ public class AgendamentoMediator {
         if (!ga.verificarHorarioAgendamento(ag.getDataHora(), ag.getFuncionario())) {
             System.out.println("Funcionário ocupado neste horário: " + ag.getDataHora());
             return false;
+        }
+
+        // Lógica da Cadeira para agendamento manual
+        if (ag.getIdCadeira() == 0) { // Se a cadeira não foi definida no agendamento manual
+            TipoCadeira tipoCadeiraNecessaria = determinarTipoCadeira(ag.getServicos());
+            List<Cadeira> cadeirasDisponiveis = gca.buscarPorTipo(tipoCadeiraNecessaria);
+            int idCadeiraSelecionada = -1;
+
+            for (Cadeira cadeira : cadeirasDisponiveis) {
+                if (ga.verificarDisponibilidadeCadeira(ag.getDataHora(), cadeira.getId())) {
+                    idCadeiraSelecionada = cadeira.getId();
+                    ag.setIdCadeira(idCadeiraSelecionada);
+                    System.out.println(cadeira.getNome() + " selecionada para agendamento manual.");
+                    break;
+                }
+            }
+
+            if (idCadeiraSelecionada == -1) {
+                System.out.println("Nenhuma cadeira do tipo " + tipoCadeiraNecessaria + " disponível neste horário para agendamento manual.");
+                return false;
+            }
+        } else {
+            // Se a cadeira foi definida, apenas verifica a disponibilidade
+            if (!ga.verificarDisponibilidadeCadeira(ag.getDataHora(), ag.getIdCadeira())) {
+                System.out.println("Cadeira " + ag.getIdCadeira() + " ocupada neste horário para agendamento manual.");
+                return false;
+            }
         }
 
         ga.criarAgendamento(ag);
@@ -109,13 +169,17 @@ public class AgendamentoMediator {
 
     public Agendamento buscarAgendamento(int idAgendamento) {
         Agendamento achou = ga.buscarPorId(idAgendamento);
-        if (!achou.equals(null)){
+        if (achou != null){
             System.out.println("Agendamento buscado com sucesso!");
             return achou;
         } else {
             System.out.println("Agendamento nao encontrado!");
         }
         return achou;
+    }
+
+    public void limparAgendamentos() {
+        ga.limparAgendamentos();
     }
 }
 

@@ -15,6 +15,7 @@ public class Agendamento {
     Funcionario funcionario;
     private List<Servico> servicos;
     private StatusAtendimentoCliente statusCliente;
+    private int idCadeira;
 
     private static final AtomicInteger contador = new AtomicInteger(0);
     private int id;
@@ -23,13 +24,14 @@ public class Agendamento {
 
     }
 
-    public Agendamento(String dataHoraAgendamento, Cliente cliente, Funcionario funcionario, List<Servico> servicos, StatusAtendimentoCliente statusCliente) {
+    public Agendamento(String dataHoraAgendamento, Cliente cliente, Funcionario funcionario, List<Servico> servicos, StatusAtendimentoCliente statusCliente, int idCadeira) {
         this.id = contador.incrementAndGet();
         this.dataHoraAgendamento = dataHoraAgendamento;
         this.cliente = cliente;
         this.funcionario = funcionario;
         this.servicos = servicos;
         this.statusCliente = statusCliente;
+        this.idCadeira = idCadeira;
     }
 
 
@@ -61,6 +63,14 @@ public class Agendamento {
         return servicos;
     }
 
+    public int getIdCadeira() {
+        return idCadeira;
+    }
+
+    public void setIdCadeira(int idCadeira) {
+        this.idCadeira = idCadeira;
+    }
+
     public StatusAtendimentoCliente getStatusCliente() {
         return statusCliente;
     }
@@ -85,6 +95,7 @@ public class Agendamento {
                 "\n Funcionário: " + (funcionario != null ? funcionario.getNome() : "N/A") +
                 "\n Servicos:  " + servicos +
                 "\n Status: " + (statusCliente != null ? statusCliente : "N/A") +
+                "\n Cadeira: " + idCadeira +
                 "\n";
     }
 
