@@ -53,6 +53,16 @@ public class GerenciarAgendamento {
         return null;
     }
 
+        public boolean verificarDisponibilidadeCadeira(String horario, int idCadeira) {
+        for (Agendamento agendamento : agendamentos) {
+            if (agendamento.getDataHora().equals(horario) && agendamento.getIdCadeira() == idCadeira) {
+//                System.out.println("Cadeira já ocupada neste horário!");
+                return false;
+            }
+        }
+        return true;
+    }
+
     public boolean verificarHorarioAgendamento(String horario, Funcionario funcionario){
         Iterator<Agendamento> iterator = agendamentos.iterator();
         while(iterator.hasNext()){

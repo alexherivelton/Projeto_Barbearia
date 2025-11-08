@@ -1,0 +1,13 @@
+[ {
+  "id" : 1,
+  "nome" : "Cadeira Lavagem 1",
+  "tipo" : "LAVAR_SECAR"
+}, {
+  "id" : 2,
+  "nome" : "Cadeira Serviço 1",
+  "tipo" : "SERVICO_CORRIQUEIRO"
+}, {
+  "id" : 3,
+  "nome" : "Cadeira Serviço 2",
+  "tipo" : "SERVICO_CORRIQUEIRO"
+} ]
