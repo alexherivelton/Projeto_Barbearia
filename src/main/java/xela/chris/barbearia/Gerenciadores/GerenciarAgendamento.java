@@ -63,6 +63,8 @@ public class GerenciarAgendamento {
         return true;
     }
 
+    //teste
+
     public boolean verificarHorarioAgendamento(String horario, Funcionario funcionario){
         Iterator<Agendamento> iterator = agendamentos.iterator();
         while(iterator.hasNext()){
