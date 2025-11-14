@@ -76,7 +76,7 @@ public class QuestoesRespondidas {
         System.out.println("Acessar a classe ClienteCpfComparators"); // -> retorna em ordem alfabetica baseada na comparacao de caracteres
         System.out.println("Acessar a classe ClienteNomeComparators"); // -> retorna em ordem alfabetica baseada na comparacao de caracteres
         System.out.println("Acessar a classe AgendamentoServicoComparators"); // -> retorna em ordem alfabetica baseada na comparacao de caracteres
-        System.out.println("Acessar a classe AgendamentoClienteComparator"); // -> retorna em ordem alfabetica baseada na comparacao de caracteres
+        System.out.println("Acessar a classe AgendamentoDataComparator"); // -> retorna em ordem alfabetica baseada na comparacao de caracteres
         // }
         //Questão 14:{
         System.out.println("====Questão 14====");

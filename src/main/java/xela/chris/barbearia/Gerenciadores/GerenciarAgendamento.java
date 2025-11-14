@@ -1,10 +1,11 @@
 package xela.chris.barbearia.Gerenciadores;
 
-import xela.chris.barbearia.models.Cliente;
+import xela.chris.barbearia.Comparators.AgendamentoDataComparator;
 import xela.chris.barbearia.models.Funcionario;
 import xela.chris.barbearia.negocio.Agendamento;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -51,7 +52,6 @@ public class GerenciarAgendamento {
      */
     public void criarAgendamento(Agendamento agendamento) {
         this.agendamentos.add(agendamento);
-        repo.salvarTodos(agendamentos);
     }
 
     /**
@@ -64,7 +64,7 @@ public class GerenciarAgendamento {
     public boolean removerPorId(int id) {
         boolean removido = this.agendamentos.removeIf(agendamento -> agendamento.getId() == id);
         if (removido) {
-            repo.salvarTodos(agendamentos);
+            System.out.println("Removido com sucesso!");
         }
         return removido;
     }
@@ -125,6 +125,10 @@ public class GerenciarAgendamento {
         return true;
     }
 
+    public void ordenarPorData(){
+        Collections.sort(agendamentos, new AgendamentoDataComparator());
+    }
+
     /**
      * Exibe todos os agendamentos no console.
      * Atualmente retorna uma lista vazia (pode ser ajustado no futuro).
@@ -137,6 +141,16 @@ public class GerenciarAgendamento {
             System.out.println(a);
         }
         return List.of();
+    }
+
+    public List<Agendamento> listarAgendamentosOrdenadosPorData(){
+        ordenarPorData();
+        return new ArrayList<>(agendamentos); // Só retorna a lista ordenada
+    }
+
+
+    public void salvarTodos(){
+        repo.salvarTodos(agendamentos);
     }
 
     /**

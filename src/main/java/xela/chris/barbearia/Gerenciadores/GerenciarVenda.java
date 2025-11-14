@@ -49,7 +49,6 @@ public class GerenciarVenda {
      */
     public void adicionar(Venda venda) {
         vendas.add(venda);
-        repo.salvarTodos(vendas);
     }
 
     /**
@@ -62,7 +61,7 @@ public class GerenciarVenda {
     public boolean removerPorId(int id) {
         boolean removido = vendas.removeIf(v -> v.getId() == id);
         if (removido) {
-            repo.salvarTodos(vendas);
+            System.out.println("Venda removida com sucesso!");
         }
         return removido;
     }
@@ -92,6 +91,10 @@ public class GerenciarVenda {
      */
     public double calcularTotalVendas() {
         return vendas.stream().mapToDouble(Venda::getValorTotal).sum();
+    }
+
+    public void salvarTodasVendas(){
+        repo.salvarTodos(vendas);
     }
 
     /**

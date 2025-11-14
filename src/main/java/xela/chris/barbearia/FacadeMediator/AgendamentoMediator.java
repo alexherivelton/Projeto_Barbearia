@@ -137,8 +137,6 @@ public class AgendamentoMediator {
                 return false;
             }
         }
-
-        ga.criarAgendamento(ag);
         System.out.println("Agendamento registrado via registrarAgendamento: " + ag.getCliente().getNome());
         return true;
     }
@@ -155,6 +153,19 @@ public class AgendamentoMediator {
         System.out.println("\nLista de agendamentos:");
         for (Agendamento a : lista) {
             System.out.println(a);
+        }
+    }
+
+    public void listarAgendamentosOrdenadosPorData(){
+        List<Agendamento> listaAgendamento = ga.listarAgendamentosOrdenadosPorData();
+
+        if (listaAgendamento == null || listaAgendamento.isEmpty()) {
+            System.out.println("Nenhum agendamento encontrado.");
+        } else {
+            System.out.println("\nLista de agendamentos ordenados:");
+            for (Agendamento a : listaAgendamento) {
+                System.out.println(a);
+            }
         }
     }
 
@@ -177,6 +188,12 @@ public class AgendamentoMediator {
             System.out.println("Agendamento nao encontrado!");
         }
         return achou;
+    }
+
+
+    public void salvarTodosAgendamentos(){
+        ga.salvarTodos();
+        System.out.println("Agendamentos salvos com sucesso!");
     }
 
     public void limparAgendamentos() {

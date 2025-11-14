@@ -58,7 +58,6 @@ public class GerenciadorProduto {
      */
     public void adicionar(Produto produto) {
         this.produtos.add(produto);
-        repo.salvarTodos(produtos);
     }
 
     /**
@@ -72,7 +71,7 @@ public class GerenciadorProduto {
     public boolean removerPorCpf(String id) {
         boolean removido = this.produtos.removeIf(p -> id.equals(p.getId()));
         if (removido) {
-            repo.salvarTodos(produtos);
+            System.out.println("Removido com sucesso!");
         }
         return removido;
     }
@@ -121,6 +120,10 @@ public class GerenciadorProduto {
      */
     public List<Produto> listar() {
         return produtos;
+    }
+
+    public void salvarTodosProdutos(){
+        repo.salvarTodos(produtos);
     }
 
     /**

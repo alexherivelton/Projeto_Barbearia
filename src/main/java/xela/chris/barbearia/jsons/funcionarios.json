@@ -17,30 +17,12 @@
   "senha" : "mamabola",
   "permissoes" : [ "CADASTRAR_CLIENTE", "VERIFICAR_CLIENTE", "CRIAR_AGENDAMENTO", "GERAR_NOTA", "GERAR_BALANCO_MENSAL" ]
 }, {
-  "nome" : "Caralho",
-  "cpf" : "87654571232",
-  "telefone" : "11111111111",
-  "cargo" : "Administrador",
-  "usuario" : "carambolas",
-  "id" : 3,
-  "senha" : "carambolas123",
-  "permissoes" : [ "CAD_FUNC", "GERAR_BALANCO_MENSAL", "FAZER_BALANCO_MENSAL", "CADASTRAR_CLIENTE", "CRIAR_AGENDAMENTO", "VERIFICAR_AGENDA", "VERIFICAR_CLIENTE", "GERAR_NOTA" ]
-}, {
   "nome" : "Jose du Corte",
   "cpf" : "12312312322",
   "telefone" : "33998642761",
   "cargo" : "Barbeiro",
   "usuario" : "mamaBolas",
-  "id" : 4,
-  "senha" : "tomanocuminhamaevai",
-  "permissoes" : [ "VERIFICAR_CLIENTE", "CRIAR_AGENDAMENTO" ]
-}, {
-  "nome" : "Jose du mamaBola",
-  "cpf" : "12312312322",
-  "telefone" : "33998642761",
-  "cargo" : "Barbeiro",
-  "usuario" : "mamaBolas",
-  "id" : 5,
+  "id" : 3,
   "senha" : "tomanocuminhamaevai",
   "permissoes" : [ "VERIFICAR_CLIENTE", "CRIAR_AGENDAMENTO" ]
 } ]

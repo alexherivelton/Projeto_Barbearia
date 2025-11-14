@@ -69,9 +69,7 @@ public class GerenciadorFuncionario {
      * @param funcionario funcionário que será cadastrado
      */
     public synchronized void adicionarFuncionario(Funcionario funcionario) {
-        List<Funcionario> funcionarios = repo.listar();
         funcionarios.add(funcionario);
-        repo.salvarTodos(funcionarios);
     }
 
     /**
@@ -94,7 +92,6 @@ public class GerenciadorFuncionario {
     public void removerFuncionario(int id) {
         List<Funcionario> funcionarios = repo.listar();
         funcionarios.removeIf(f -> f.getId() == id);
-        repo.salvarTodos(funcionarios);
     }
 
     /**
@@ -167,7 +164,6 @@ public class GerenciadorFuncionario {
         funcionario.setUsuario(novoUsuario != null ? novoUsuario : usuarioAtual);
         funcionario.setSenha(novaSenha != null ? novaSenha : senhaAtual);
 
-        repo.salvarTodos(funcionarios);
 
         System.out.println("Sucesso em atualizar!");
         return true;
@@ -181,6 +177,10 @@ public class GerenciadorFuncionario {
      */
     public List<Funcionario> listar() {
         return repo.buscarTodos();
+    }
+
+    public void salvarTodosFuncionarios(){
+        repo.salvarTodos(funcionarios);
     }
 
     /**

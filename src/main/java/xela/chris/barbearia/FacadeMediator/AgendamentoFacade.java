@@ -35,6 +35,10 @@ public class AgendamentoFacade {
         return mediator.agendarPorIds(idCliente, idFuncionario, idServico, dataHora);
     }
 
+    public void salvarAgendamentos(){
+        mediator.salvarTodosAgendamentos();
+    }
+
     public boolean registrarAgendamentoManual(Agendamento ag) {
         return mediator.registrarAgendamento(ag);
     }
@@ -42,6 +46,8 @@ public class AgendamentoFacade {
     public void listarAgendamentos() {
         mediator.listarAgendamentos();
     }
+
+    public void listarAgendamentosOrdenadosPorData() {mediator.listarAgendamentosOrdenadosPorData();}
 
     public boolean excluirAgendamento(int idAgendamento) {
         return mediator.excluirAgendamento(idAgendamento);

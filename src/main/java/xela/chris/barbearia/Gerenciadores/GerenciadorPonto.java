@@ -103,8 +103,6 @@ public class GerenciadorPonto {
             System.out.println("O funcionário " + funcionario.getNome() +
                     " já registrou entrada e saída hoje.");
         }
-
-        repo.salvarTodos(registros);
         pontos = registros;
     }
 
@@ -141,6 +139,10 @@ public class GerenciadorPonto {
                 funcionario.getNome() + " em " + data);
 
         return null;
+    }
+
+    public void salvarPonto(){
+        repo.salvarTodos(pontos);
     }
 
     /**
