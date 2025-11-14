@@ -26,7 +26,7 @@ public class TestFacadeMediator {
 
         // 5. Teste de falha ao tentar agendar mais um serviço lavar/secar no mesmo horário
         System.out.println("\n--- Teste 5: Falha ao Agendar (Cadeira Lavar/Secar Ocupada) ---");
-        ag.criarAgendamento(1, 1, 3, "02/10/2032 13:30"); // Cliente 1, Func 3, Servico 3 (Lavagem/Secagem) - Falha esperada (Cadeira lavar/secar ocupada)
+        ag.criarAgendamento(1, 1, 4, "02/10/2032 13:30"); // Cliente 1, Func 3, Servico 3 (Lavagem/Secagem) - Falha esperada (Cadeira lavar/secar ocupada)
 
         // 6. Teste de agendamento em horário diferente
         System.out.println("\n--- Teste 6: Agendamento em Horário Diferente ---");

@@ -37,8 +37,9 @@ public class AgendamentoMediator {
     private TipoCadeira determinarTipoCadeira(List<Servico> servicos) {
         for (Servico servico : servicos) {
             // Assumindo que "lavar" ou "secar" no nome do serviço indica a necessidade da cadeira de lavar/secar
-            if (servico.getNome().toLowerCase().contains("lavagem") || servico.getNome().toLowerCase().contains("secar")) {
-                return TipoCadeira.LAVAR_SECAR;
+            // if (servico.getNome().toLowerCase().contains("lavagem") || servico.getNome().toLowerCase().contains("secar")) {
+                if (servico.isUtilizaLavagemSecagem()) {
+                    return TipoCadeira.LAVAR_SECAR;
             }
         }
         return TipoCadeira.SERVICO_CORRIQUEIRO;

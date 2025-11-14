@@ -10,6 +10,7 @@ public class Servico {
     private int id;
     private String nome;
     private double preco;
+    private boolean utilizaLavagemSecagem = false;
     private String descricao;
 
     // 🔹 Construtor padrão obrigatório para o Jackson (desserialização)
@@ -17,11 +18,20 @@ public class Servico {
     }
 
     // 🔹 Construtor usado para criar novos serviços manualmente
-    public Servico(String nome, double preco, String descricao) {
+    public Servico(String nome, double preco,boolean utilizaLavagemSecagem ,String descricao) {
         this.id = contador.incrementAndGet();
         this.nome = nome;
         this.preco = preco;
+        this.utilizaLavagemSecagem = utilizaLavagemSecagem;
         this.descricao = descricao;
+    }
+
+    public boolean isUtilizaLavagemSecagem() {
+        return utilizaLavagemSecagem;
+    }
+
+    public void setUtilizaLavagemSecagem(boolean utilizaLavagemSecagem) {
+        this.utilizaLavagemSecagem = utilizaLavagemSecagem;
     }
 
     public int getId() {
