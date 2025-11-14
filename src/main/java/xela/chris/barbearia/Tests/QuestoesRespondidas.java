@@ -57,6 +57,7 @@ public class QuestoesRespondidas {
         //Questão 09:{
         System.out.println("====Questão 09====");
         System.out.println("Precisa fazer!");
+
         // }
         //Questão 10:{
         System.out.println("====Questão 10====");
@@ -87,7 +88,7 @@ public class QuestoesRespondidas {
         // }
         //Questão 16:{
         System.out.println("====Questão 16====");
-        System.out.println("Precisa fazer");
+        System.out.println("Das classes disponiveis esta pronto");
         // }
         //Questão 17:{
         System.out.println("====Questão 17====");
