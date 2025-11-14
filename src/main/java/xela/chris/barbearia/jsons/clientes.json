@@ -4,10 +4,4 @@
   "telefone" : "33998642761",
   "id" : 1,
   "statusAtendimentoCliente" : "EM_ESPERA"
-}, {
-  "nome" : "xela",
-  "cpf" : "14027245601",
-  "telefone" : "99999999999",
-  "id" : 2,
-  "statusAtendimentoCliente" : "EM_ESPERA"
 } ]

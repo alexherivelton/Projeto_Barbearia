@@ -15,18 +15,21 @@ public class TestServico {
         gs.carregar();
         // 🔹 2. Adicionar novos serviços
 //        System.out.println("\n➡️ Adicionando novos serviços...");
-//        gs.adicionar(new Servico("Corte de cabelo", 30.0, "Corte masculino com finalização"));
-//        gs.adicionar(new Servico("Barba tradicional", 25.0, "Barba feita com toalha quente e navalha"));
-//        gs.adicionar(new Servico("Sobrancelha", 15.0, "Design de sobrancelha masculino"));
-//        gs.adicionar(new Servico("Corte + Barba", 50.0, "Pacote completo: corte e barba"));
+        gs.adicionar(new Servico("Corte de cabelo", 30.0,true ,"Corte masculino com finalização"));
+        gs.adicionar(new Servico("Barba tradicional", 25.0, false ,"Barba feita com toalha quente e navalha"));
+        gs.adicionar(new Servico("Sobrancelha", 15.0, true ,"Design de sobrancelha masculino"));
+        gs.adicionar(new Servico("Corte + Barba", 50.0,true ,"Pacote completo: corte e barba"));
+
+        gs.salvarTodosProdutos();
+
 
         // 🔹 3. Listar todos os serviços
 //        System.out.println("\n➡️ Listando serviços...");
 //        gs.listar();
 
         // 🔹 4. Buscar um serviço específico pelo ID
-        System.out.println("\n➡️ Buscando serviço com ID 2...");
-        System.out.println(gs.buscarPorId(2));
+//        System.out.println("\n➡️ Buscando serviço com ID 2...");
+//        System.out.println(gs.buscarPorId(2));
 
 //        // 🔹 5. Atualizar um serviço existente
 //        System.out.println("\n➡️ Atualizando serviço com ID 2...");

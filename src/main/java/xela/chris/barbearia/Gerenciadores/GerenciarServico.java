@@ -40,7 +40,6 @@ public class GerenciarServico {
      */
     public void adicionar(Servico servico) {
         servicos.add(servico);
-        repo.salvarTodos(servicos);
     }
 
     /**
@@ -52,7 +51,7 @@ public class GerenciarServico {
     public boolean removerPorId(int id) {
         boolean removido = servicos.removeIf(s -> s.getId() == id);
         if (removido) {
-            repo.salvarTodos(servicos);
+            System.out.println("Removido com sucesso!");
         }
         return removido;
     }
@@ -107,6 +106,10 @@ public class GerenciarServico {
             System.out.println(s);
         }
         return List.of();
+    }
+
+    public void salvarTodosProdutos(){
+        repo.salvarTodos(servicos);
     }
 
     /**

@@ -77,7 +77,6 @@ public class GerenciarCliente {
      */
     public void adicionar(Cliente cliente) {
         clientes.add(cliente);
-        repo.salvarTodos(clientes);
     }
 
     /**
@@ -89,7 +88,7 @@ public class GerenciarCliente {
     public boolean removerPorId(int id) {
         boolean removido = clientes.removeIf(c -> id == c.getId());
         if (removido) {
-            repo.salvarTodos(clientes);
+            System.out.println("Cliente removido!");
         }
         return removido;
     }
@@ -136,6 +135,11 @@ public class GerenciarCliente {
             System.out.println(c);
         }
         return List.of();
+    }
+
+
+    public void salvarTodosClientes(){
+        repo.salvarTodos(clientes);
     }
 
     /**

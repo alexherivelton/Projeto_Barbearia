@@ -14,62 +14,25 @@ public class PessoaTest {
 
         gerenciarCliente.carregar();
         gerenciadorFuncionario.carregar();
+
+//        gerenciadorFuncionario.adicionarFuncionario(new Funcionario("Maria", "12345678900", "33998642761", "Atendente","chris" , "1234"));
+//        gerenciadorFuncionario.adicionarFuncionario(new Funcionario("Alberto", "87654571232", "45986745", "Atendente","xela" , "mamabola"));
+//        gerenciadorFuncionario.adicionarFuncionario(new Funcionario("Jose du Corte", "12312312322", "33998642761", "Barbeiro", "mamaBolas", "tomanocuminhamaevai"));
 //
-//
-//        System.out.println("Pasta dos JSONs: " + new File("jsons").getAbsolutePath());
-//        gerenciarCliente.limpar();
-//        gerenciadorFuncionario.limpar();
-//
-//        Cliente cliente1 = new Cliente("Christian", "17600724600", "33998642761", StatusAtendimentoCliente.EM_ESPERA);
-//        Cliente cliente2 = new Cliente("xela", "14027245601", "99999999999", StatusAtendimentoCliente.EM_ESPERA);
-//        Funcionario f1 = new Funcionario("Maria", "12345678900", "33998642761", "Atendente","chris" , "1234");
-//        Funcionario f2 = new Funcionario("Alberto", "87654571232", "45986745", "Atendente","xela" , "mamabola");
-//        Funcionario f4 = new Funcionario("Jose du Corte", "12312312322", "33998642761", "Barbeiro", "mamaBolas", "tomanocuminhamaevai");
-//
-//        gerenciarCliente.adicionar(cliente1);
-//        gerenciarCliente.adicionar(cliente2);
-//
-//        gerenciadorFuncionario.adicionarFuncionario(f1);
-//        gerenciadorFuncionario.adicionarFuncionario(f2);
-//        gerenciadorFuncionario.adicionarFuncionario(f3);
-//        gerenciadorFuncionario.adicionarFuncionario(f4);
-//
-//
-//        System.out.println("\nClientes: "  + gerenciarCliente.listar());
-//
-//        System.out.println("=================================================================");
-//        System.out.println("=================================================================");
-//
-//        System.out.println("Funcionarios: " + gerenciadorFuncionario.listar());
-//
-//        //gerenciarCliente.removerPorCpf("17600724600");
-//
-//        System.out.println("\nClientes: "  + gerenciarCliente.listar());
-//
-//        System.out.println("=================================================================");
-//        System.out.println("=================================================================");
-//
-//        Funcionario f5 = new Funcionario("Jose du mamaBola", "12312312322", "33998642761", "Barbeiro", "mamaBolas", "tomanocuminhamaevai");
-//        gerenciadorFuncionario.adicionarFuncionario(f5);
-//        System.out.println("\nFuncionarios: "  + gerenciadorFuncionario.listar());
-//        System.out.println(gerenciarCliente.buscarCliente(1));
+//        gerenciadorFuncionario.salvarTodosFuncionarios();
 
 
-
-       //gerenciadorFuncionario.atualizarFuncionario(3, "Jose do Grau Forte", null, null, null, null, "jose1", "jose678");
-
-//        System.out.println(gerenciadorFuncionario.buscarFuncionario(3));
-
-//        gerenciadorFuncionario.atualizarFuncionario(3, "Jose do Grau", null, null, null, "jose123", "jose1234545");
-//
-//        gerenciadorFuncionario.removerFuncionario(3);
+//        gerenciarCliente.adicionar(new Cliente("Christian", "17600724600", "33998642761", StatusAtendimentoCliente.EM_ESPERA));
+//        gerenciarCliente.adicionar(new Cliente("xela", "14027245601", "99999999999", StatusAtendimentoCliente.EM_ESPERA));
 
 
-        gerenciarCliente.atualizarCliente(2, "Alex", null, null, StatusAtendimentoCliente.EM_ATENDIMENTO);
+        gerenciarCliente.salvarTodosClientes();
+
 
         gerenciarCliente.removerPorId(2);
 
-        System.out.println(gerenciarCliente.listar());
+        gerenciarCliente.salvarTodosClientes();
 
+        gerenciarCliente.listar();
     }
 }
