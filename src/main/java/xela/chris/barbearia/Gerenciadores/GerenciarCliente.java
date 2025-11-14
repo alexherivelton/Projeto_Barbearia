@@ -1,6 +1,8 @@
 package xela.chris.barbearia.Gerenciadores;
 
+import xela.chris.barbearia.enums.StatusAtendimentoCliente;
 import xela.chris.barbearia.models.Cliente;
+import xela.chris.barbearia.models.Funcionario;
 import xela.chris.barbearia.models.Servico;
 import xela.chris.barbearia.negocio.Agendamento;
 
@@ -65,12 +67,58 @@ public class GerenciarCliente {
      * @param cpf CPF do cliente a ser removido.
      * @return true se o cliente foi encontrado e removido; false caso contrário.
      */
-    public boolean removerPorCpf(String cpf) {
-        boolean removido = clientes.removeIf(c -> cpf.equals(c.getCpf()));
+    public boolean removerPorId(int id) {
+        boolean removido = clientes.removeIf(c -> id.equals(c.getId()));
         if (removido) {
             repo.salvarTodos(clientes);
         }
         return removido;
+    }
+
+    public boolean atualizarCliente(int id, String novoNome, String novoCpf, String novoTelefone, StatusAtendimentoCliente status) {
+        List<Cliente> clientes = repo.listar();
+        Cliente cliente = buscarCliente(id);
+
+        Cliente clienteParaAtualizar = buscarCliente(id);
+        if(clienteParaAtualizar == null){
+            System.out.println("Funcionario com o id{" + id + "} nao foi encontrado!");
+            return false;
+        }
+
+        String nomeAtual = cliente.getNome();
+        String cpfAtual = cliente.getCpf();
+        String telefoneAtual = cliente.getTelefone();
+        StatusAtendimentoCliente statusAtual = cliente.getStatusAtendimentoCliente();
+
+        if(novoNome != null){
+            cliente.setNome(novoNome);
+        } else {
+            cliente.setNome(nomeAtual);
+        }
+
+        if(novoCpf != null){
+            cliente.setCpf(novoCpf);
+        } else {
+            cliente.setCpf(cpfAtual);
+        }
+
+        if(novoTelefone != null){
+            cliente.setTelefone(novoTelefone);
+        } else {
+            cliente.setTelefone(telefoneAtual);
+        }
+        //mexer na logica ------0923u892403y5bbdfgsjklbsdfsdfglkjbsdcfg lkjb sdfg lkjbn
+        if(status != null){
+            cliente.setStatusAtendimentoCliente(status);
+        } else {
+            cliente.setStatusAtendimentoCliente(statusAtual);
+        }
+
+
+        repo.salvarTodos(clientes);
+
+        System.out.println("Sucesso em atualizar!");
+        return true;
     }
 
     /**
