@@ -52,13 +52,15 @@ public class QuestoesRespondidas {
         //Questão 08:{
         System.out.println("====Questão 08====");
         System.out.println("Precisa fazer!");
-        // }
+
+
         //Questão 09:{
         System.out.println("====Questão 09====");
         System.out.println("Precisa fazer!");
         // }
         //Questão 10:{
         System.out.println("====Questão 10====");
+        System.out.println("Precisa fazer!");
 
         //Questão 11:{
         System.out.println("====Questão 11====");
@@ -70,7 +72,10 @@ public class QuestoesRespondidas {
         // }
         //Questão 13:{
         System.out.println("====Questão 13====");
-        System.out.println("Acessar a classe CompareteNameCliente");
+        System.out.println("Acessar a classe ClienteCpfComparators"); // -> retorna em ordem alfabetica baseada na comparacao de caracteres
+        System.out.println("Acessar a classe ClienteNomeComparators"); // -> retorna em ordem alfabetica baseada na comparacao de caracteres
+        System.out.println("Acessar a classe AgendamentoServicoComparators"); // -> retorna em ordem alfabetica baseada na comparacao de caracteres
+        System.out.println("Acessar a classe AgendamentoClienteComparator"); // -> retorna em ordem alfabetica baseada na comparacao de caracteres
         // }
         //Questão 14:{
         System.out.println("====Questão 14====");
@@ -78,7 +83,7 @@ public class QuestoesRespondidas {
         // }
         //Questão 15:{
         System.out.println("====Questão 15====");
-        System.out.println("Acessar a classe FilaEsperaRepository");
+        System.out.println("Tem que fazer");
         // }
         //Questão 16:{
         System.out.println("====Questão 16====");
