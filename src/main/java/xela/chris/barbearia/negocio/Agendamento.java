@@ -150,6 +150,19 @@ public class Agendamento {
     }
 
     /**
+     * Define o status do atendimento do cliente.
+     *
+     * Este método permite atualizar o status do atendimento do cliente,
+     *
+     *
+     * @param statusCliente novo status a ser atribuído
+     */
+
+    public void setStatusCliente(StatusAtendimentoCliente statusCliente) {
+        this.statusCliente = statusCliente;
+    }
+
+    /**
      * Atualiza o contador de IDs para manter a continuidade na numeração
      * quando os dados são carregados de arquivos ou outros repositórios.
      *

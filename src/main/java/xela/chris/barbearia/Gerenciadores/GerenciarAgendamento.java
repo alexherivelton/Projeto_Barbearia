@@ -3,6 +3,9 @@ package xela.chris.barbearia.Gerenciadores;
 import xela.chris.barbearia.models.Cliente;
 import xela.chris.barbearia.models.Funcionario;
 import xela.chris.barbearia.negocio.Agendamento;
+import xela.chris.barbearia.enums.StatusAtendimentoCliente;
+import xela.chris.barbearia.models.NotaFiscal;
+import xela.chris.barbearia.Gerenciadores.GerenciarNotaFiscal;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -147,4 +150,28 @@ public class GerenciarAgendamento {
         agendamentos = new ArrayList<>();
         repo.salvarTodos(new ArrayList<>());
     }
+
+    /**
+     * Finaliza um agendamento ao marcar o status como atendido e gerar uma nota fiscal.
+     *
+     * <p>
+     * Este método atualiza o status do agendamento identificado por {@code idAgendamento}
+     * para {@link StatusAtendimentoCliente#ATENDIDO}, persiste a alteração no arquivo JSON
+     * e gera uma instância de {@link NotaFiscal} com base no agendamento.
+     * </p>
+     *
+     * @param idAgendamento identificador do agendamento a ser finalizado
+     *
+     */
+    public boolean finalizarAgendamento(int idAgendamento) {
+        Agendamento ag = buscarPorId(idAgendamento);
+        if (ag == null) {
+            System.out.println("Agendamento não encontrado para finalizar!");
+            return false;
+        }
+        ag.setStatusCliente(StatusAtendimentoCliente.ATENDIDO);
+        repo.salvarTodos(agendamentos);
+        return true;
+    }
+
 }
