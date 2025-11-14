@@ -7,15 +7,13 @@ import xela.chris.barbearia.enums.StatusAtendimentoCliente;
 import xela.chris.barbearia.models.Cliente;
 import xela.chris.barbearia.models.Funcionario;
 
-import java.io.File;
-import java.util.List;
-
 public class PessoaTest {
     public static void main(String[] args) {
         GerenciarCliente gerenciarCliente = new GerenciarCliente();
         GerenciadorFuncionario gerenciadorFuncionario = new GerenciadorFuncionario();
 
         gerenciarCliente.carregar();
+        gerenciadorFuncionario.carregar();
 //
 //
 //        System.out.println("Pasta dos JSONs: " + new File("jsons").getAbsolutePath());
@@ -26,7 +24,6 @@ public class PessoaTest {
 //        Cliente cliente2 = new Cliente("xela", "14027245601", "99999999999", StatusAtendimentoCliente.EM_ESPERA);
 //        Funcionario f1 = new Funcionario("Maria", "12345678900", "33998642761", "Atendente","chris" , "1234");
 //        Funcionario f2 = new Funcionario("Alberto", "87654571232", "45986745", "Atendente","xela" , "mamabola");
-//        Funcionario f3 = new Funcionario("Caralho", "87654571232", "11111111111", "Administrador","carambolas" , "carambolas123");
 //        Funcionario f4 = new Funcionario("Jose du Corte", "12312312322", "33998642761", "Barbeiro", "mamaBolas", "tomanocuminhamaevai");
 //
 //        gerenciarCliente.adicionar(cliente1);
@@ -55,7 +52,24 @@ public class PessoaTest {
 //        Funcionario f5 = new Funcionario("Jose du mamaBola", "12312312322", "33998642761", "Barbeiro", "mamaBolas", "tomanocuminhamaevai");
 //        gerenciadorFuncionario.adicionarFuncionario(f5);
 //        System.out.println("\nFuncionarios: "  + gerenciadorFuncionario.listar());
-        System.out.println(gerenciarCliente.buscarCliente(1));
+//        System.out.println(gerenciarCliente.buscarCliente(1));
+
+
+
+       //gerenciadorFuncionario.atualizarFuncionario(3, "Jose do Grau Forte", null, null, null, null, "jose1", "jose678");
+
+//        System.out.println(gerenciadorFuncionario.buscarFuncionario(3));
+
+//        gerenciadorFuncionario.atualizarFuncionario(3, "Jose do Grau", null, null, null, "jose123", "jose1234545");
+//
+//        gerenciadorFuncionario.removerFuncionario(3);
+
+
+        gerenciarCliente.atualizarCliente(2, "Alex", null, null, StatusAtendimentoCliente.EM_ATENDIMENTO);
+
+        gerenciarCliente.removerPorId(2);
+
+        System.out.println(gerenciarCliente.listar());
 
     }
 }
