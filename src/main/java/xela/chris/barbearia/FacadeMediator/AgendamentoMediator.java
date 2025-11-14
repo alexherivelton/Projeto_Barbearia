@@ -33,7 +33,7 @@ public class AgendamentoMediator {
         this.gca = gca;
         this.ga = ga;
     }
-
+// comentario
     private TipoCadeira determinarTipoCadeira(List<Servico> servicos) {
         for (Servico servico : servicos) {
             // Assumindo que "lavar" ou "secar" no nome do serviço indica a necessidade da cadeira de lavar/secar
