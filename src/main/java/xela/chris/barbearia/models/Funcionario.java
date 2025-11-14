@@ -3,16 +3,18 @@ package xela.chris.barbearia.models;
 import xela.chris.barbearia.enums.PermissoesEnum;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * Representa um funcionário da barbearia, estendendo a classe {@link Pessoa}.
- * <p>
- * Cada funcionário possui um identificador único gerado automaticamente,
- * além de informações como cargo, usuário, senha e permissões de acesso.
- * </p>
+ * Representa um funcionário da barbearia, herdando informações básicas da classe {@link Pessoa}.
+ *
+ * <p>Cada funcionário possui um ID único gerado automaticamente, além de
+ * atributos como cargo, usuário, senha e lista de permissões definidas de acordo
+ * com o cargo ocupado.</p>
+ *
+ * <p>As permissões controlam as ações que o funcionário pode realizar no sistema,
+ * como cadastrar clientes, visualizar dados ou gerar relatórios.</p>
  */
 public class Funcionario extends Pessoa {
 
@@ -24,34 +26,29 @@ public class Funcionario extends Pessoa {
     private List<PermissoesEnum> permissoes;
 
     /**
-     * Construtor padrão da classe {@code Funcionario}.
-     * <p>
-     * Inicializa a lista de permissões do funcionário com um conjunto padrão de ações,
-     * garantindo que todo funcionário criado com este construtor possa:
-     * </p>
-     * <ul>
-     *   <li>Gerar notas fiscais ({@link PermissoesEnum#GERAR_NOTA})</li>
-     *   <li>Cadastrar clientes ({@link PermissoesEnum#CADASTRAR_CLIENTE})</li>
-     *   <li>Verificar clientes ({@link PermissoesEnum#VERIFICAR_CLIENTE})</li>
-     *   <li>Criar agendamentos ({@link PermissoesEnum#CRIAR_AGENDAMENTO})</li>
-     * </ul>
-     * <p>
-     * Este construtor é especialmente útil para frameworks de serialização e desserialização JSON.
-     * </p>
+     * Construtor padrão.
+     *
+     * <p>Inicializa a lista de permissões como vazia. É utilizado principalmente
+     * por frameworks de serialização/desserialização.</p>
      */
     public Funcionario() {
         this.permissoes = new ArrayList<>();
     }
 
     /**
-     * Construtor completo da classe {@code Funcionario}.
+     * Construtor completo que cria um funcionário com seus dados pessoais, cargo,
+     * credenciais e permissões associadas automaticamente.
      *
-     * @param nome        o nome do funcionário
-     * @param cpf         o CPF do funcionário
-     * @param telefone    o telefone do funcionário
-     * @param cargo       o cargo ocupado (ex: barbeiro, gerente)
+     * @param nome     nome completo do funcionário
+     * @param cpf      CPF do funcionário
+     * @param telefone telefone de contato
+     * @param cargo    cargo ocupado (ex.: "barbeiro", "atendente", "administrador")
+     * @param usuario  nome de usuário para login
+     * @param senha    senha de acesso ao sistema
      */
-    public Funcionario(String nome, String cpf, String telefone, String cargo, String usuario , String senha) {
+    public Funcionario(String nome, String cpf, String telefone,
+                       String cargo, String usuario, String senha) {
+
         super(nome, cpf, telefone);
         this.id = contador.incrementAndGet();
         this.cargo = cargo;
@@ -60,10 +57,17 @@ public class Funcionario extends Pessoa {
         this.senha = senha;
     }
 
+    /**
+     * Define automaticamente as permissões com base no cargo do funcionário.
+     *
+     * @param cargo cargo informado
+     * @return lista de permissões correspondente ao cargo
+     */
     public List<PermissoesEnum> definirPermissoesPorCargo(String cargo) {
         List<PermissoesEnum> lista = new ArrayList<>();
 
         switch (cargo.toLowerCase()) {
+
             case "atendente":
                 lista.add(PermissoesEnum.CADASTRAR_CLIENTE);
                 lista.add(PermissoesEnum.VERIFICAR_CLIENTE);
@@ -78,18 +82,21 @@ public class Funcionario extends Pessoa {
                 break;
 
             case "administrador":
-                lista.addAll(List.of(
-                        PermissoesEnum.values()
-                ));
+                lista.addAll(List.of(PermissoesEnum.values()));
+                break;
+
+            default:
+                // Nenhuma permissão atribuída caso o cargo seja desconhecido
                 break;
         }
+
         return lista;
     }
 
     /**
      * Retorna o cargo do funcionário.
      *
-     * @return o cargo atual
+     * @return cargo atual
      */
     public String getCargo() {
         return cargo;
@@ -98,25 +105,25 @@ public class Funcionario extends Pessoa {
     /**
      * Define o cargo do funcionário.
      *
-     * @param cargo o novo cargo
+     * @param cargo novo cargo
      */
     public void setCargo(String cargo) {
         this.cargo = cargo;
     }
 
     /**
-     * Retorna o nome de usuário do funcionário.
+     * Retorna o nome de usuário utilizado pelo funcionário para login.
      *
-     * @return o nome de usuário
+     * @return nome de usuário
      */
     public String getUsuario() {
         return usuario;
     }
 
     /**
-     * Define o nome de usuário do funcionário.
+     * Define o nome de usuário para login.
      *
-     * @param usuario o nome de usuário
+     * @param usuario novo nome de usuário
      */
     public void setUsuario(String usuario) {
         this.usuario = usuario;
@@ -125,7 +132,7 @@ public class Funcionario extends Pessoa {
     /**
      * Retorna a senha do funcionário.
      *
-     * @return a senha
+     * @return senha atual
      */
     public String getSenha() {
         return senha;
@@ -134,30 +141,28 @@ public class Funcionario extends Pessoa {
     /**
      * Define a senha do funcionário.
      *
-     * @param senha a nova senha
+     * @param senha nova senha
      */
     public void setSenha(String senha) {
         this.senha = senha;
     }
 
     /**
-     * Retorna uma cópia da lista de permissões associadas ao funcionário.
-     * <p>
-     * A lista retornada é uma nova instância, garantindo que alterações feitas fora
-     * da classe não afetem a lista interna de permissões do funcionário.
-     * </p>
+     * Retorna uma nova lista contendo as permissões do funcionário.
      *
-     * @return uma {@link List} contendo as permissões do funcionário
+     * <p>A lista retornada é uma cópia para evitar modificações externas.</p>
+     *
+     * @return lista de permissões
      */
     public List<PermissoesEnum> getPermissoes() {
         return new ArrayList<>(permissoes);
     }
 
     /**
-     * Verifica se o funcionário possui uma permissão específica.
+     * Verifica se o funcionário possui determinada permissão.
      *
-     * @param permissao a permissão a ser verificada
-     * @return {@code true} se o funcionário possui a permissão; {@code false} caso contrário
+     * @param permissao permissão a verificar
+     * @return {@code true} se o funcionário possui a permissão, {@code false} caso contrário
      */
     public boolean temPermissao(PermissoesEnum permissao) {
         return permissoes.contains(permissao);
@@ -166,7 +171,7 @@ public class Funcionario extends Pessoa {
     /**
      * Retorna o identificador único do funcionário.
      *
-     * @return o ID do funcionário
+     * @return ID do funcionário
      */
     public int getId() {
         return id;
@@ -175,30 +180,27 @@ public class Funcionario extends Pessoa {
     /**
      * Define manualmente o ID do funcionário.
      *
-     * @param id o novo identificador
+     * @param id novo ID
      */
     public void setId(int id) {
         this.id = id;
     }
 
     /**
-     * Atualiza o contador de IDs para garantir que os próximos registros
-     * continuem a sequência a partir do último ID existente.
+     * Atualiza o contador estático de IDs, garantindo continuidade de numeração
+     * quando dados são carregados do armazenamento.
      *
-     * @param ultimoId maior ID encontrado ao carregar os dados
+     * @param ultimoId maior ID encontrado nos registros
      */
     public static void atualizarContador(int ultimoId) {
         contador.set(ultimoId);
     }
 
     /**
-     * Retorna uma representação textual do funcionário.
-     * <p>
-     * Exibe os dados formatados, com CPF parcialmente anonimizado
-     * e telefone no formato correto.
-     * </p>
+     * Retorna uma representação textual do funcionário, contendo informações básicas
+     * e permissões atribuídas.
      *
-     * @return string representando o funcionário
+     * @return string formatada com dados do funcionário
      */
     @Override
     public String toString() {

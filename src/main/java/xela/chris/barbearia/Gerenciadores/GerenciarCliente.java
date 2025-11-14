@@ -11,22 +11,35 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * Gerencia os clientes da barbearia, permitindo adicionar, remover,
- * listar e carregar clientes, persistindo os dados em um arquivo JSON.
+ * Responsável por gerenciar os clientes da barbearia.
+ *
+ * Esta classe permite:
+ * - Cadastrar novos clientes;
+ * - Remover clientes;
+ * - Atualizar dados de um cliente existente;
+ * - Buscar por ID;
+ * - Listar todos os clientes armazenados;
+ * - Persistir os dados em arquivo JSON por meio do {@link RepositorioJson}.
+ *
+ * É usada para manter o controle dos clientes que realizam serviços
+ * ou agendamentos na barbearia.
  */
 public class GerenciarCliente {
 
     private List<Cliente> clientes = new ArrayList<>();
     private RepositorioJson<Cliente> repo = new RepositorioJson<>(Cliente.class, "clientes.json");
 
-
+    /**
+     * Construtor que automaticamente carrega os clientes gravados no JSON.
+     */
     public GerenciarCliente() {
         this.carregar();
     }
 
-
     /**
-     * Carrega todos os clientes do arquivo JSON para a lista interna.
+     * Carrega todos os clientes armazenados no arquivo JSON.
+     * Também sincroniza o contador de IDs da classe {@link Cliente}
+     * garantindo que novos clientes recebam IDs corretos.
      */
     public void carregar() {
         clientes = repo.buscarTodos();
@@ -39,20 +52,26 @@ public class GerenciarCliente {
         }
     }
 
+    /**
+     * Busca um cliente pelo seu ID.
+     *
+     * @param id Identificador único do cliente.
+     * @return O cliente encontrado ou {@code null} caso não exista.
+     */
     public Cliente buscarCliente(int id) {
         Iterator<Cliente> iterator = clientes.iterator();
-        while(iterator.hasNext()){
+        while (iterator.hasNext()) {
             Cliente cliente = iterator.next();
-            if(cliente.getId() == id){
+            if (cliente.getId() == id) {
                 return cliente;
             }
         }
-        System.out.println("Diabo nao encontrado!");
+        System.out.println("Cliente não encontrado!");
         return null;
     }
 
     /**
-     * Adiciona um novo cliente à lista e atualiza o arquivo JSON.
+     * Adiciona um novo cliente ao sistema e salva no arquivo JSON.
      *
      * @param cliente Cliente a ser adicionado.
      */
@@ -62,58 +81,43 @@ public class GerenciarCliente {
     }
 
     /**
-     * Remove um cliente da lista pelo CPF e atualiza o arquivo JSON.
+     * Remove um cliente da lista a partir do seu ID.
      *
-     * @param cpf CPF do cliente a ser removido.
-     * @return true se o cliente foi encontrado e removido; false caso contrário.
+     * @param id Identificador do cliente a ser removido.
+     * @return true se o cliente foi removido; false caso contrário.
      */
     public boolean removerPorId(int id) {
-        boolean removido = clientes.removeIf(c -> id.equals(c.getId()));
+        boolean removido = clientes.removeIf(c -> id == c.getId());
         if (removido) {
             repo.salvarTodos(clientes);
         }
         return removido;
     }
 
+    /**
+     * Atualiza os dados de um cliente existente.
+     * Qualquer campo que receber {@code null} permanece inalterado.
+     *
+     * @param id           ID do cliente que será atualizado.
+     * @param novoNome     Novo nome ou {@code null} para manter o atual.
+     * @param novoCpf      Novo CPF ou {@code null} para manter o atual.
+     * @param novoTelefone Novo telefone ou {@code null} para manter o atual.
+     * @param status       Novo status de atendimento ou {@code null}.
+     * @return true caso o cliente seja encontrado e atualizado; false caso contrário.
+     */
     public boolean atualizarCliente(int id, String novoNome, String novoCpf, String novoTelefone, StatusAtendimentoCliente status) {
         List<Cliente> clientes = repo.listar();
         Cliente cliente = buscarCliente(id);
 
-        Cliente clienteParaAtualizar = buscarCliente(id);
-        if(clienteParaAtualizar == null){
-            System.out.println("Funcionario com o id{" + id + "} nao foi encontrado!");
+        if (cliente == null) {
+            System.out.println("Cliente com ID {" + id + "} não foi encontrado!");
             return false;
         }
 
-        String nomeAtual = cliente.getNome();
-        String cpfAtual = cliente.getCpf();
-        String telefoneAtual = cliente.getTelefone();
-        StatusAtendimentoCliente statusAtual = cliente.getStatusAtendimentoCliente();
-
-        if(novoNome != null){
-            cliente.setNome(novoNome);
-        } else {
-            cliente.setNome(nomeAtual);
-        }
-
-        if(novoCpf != null){
-            cliente.setCpf(novoCpf);
-        } else {
-            cliente.setCpf(cpfAtual);
-        }
-
-        if(novoTelefone != null){
-            cliente.setTelefone(novoTelefone);
-        } else {
-            cliente.setTelefone(telefoneAtual);
-        }
-        //mexer na logica ------0923u892403y5bbdfgsjklbsdfsdfglkjbsdcfg lkjb sdfg lkjbn
-        if(status != null){
-            cliente.setStatusAtendimentoCliente(status);
-        } else {
-            cliente.setStatusAtendimentoCliente(statusAtual);
-        }
-
+        if (novoNome != null) cliente.setNome(novoNome);
+        if (novoCpf != null) cliente.setCpf(novoCpf);
+        if (novoTelefone != null) cliente.setTelefone(novoTelefone);
+        if (status != null) cliente.setStatusAtendimentoCliente(status);
 
         repo.salvarTodos(clientes);
 
@@ -122,12 +126,12 @@ public class GerenciarCliente {
     }
 
     /**
-     * Retorna a lista de todos os clientes atualmente gerenciados.
+     * Lista todos os clientes cadastrados, exibindo no console.
      *
-     * @return Lista de clientes.
+     * @return Uma lista vazia (o método apenas exibe no console).
      */
     public List<Cliente> listar() {
-        System.out.println("➡ Serviços carregados: " + clientes.size());
+        System.out.println("➡ Clientes carregados: " + clientes.size());
         for (Cliente c : clientes) {
             System.out.println(c);
         }
@@ -135,7 +139,7 @@ public class GerenciarCliente {
     }
 
     /**
-     * Limpa todos os clientes da lista e do arquivo JSON.
+     * Remove todos os clientes tanto da memória quanto do arquivo JSON.
      */
     public void limpar() {
         clientes = new ArrayList<>();

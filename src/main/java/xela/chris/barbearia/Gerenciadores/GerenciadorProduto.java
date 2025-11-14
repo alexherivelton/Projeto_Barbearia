@@ -6,20 +6,43 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Gerencia os produtos da barbearia, permitindo adicionar, remover,
- * listar e carregar produtos, persistindo os dados em um arquivo JSON.
+ * Classe responsável por gerenciar os produtos da barbearia.
+ * <p>
+ * Esta classe controla operações como adicionar, remover, atualizar estoque
+ * e consultar produtos, além de realizar a persistência em arquivo JSON
+ * por meio da classe {@link RepositorioJson}.
+ * </p>
+ *
+ * <p>Principais funcionalidades:</p>
+ * <ul>
+ *     <li>Carregar produtos salvos no arquivo</li>
+ *     <li>Adicionar novos produtos</li>
+ *     <li>Remover produtos</li>
+ *     <li>Buscar produtos por ID</li>
+ *     <li>Atualizar estoque após vendas</li>
+ *     <li>Listar todos os produtos</li>
+ *     <li>Limpar o repositório</li>
+ * </ul>
  */
 public class GerenciadorProduto {
 
+    /** Lista de produtos mantidos em memória. */
     private List<Produto> produtos = new ArrayList<>();
-    private RepositorioJson<Produto> repo = new RepositorioJson<>(Produto.class, "produtos.json");
+
+    /** Repositório responsável por persistência dos produtos no arquivo JSON. */
+    private RepositorioJson<Produto> repo =
+            new RepositorioJson<>(Produto.class, "produtos.json");
 
     /**
      * Carrega todos os produtos do arquivo JSON para a lista interna.
+     * <p>
+     * Também atualiza o contador estático de IDs da classe {@link Produto},
+     * garantindo que novos produtos continuem a sequência correta.
+     * </p>
      */
     public void carregar() {
         produtos = repo.buscarTodos();
-        if(!produtos.isEmpty()) {
+        if (!produtos.isEmpty()) {
             int maiorId = produtos.stream()
                     .mapToInt(Produto::getId)
                     .max()
@@ -29,7 +52,7 @@ public class GerenciadorProduto {
     }
 
     /**
-     * Adiciona um novo produto à lista e atualiza o arquivo JSON.
+     * Adiciona um novo produto à lista e salva a lista atualizada no arquivo JSON.
      *
      * @param produto Produto a ser adicionado.
      */
@@ -39,10 +62,12 @@ public class GerenciadorProduto {
     }
 
     /**
-     * Remove um produto da lista pelo seu ID e atualiza o arquivo JSON.
+     * Remove um produto da lista com base em seu ID e persiste a alteração.
+     * <p><b>Observação:</b> o nome do método está incorreto
+     * (“removerPorCpf”), pois a remoção é feita por ID.</p>
      *
-     * @param id Identificador do produto a ser removido.
-     * @return true se o produto foi encontrado e removido; false caso contrário.
+     * @param id ID do produto a ser removido.
+     * @return {@code true} se o produto foi removido, {@code false} caso não exista.
      */
     public boolean removerPorCpf(String id) {
         boolean removido = this.produtos.removeIf(p -> id.equals(p.getId()));
@@ -52,6 +77,12 @@ public class GerenciadorProduto {
         return removido;
     }
 
+    /**
+     * Busca um produto pelo seu identificador numérico.
+     *
+     * @param id ID do produto.
+     * @return Produto encontrado ou {@code null} se não existir.
+     */
     public Produto buscarPorId(int id) {
         for (Produto p : produtos) {
             if (p.getId() == id) {
@@ -61,28 +92,40 @@ public class GerenciadorProduto {
         return null;
     }
 
+    /**
+     * Atualiza o estoque de um produto após uma venda.
+     * <p>
+     * Caso o produto exista e tenha quantidade suficiente, a quantidade é
+     * reduzida e a alteração é salva no arquivo.
+     * </p>
+     *
+     * @param produtoId ID do produto vendido.
+     * @param quantidadeVendida quantidade a ser removida do estoque.
+     * @return {@code true} se o estoque foi atualizado;
+     *         {@code false} caso o produto não exista ou o estoque seja insuficiente.
+     */
     public boolean atualizarEstoque(int produtoId, int quantidadeVendida) {
         Produto p = buscarPorId(produtoId);
         if (p != null && p.getQuantidade() >= quantidadeVendida) {
             p.setQuantidade(p.getQuantidade() - quantidadeVendida);
-            repo.salvarTodos(produtos); // persistir a lista atualizada
+            repo.salvarTodos(produtos);
             return true;
         }
         return false;
     }
 
-
     /**
-     * Retorna a lista de todos os produtos atualmente gerenciados.
+     * Retorna uma lista contendo todos os produtos atualmente cadastrados.
      *
-     * @return Lista de produtos.
+     * @return lista de produtos.
      */
     public List<Produto> listar() {
         return produtos;
     }
 
     /**
-     * Limpa todos os produtos da lista e do arquivo JSON.
+     * Remove todos os produtos do repositório, limpando a lista interna
+     * e sobrescrevendo o arquivo JSON com uma lista vazia.
      */
     public void limpar() {
         produtos = new ArrayList<>();

@@ -8,16 +8,33 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * Responsável por gerenciar todos os agendamentos da barbearia.
+ *
+ * Esta classe permite:
+ * - Criar novos agendamentos;
+ * - Remover agendamentos existentes;
+ * - Buscar agendamentos pelo ID;
+ * - Validar horário e cadeira para evitar conflitos;
+ * - Listar e limpar todos os agendamentos;
+ * - Persistir os dados em arquivo JSON.
+ *
+ * Ela mantém os agendamentos em memória e utiliza o {@code RepositorioJson}
+ * para salvar e carregar automaticamente os dados no arquivo {@code agendamentos.json}.
+ */
 public class GerenciarAgendamento {
 
     private List<Agendamento> agendamentos = new ArrayList<>();
     private RepositorioJson<Agendamento> repo = new RepositorioJson<>(Agendamento.class, "agendamentos.json");
 
-
-
-    public void carregar(){
+    /**
+     * Carrega todos os agendamentos a partir do arquivo JSON.
+     * Se a lista não estiver vazia, atualiza o contador de IDs da classe {@link Agendamento}
+     * para evitar duplicação de identificadores ao reiniciar o sistema.
+     */
+    public void carregar() {
         agendamentos = repo.buscarTodos();
-        if(!agendamentos.isEmpty()){
+        if (!agendamentos.isEmpty()) {
             int maiorId = agendamentos.stream()
                     .mapToInt(Agendamento::getId)
                     .max()
@@ -26,26 +43,43 @@ public class GerenciarAgendamento {
         }
     }
 
-
-    public void criarAgendamento(Agendamento agendamento){
+    /**
+     * Cria um novo agendamento, adicionando-o à lista interna e persistindo
+     * a atualização no arquivo JSON.
+     *
+     * @param agendamento Agendamento a ser registrado.
+     */
+    public void criarAgendamento(Agendamento agendamento) {
         this.agendamentos.add(agendamento);
         repo.salvarTodos(agendamentos);
     }
 
-    public boolean removerPorId(int id){
+    /**
+     * Remove um agendamento existente com base no seu ID.
+     * Caso a remoção seja feita com sucesso, salva a lista atualizada no JSON.
+     *
+     * @param id Identificador do agendamento a ser removido.
+     * @return {@code true} se foi removido; {@code false} caso não exista.
+     */
+    public boolean removerPorId(int id) {
         boolean removido = this.agendamentos.removeIf(agendamento -> agendamento.getId() == id);
-        if(removido){
+        if (removido) {
             repo.salvarTodos(agendamentos);
         }
         return removido;
     }
 
-
-    public Agendamento buscarPorId(int id){
+    /**
+     * Busca um agendamento pelo seu ID.
+     *
+     * @param id Identificador do agendamento desejado.
+     * @return O agendamento encontrado ou {@code null} se não existir.
+     */
+    public Agendamento buscarPorId(int id) {
         Iterator<Agendamento> iterator = agendamentos.iterator();
-        while(iterator.hasNext()){
+        while (iterator.hasNext()) {
             Agendamento agendamento = iterator.next();
-            if(agendamento.getId() == id){
+            if (agendamento.getId() == id) {
                 return agendamento;
             }
         }
@@ -53,21 +87,34 @@ public class GerenciarAgendamento {
         return null;
     }
 
-        public boolean verificarDisponibilidadeCadeira(String horario, int idCadeira) {
+    /**
+     * Verifica se uma cadeira está disponível em um determinado horário.
+     * Essa validação impede que duas pessoas agendem o mesmo horário na mesma cadeira.
+     *
+     * @param horario   Horário desejado.
+     * @param idCadeira Número da cadeira.
+     * @return {@code true} se estiver disponível; {@code false} caso já esteja ocupada.
+     */
+    public boolean verificarDisponibilidadeCadeira(String horario, int idCadeira) {
         for (Agendamento agendamento : agendamentos) {
             if (agendamento.getDataHora().equals(horario) && agendamento.getIdCadeira() == idCadeira) {
-//                System.out.println("Cadeira já ocupada neste horário!");
                 return false;
             }
         }
         return true;
     }
 
-    //teste
-
-    public boolean verificarHorarioAgendamento(String horario, Funcionario funcionario){
+    /**
+     * Verifica se o funcionário já possui um agendamento registrado no mesmo horário,
+     * evitando que ele atenda mais de um cliente ao mesmo tempo.
+     *
+     * @param horario     Horário desejado.
+     * @param funcionario Funcionário responsável pelo atendimento.
+     * @return {@code true} se o horário estiver livre; {@code false} se já houver outro agendamento.
+     */
+    public boolean verificarHorarioAgendamento(String horario, Funcionario funcionario) {
         Iterator<Agendamento> iterator = agendamentos.iterator();
-        while(iterator.hasNext()){
+        while (iterator.hasNext()) {
             Agendamento agendamento = iterator.next();
             if (agendamento.getFuncionario().equals(funcionario) && agendamento.getDataHora().equals(horario)) {
                 System.out.println("Já existe um horario para este funcionario e também neste horario!");
@@ -78,15 +125,25 @@ public class GerenciarAgendamento {
         return true;
     }
 
-    public List<Agendamento> listarAgendamentos(){
-        System.out.println("➡ Agedamentos carregados: " + agendamentos.size());
+    /**
+     * Exibe todos os agendamentos no console.
+     * Atualmente retorna uma lista vazia (pode ser ajustado no futuro).
+     *
+     * @return Uma lista vazia.
+     */
+    public List<Agendamento> listarAgendamentos() {
+        System.out.println("Agedamentos carregados: " + agendamentos.size());
         for (Agendamento a : agendamentos) {
             System.out.println(a);
         }
         return List.of();
     }
 
-    public void limparAgendamentos(){
+    /**
+     * Remove todos os agendamentos tanto da memória quanto do arquivo JSON,
+     * deixando a lista completamente zerada.
+     */
+    public void limparAgendamentos() {
         agendamentos = new ArrayList<>();
         repo.salvarTodos(new ArrayList<>());
     }
