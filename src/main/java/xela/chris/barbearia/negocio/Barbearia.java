@@ -1,4 +1,4 @@
-package xela.chris.barbearia.Tests;
+package xela.chris.barbearia.negocio;
 
 import xela.chris.barbearia.FacadeMediator.AgendamentoFacade;
 import xela.chris.barbearia.Gerenciadores.*;
