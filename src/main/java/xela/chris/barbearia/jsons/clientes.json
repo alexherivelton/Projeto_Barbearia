@@ -4,4 +4,88 @@
   "telefone" : "33998642761",
   "id" : 1,
   "statusAtendimentoCliente" : "EM_ESPERA"
+}, {
+  "nome" : "João",
+  "cpf" : "12345678901",
+  "telefone" : "31912345678",
+  "id" : 9,
+  "statusAtendimentoCliente" : "AGENDADO"
+}, {
+  "nome" : "Maria",
+  "cpf" : "98765432109",
+  "telefone" : "31987654321",
+  "id" : 10,
+  "statusAtendimentoCliente" : "EM_ESPERA"
+}, {
+  "nome" : "Ana",
+  "cpf" : "11111111111",
+  "telefone" : "31911111111",
+  "id" : 12,
+  "statusAtendimentoCliente" : "AGENDADO"
+}, {
+  "nome" : "Carlos",
+  "cpf" : "99999999999",
+  "telefone" : "31999999999",
+  "id" : 13,
+  "statusAtendimentoCliente" : "EM_ATENDIMENTO"
+}, {
+  "nome" : "Cliente 1",
+  "cpf" : "00000000001",
+  "telefone" : "31900000001",
+  "id" : 17,
+  "statusAtendimentoCliente" : "AGENDADO"
+}, {
+  "nome" : "Cliente 2",
+  "cpf" : "00000000002",
+  "telefone" : "31900000002",
+  "id" : 18,
+  "statusAtendimentoCliente" : "AGENDADO"
+}, {
+  "nome" : "Cliente 3",
+  "cpf" : "00000000003",
+  "telefone" : "31900000003",
+  "id" : 19,
+  "statusAtendimentoCliente" : "AGENDADO"
+}, {
+  "nome" : "Cliente 4",
+  "cpf" : "00000000004",
+  "telefone" : "31900000004",
+  "id" : 20,
+  "statusAtendimentoCliente" : "AGENDADO"
+}, {
+  "nome" : "Cliente 5",
+  "cpf" : "00000000005",
+  "telefone" : "31900000005",
+  "id" : 21,
+  "statusAtendimentoCliente" : "AGENDADO"
+}, {
+  "nome" : "Cliente 6",
+  "cpf" : "00000000006",
+  "telefone" : "31900000006",
+  "id" : 22,
+  "statusAtendimentoCliente" : "AGENDADO"
+}, {
+  "nome" : "Cliente 7",
+  "cpf" : "00000000007",
+  "telefone" : "31900000007",
+  "id" : 23,
+  "statusAtendimentoCliente" : "AGENDADO"
+}, {
+  "nome" : "Cliente 8",
+  "cpf" : "00000000008",
+  "telefone" : "31900000008",
+  "id" : 24,
+  "statusAtendimentoCliente" : "AGENDADO"
+}, {
+  "nome" : "Cliente 9",
+  "cpf" : "00000000009",
+  "telefone" : "31900000009",
+  "id" : 25,
+  "statusAtendimentoCliente" : "AGENDADO"
+}, {
+  "nome" : "Cliente 10",
+  "cpf" : "00000000010",
+  "telefone" : "31900000010",
+  "id" : 26,
+  "statusAtendimentoCliente" : "AGENDADO"
 } ]

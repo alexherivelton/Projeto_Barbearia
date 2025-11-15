@@ -264,13 +264,6 @@ public class QuestoesRespondidas {
             System.out.println("  [" + i + "] " + listaOrdenadaCpf.get(i).getNome() + " - CPF: " + listaOrdenadaCpf.get(i).getCpf());
         }
         
-        Cliente encontradoBinaryCpf = gerenciarCliente.buscarClientePorCpfComBinarySearch(clienteProcuradoCpf);
-        if (encontradoBinaryCpf != null) {
-            System.out.println("✓ Cliente encontrado com binarySearch: " + encontradoBinaryCpf.getNome());
-        } else {
-            System.out.println("✗ Cliente não encontrado com binarySearch!");
-        }
-        
         System.out.println("\n=== TESTE 3: Busca genérica com binarySearch ===");
         System.out.println("\nBuscando cliente usando método genérico buscarClienteComBinarySearch():");
         Cliente clienteProcuradoGenerico = new Cliente("Ana", "11111111111", "31911111111", StatusAtendimentoCliente.AGENDADO);

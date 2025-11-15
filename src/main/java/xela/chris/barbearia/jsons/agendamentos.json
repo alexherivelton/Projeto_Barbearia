@@ -7,6 +7,35 @@
     "statusAtendimentoCliente" : "EM_ESPERA"
   },
   "funcionario" : {
+    "nome" : "Maria",
+    "cpf" : "12345678900",
+    "telefone" : "33998642761",
+    "cargo" : "Atendente",
+    "usuario" : "chris",
+    "id" : 1,
+    "senha" : "1234",
+    "permissoes" : [ "CADASTRAR_CLIENTE", "VERIFICAR_CLIENTE", "CRIAR_AGENDAMENTO", "GERAR_NOTA", "GERAR_BALANCO_MENSAL" ]
+  },
+  "servicos" : [ {
+    "id" : 4,
+    "nome" : "Corte + Barba",
+    "preco" : 50.0,
+    "utilizaLavagemSecagem" : true,
+    "descricao" : "Pacote completo: corte e barba"
+  } ],
+  "statusCliente" : "AGENDADO",
+  "idCadeira" : 1,
+  "id" : 7,
+  "dataHora" : "02/10/2032 13:30"
+}, {
+  "cliente" : {
+    "nome" : "Christian",
+    "cpf" : "17600724600",
+    "telefone" : "33998642761",
+    "id" : 1,
+    "statusAtendimentoCliente" : "EM_ESPERA"
+  },
+  "funcionario" : {
     "nome" : "Alberto",
     "cpf" : "87654571232",
     "telefone" : "45986745",
@@ -29,33 +58,33 @@
   "dataHora" : "02/10/2032 14:30"
 }, {
   "cliente" : {
-    "nome" : "Christian",
-    "cpf" : "17600724600",
-    "telefone" : "33998642761",
-    "id" : 1,
-    "statusAtendimentoCliente" : "EM_ESPERA"
+    "nome" : "Pedro",
+    "cpf" : "55555555555",
+    "telefone" : "31955555555",
+    "id" : 11,
+    "statusAtendimentoCliente" : "EM_ATENDIMENTO"
   },
   "funcionario" : {
-    "nome" : "Maria",
-    "cpf" : "12345678900",
+    "nome" : "Jose du Corte",
+    "cpf" : "12312312322",
     "telefone" : "33998642761",
-    "cargo" : "Atendente",
-    "usuario" : "chris",
-    "id" : 1,
-    "senha" : "1234",
-    "permissoes" : [ "CADASTRAR_CLIENTE", "VERIFICAR_CLIENTE", "CRIAR_AGENDAMENTO", "GERAR_NOTA", "GERAR_BALANCO_MENSAL" ]
+    "cargo" : "Barbeiro",
+    "usuario" : "mamaBolas",
+    "id" : 3,
+    "senha" : "tomanocuminhamaevai",
+    "permissoes" : [ "VERIFICAR_CLIENTE", "CRIAR_AGENDAMENTO" ]
   },
   "servicos" : [ {
-    "id" : 4,
-    "nome" : "Corte + Barba",
-    "preco" : 50.0,
-    "utilizaLavagemSecagem" : true,
-    "descricao" : "Pacote completo: corte e barba"
+    "id" : 2,
+    "nome" : "Barba tradicional",
+    "preco" : 25.0,
+    "utilizaLavagemSecagem" : false,
+    "descricao" : "Barba feita com toalha quente e navalha"
   } ],
   "statusCliente" : "AGENDADO",
-  "idCadeira" : 1,
-  "id" : 7,
-  "dataHora" : "02/10/2032 13:30"
+  "idCadeira" : 2,
+  "id" : 9,
+  "dataHora" : "13/06/2005 13:30"
 }, {
   "cliente" : {
     "nome" : "Christian",

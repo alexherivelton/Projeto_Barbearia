@@ -4,8 +4,37 @@ import xela.chris.barbearia.negocio.Agendamento;
 
 import java.util.Comparator;
 
+/**
+ * Compara dois objetos {@link Agendamento} com base no nome do **primeiro serviço**
+ * listado em cada agendamento.
+ *
+ * <p>Este comparador é projetado para ordenar agendamentos alfabeticamente
+ * com base no nome do primeiro serviço ({@code getServicos().get(0).getNome()}).
+ *
+ * A lógica de comparação trata extensivamente casos nulos e listas vazias
+ * para evitar {@link NullPointerException} e garantir uma ordenação consistente,
+ * priorizando valores nulos ou vazios (colocando-os "antes" na ordenação):
+ *
+ * Compara a nulidade dos próprios objetos {@code Agendamento}.
+ * Compara a nulidade da lista de serviços ({@code getServicos()}).
+ * Compara se a lista de serviços está vazia ({@code isEmpty()}).
+ * Se ambos os agendamentos possuírem pelo menos um serviço, compara
+ * o nome do primeiro serviço ({@code get(0).getNome()}) de forma lexicográfica
+ * (alfabética), ignorando maiúsculas e minúsculas.
+ *
+ *
+ */
 public class AgendamentoServicoComparators implements Comparator<Agendamento> {
 
+    /**
+     * Compara dois agendamentos (a1 e a2) com base no nome do primeiro serviço de cada um.
+     *
+     * @param a1 o primeiro objeto Agendamento a ser comparado.
+     * @param a2 o segundo objeto Agendamento a ser comparado.
+     * @return um inteiro negativo se {@code a1} for considerado "menor" que {@code a2},
+     * zero se forem considerados "iguais" (com base nos critérios),
+     * ou um inteiro positivo se {@code a1} for considerado "maior" que {@code a2}.
+     */
     @Override
     public int compare(Agendamento a1, Agendamento a2) {
         if (a1 == null && a2 == null) return 0;
