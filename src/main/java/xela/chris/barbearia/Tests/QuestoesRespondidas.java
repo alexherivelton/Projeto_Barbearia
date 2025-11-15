@@ -84,7 +84,7 @@ public class QuestoesRespondidas {
         // }
         //Questão 15:{
         System.out.println("====Questão 15====");
-        System.out.println("Tem que fazer");
+        System.out.println("Acessar as classes: FilaDeEspera, GerenciaFilaDeEspera");
         // }
         //Questão 16:{
         System.out.println("====Questão 16====");
