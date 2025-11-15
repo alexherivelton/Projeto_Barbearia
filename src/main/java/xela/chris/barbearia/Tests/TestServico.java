@@ -20,7 +20,6 @@ public class TestServico {
         gs.adicionar(new Servico("Sobrancelha", 15.0, true ,"Design de sobrancelha masculino"));
         gs.adicionar(new Servico("Corte + Barba", 50.0,true ,"Pacote completo: corte e barba"));
 
-        gs.salvarTodosProdutos();
 
 
         // 🔹 3. Listar todos os serviços
