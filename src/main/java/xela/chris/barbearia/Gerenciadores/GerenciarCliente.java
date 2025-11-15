@@ -118,8 +118,6 @@ public class GerenciarCliente {
         if (novoTelefone != null) cliente.setTelefone(novoTelefone);
         if (status != null) cliente.setStatusAtendimentoCliente(status);
 
-        repo.salvarTodos(clientes);
-
         System.out.println("Sucesso em atualizar!");
         return true;
     }
