@@ -137,6 +137,14 @@ public class GerenciarAgendamento {
         return true;
     }
 
+    /**
+     * Ordena a lista de agendamentos em memória por data e hora,
+     * utilizando o comparador {@link AgendamentoDataComparator}.
+     *
+     * <p>Esta operação modifica diretamente a lista em memória.
+     * Para persistir a ordenação, chame {@link #salvarTodos()} após
+     * a ordenação.</p>
+     */
     public void ordenarPorData(){
         Collections.sort(agendamentos, new AgendamentoDataComparator());
     }

@@ -19,7 +19,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class Agendamento {
 
     private String dataHoraAgendamento;
+    /** Cliente associado ao agendamento. */
     Cliente cliente;
+    /** Funcionário responsável pelo atendimento. */
     Funcionario funcionario;
     private List<Servico> servicos;
     private StatusAtendimentoCliente statusCliente;

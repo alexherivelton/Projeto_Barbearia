@@ -46,7 +46,15 @@ public class Barbearia {
     private static final ServicoVenda servicoVenda = new ServicoVenda(gerenciadorProduto, gerenciarVenda, gerenciarCliente);
     private static final ServicoOrdemServico servicoOrdemServico = new ServicoOrdemServico(gerenciarAgendamento, gerenciarVenda);
 
-
+    /**
+     * Método principal do sistema de barbearia.
+     *
+     * <p>Inicializa o sistema, realiza o login do usuário e exibe
+     * o menu principal com as opções disponíveis de acordo com as
+     * permissões do funcionário logado.</p>
+     *
+     * @param args argumentos da linha de comando (não utilizados)
+     */
     public static void main(String[] args) {
         // Inicializa o Proxy com o Gerenciador de Funcionários
         acesso = new Proxy(gerenciadorFuncionario);
