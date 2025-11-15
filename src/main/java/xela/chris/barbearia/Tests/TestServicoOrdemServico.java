@@ -23,33 +23,20 @@ public class TestServicoOrdemServico {
         GerenciarAgendamento gerenciarAgendamento = new GerenciarAgendamento();
         gerenciarAgendamento.carregar();
 
-        List<Agendamento> agendamentos = gerenciarAgendamento.listarAgendamentosOrdenadosPorData();
-
         GerenciarVenda gerenciarVenda = new GerenciarVenda();
         gerenciarVenda.carregar();
-        List<Venda> vendas = gerenciarVenda.listar();
 
         GerenciarCliente gerenciarCliente = new GerenciarCliente();
-        Cliente clientePadrao = gerenciarCliente.buscarCliente(1);
 
         String dataParaTeste = "02/10/2032";
         Cliente clienteParaTeste = gerenciarCliente.buscarCliente(1);
 
         System.out.println("=== TESTE DE ORDEM DE SERVIÇO ===");
 
-        servico.imprimirPorData(dataParaTeste);
-//        servico.imprimirPorCliente(clienteParaTeste.getId());
+//        servico.imprimirPorData(dataParaTeste);
+        servico.imprimirPorCliente(clienteParaTeste.getId());
 
 
         System.out.println("\n=== FIM DO TESTE ===");
-    }
-
-
-
-    private static Cliente escolherCliente(List<Agendamento> agendamentos, Cliente fallback) {
-        if (!agendamentos.isEmpty() && agendamentos.get(0).getCliente() != null) {
-            return agendamentos.get(0).getCliente();
-        }
-        return fallback;
     }
 }

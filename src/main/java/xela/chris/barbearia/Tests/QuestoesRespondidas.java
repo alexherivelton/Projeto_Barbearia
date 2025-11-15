@@ -45,23 +45,25 @@ public class QuestoesRespondidas {
         //Questão 07:{
         System.out.println("====Questão 07====");
         // ex para adicionar: Cliente cliente1 = new Cliente("Christian", "17600724600", "33998642761", StatusAtendimentoCliente.EM_ESPERA);
-        //ex para alterar: gerenciarCliente.atualizarCliente(2, "Alex", null, null, StatusAtendimentoCliente.EM_ATENDIMENTO);
+        // ex para alterar: gerenciarCliente.atualizarCliente(2, "Alex", null, null, StatusAtendimentoCliente.EM_ATENDIMENTO);
         // ex para excluir: gerenciarCliente.removerPorId(2);
 
 
         //Questão 08:{
         System.out.println("====Questão 08====");
-        System.out.println("Precisa fazer!");
+        // Imprimi os atendimentos e serviços realizados em determinado dia
+        // Imprimi também os serviços realizados por clientes
 
 
         //Questão 09:{
         System.out.println("====Questão 09====");
-        System.out.println("Precisa fazer!");
+        // Feito
 
         // }
         //Questão 10:{
         System.out.println("====Questão 10====");
         System.out.println("Precisa fazer!");
+        // Acredito que seja resolvido com a Nota Fiscal
 
         //Questão 11:{
         System.out.println("====Questão 11====");
