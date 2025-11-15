@@ -25,9 +25,13 @@ public class PessoaTest {
 //        gerenciarCliente.adicionar(new Cliente("Christian", "17600724600", "33998642761", StatusAtendimentoCliente.EM_ESPERA));
 //        gerenciarCliente.adicionar(new Cliente("xela", "14027245601", "99999999999", StatusAtendimentoCliente.EM_ESPERA));
 
+        gerenciadorFuncionario.adicionarFuncionario(new Funcionario("Christian", "17600724600", "33998642761", "administrador", "chris_ntt", "chris1234"));
+
+        gerenciadorFuncionario.salvarTodosFuncionarios();
+
+
 
         gerenciarCliente.salvarTodosClientes();
-
 
         gerenciarCliente.removerPorId(2);
 

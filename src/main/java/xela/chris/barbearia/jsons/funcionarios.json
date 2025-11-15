@@ -25,4 +25,13 @@
   "id" : 3,
   "senha" : "tomanocuminhamaevai",
   "permissoes" : [ "VERIFICAR_CLIENTE", "CRIAR_AGENDAMENTO" ]
+}, {
+  "nome" : "Christian",
+  "cpf" : "17600724600",
+  "telefone" : "33998642761",
+  "cargo" : "administrador",
+  "usuario" : "chris_ntt",
+  "id" : 4,
+  "senha" : "chris1234",
+  "permissoes" : [ "CAD_FUNC", "GERAR_BALANCO_MENSAL", "FAZER_BALANCO_MENSAL", "CADASTRAR_CLIENTE", "CRIAR_AGENDAMENTO", "VERIFICAR_AGENDA", "VERIFICAR_CLIENTE", "GERAR_NOTA" ]
 } ]
