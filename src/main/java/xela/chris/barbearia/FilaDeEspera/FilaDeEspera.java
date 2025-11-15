@@ -4,25 +4,29 @@ import xela.chris.barbearia.enums.StatusAtendimentoCliente;
 import xela.chris.barbearia.models.Cliente;
 import xela.chris.barbearia.models.Servico;
 
-public class FilaDeEspera {
-    Cliente nomeCliente;
-    Servico servicoDesejado;
-    String horarioData;
-    StatusAtendimentoCliente status;
 
-    public FilaDeEspera(Servico servicoDesejado, Cliente nomeCliente, String horarioData, StatusAtendimentoCliente status) {
+public class FilaDeEspera {
+
+    private String horarioData;
+    private Cliente cliente;
+    private Servico servicoDesejado;
+    private StatusAtendimentoCliente status;
+
+    public FilaDeEspera(Servico servicoDesejado, Cliente cliente, String horarioData, StatusAtendimentoCliente status) {
         this.servicoDesejado = servicoDesejado;
-        this.nomeCliente = nomeCliente;
+        this.cliente = cliente;
         this.horarioData = horarioData;
         this.status = status;
     }
 
-    public Cliente getNomeCliente() {
-        return nomeCliente;
+    public FilaDeEspera() {}
+
+    public Cliente getCliente() {
+        return cliente;
     }
 
-    public void setNomeCliente(Cliente nomeCliente) {
-        this.nomeCliente = nomeCliente;
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
 
     public Servico getServicoDesejado() {
@@ -48,4 +52,15 @@ public class FilaDeEspera {
     public void setStatus(StatusAtendimentoCliente status) {
         this.status = status;
     }
+
+    @Override
+    public String toString() {
+        return "FilaDeEspera{" +
+                "\ncliente=" + (cliente != null ? cliente : "null") +
+                ",\n servico=" + servicoDesejado.getId() +
+                ",\n horario=" + horarioData +
+                ",\n status=" + status +
+                '}';
+    }
+
 }
