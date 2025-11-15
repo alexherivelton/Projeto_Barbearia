@@ -1,0 +1,15 @@
+[ {
+  "idFuncionario" : {
+    "nome" : "Maria",
+    "cpf" : "12345678900",
+    "telefone" : "33998642761",
+    "cargo" : "Atendente",
+    "usuario" : "chris",
+    "id" : 1,
+    "senha" : "1234",
+    "permissoes" : [ "CADASTRAR_CLIENTE", "VERIFICAR_CLIENTE", "CRIAR_AGENDAMENTO", "GERAR_NOTA", "GERAR_BALANCO_MENSAL" ]
+  },
+  "data" : "2025-11-13",
+  "horaEntrada" : "15:33:59",
+  "horaSaida" : "15:34:35"
+} ]

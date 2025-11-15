@@ -1,0 +1,52 @@
+[ {
+  "horarioData" : "14/11/25 - 14:30",
+  "cliente" : {
+    "nome" : "Roberto Souza",
+    "cpf" : "12345678900",
+    "telefone" : "33998487867",
+    "id" : 2,
+    "statusAtendimentoCliente" : "AGENDADO"
+  },
+  "servicoDesejado" : {
+    "id" : 1,
+    "nome" : "Corte de cabelo",
+    "preco" : 30.0,
+    "utilizaLavagemSecagem" : true,
+    "descricao" : "Corte masculino com finalização"
+  },
+  "status" : "EM_ESPERA"
+}, {
+  "horarioData" : "14/11/25 - 15:30",
+  "cliente" : {
+    "nome" : "Gustavo Nascimento",
+    "cpf" : "09876543211",
+    "telefone" : "31998769756",
+    "id" : 3,
+    "statusAtendimentoCliente" : "AGENDADO"
+  },
+  "servicoDesejado" : {
+    "id" : 2,
+    "nome" : "Barba tradicional",
+    "preco" : 25.0,
+    "utilizaLavagemSecagem" : false,
+    "descricao" : "Barba feita com toalha quente e navalha"
+  },
+  "status" : "EM_ESPERA"
+}, {
+  "horarioData" : "14/11/25 - 16:30",
+  "cliente" : {
+    "nome" : "Hugo Loures",
+    "cpf" : "09876543222",
+    "telefone" : "21998377645",
+    "id" : 4,
+    "statusAtendimentoCliente" : "AGENDADO"
+  },
+  "servicoDesejado" : {
+    "id" : 3,
+    "nome" : "Sobrancelha",
+    "preco" : 15.0,
+    "utilizaLavagemSecagem" : true,
+    "descricao" : "Design de sobrancelha masculino"
+  },
+  "status" : "EM_ESPERA"
+}]
