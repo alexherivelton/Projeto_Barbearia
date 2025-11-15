@@ -2,6 +2,7 @@ package xela.chris.barbearia.Gerenciadores;
 
 import xela.chris.barbearia.models.NotaFiscal;
 import xela.chris.barbearia.negocio.Agendamento;
+import xela.chris.barbearia.models.Venda;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,10 +57,21 @@ public class GerenciarNotaFiscal {
     }
 
     public NotaFiscal gerarNotaFiscal(Agendamento agendamento) {
+        return gerarNotaFiscal(agendamento, new ArrayList<>());
+    }
+
+    /**
+     * Gera e persiste uma nova nota fiscal com serviços e vendas de produtos.
+     *
+     * @param agendamento agendamento que originou a nota fiscal
+     * @param vendasProdutos vendas de produtos associadas ao cliente
+     * @return instância da nota fiscal gerada ou {@code null} caso o agendamento seja inválido
+     */
+    public NotaFiscal gerarNotaFiscal(Agendamento agendamento, List<Venda> vendasProdutos) {
         if (agendamento == null) {
             return null;
         }
-        NotaFiscal nota = new NotaFiscal(agendamento);
+        NotaFiscal nota = new NotaFiscal(agendamento, vendasProdutos);
         adicionar(nota);
         return nota;
     }

@@ -1,9 +1,12 @@
 package xela.chris.barbearia.Tests;
 
 import xela.chris.barbearia.Gerenciadores.GerenciadorProduto;
+import xela.chris.barbearia.Gerenciadores.GerenciarCliente;
 import xela.chris.barbearia.Gerenciadores.GerenciarVenda;
 import xela.chris.barbearia.models.Produto;
 import xela.chris.barbearia.servicos.ServicoVenda;
+import xela.chris.barbearia.enums.StatusAtendimentoCliente;
+import xela.chris.barbearia.models.Cliente;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -12,7 +15,12 @@ public class TestProdutoVenda {
     public static void main(String[] args) {
         GerenciadorProduto gp = new GerenciadorProduto();
         GerenciarVenda gv = new GerenciarVenda();
-        ServicoVenda sv = new ServicoVenda(gp, gv);
+        GerenciarCliente gc = new GerenciarCliente();
+        ServicoVenda sv = new ServicoVenda(gp, gv, gc);
+
+        Cliente cliente = new Cliente("Cliente Teste", "12345678900", "11999999999", StatusAtendimentoCliente.ATENDIDO);
+        gc.adicionar(cliente);
+        gc.salvarTodosClientes();
 
         //Formatar Data
         LocalDate data = LocalDate.now();
@@ -31,8 +39,8 @@ public class TestProdutoVenda {
 
         System.out.println("=================================================================");
 
-        sv.efetuarVenda(1, 2, dataFormatada);
-        sv.efetuarVenda(2, 10, dataFormatada);
+        sv.efetuarVenda(cliente.getId(), 1, 2, dataFormatada);
+        sv.efetuarVenda(cliente.getId(), 2, 10, dataFormatada);
 
 
         System.out.println("=================================================================");

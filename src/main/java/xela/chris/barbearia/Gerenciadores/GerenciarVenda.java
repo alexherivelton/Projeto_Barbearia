@@ -1,9 +1,11 @@
 package xela.chris.barbearia.Gerenciadores;
 
+import xela.chris.barbearia.models.Cliente;
 import xela.chris.barbearia.models.Produto;
 import xela.chris.barbearia.models.Venda;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -64,6 +66,18 @@ public class GerenciarVenda {
             System.out.println("Venda removida com sucesso!");
         }
         return removido;
+    }
+
+    public Venda buscarVenda(int id) {
+        Iterator<Venda> iterator = vendas.iterator();
+        while (iterator.hasNext()) {
+            Venda venda = iterator.next();
+            if (venda.getId() == id) {
+                return venda;
+            }
+        }
+        System.out.println("Venda não encontrado!");
+        return null;
     }
 
     /**

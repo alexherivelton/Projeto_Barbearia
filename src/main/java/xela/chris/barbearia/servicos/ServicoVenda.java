@@ -2,7 +2,10 @@ package xela.chris.barbearia.servicos;
 
 import xela.chris.barbearia.Gerenciadores.GerenciadorProduto;
 import xela.chris.barbearia.Gerenciadores.GerenciarVenda;
+import xela.chris.barbearia.Gerenciadores.GerenciarCliente;
+
 import xela.chris.barbearia.models.Produto;
+import xela.chris.barbearia.models.Cliente;
 import xela.chris.barbearia.models.Venda;
 import java.time.LocalDate;
 
@@ -35,6 +38,10 @@ public class ServicoVenda {
     /** Gerenciador responsável por salvar e recuperar vendas. */
     private final GerenciarVenda gerenciarVenda;
 
+    /** Gerenciador responsável por acessar os clientes cadastrados. */
+    private final GerenciarCliente gerenciarCliente;
+
+
     /**
      * Construtor padrão que inicializa os gerenciadores internamente.
      * <p>
@@ -44,6 +51,7 @@ public class ServicoVenda {
     public ServicoVenda() {
         this.gerenciadorProduto = new GerenciadorProduto();
         this.gerenciarVenda = new GerenciarVenda();
+        this.gerenciarCliente = new GerenciarCliente();
     }
 
     /**
@@ -56,8 +64,20 @@ public class ServicoVenda {
      * @param gerenciarVenda gerenciador de vendas
      */
     public ServicoVenda(GerenciadorProduto gerenciadorProduto, GerenciarVenda gerenciarVenda) {
+        this(gerenciadorProduto, gerenciarVenda, new GerenciarCliente());
+    }
+
+    /**
+     * Construtor alternativo permitindo informar também um gerenciador de clientes.
+     *
+     * @param gerenciadorProduto gerenciador de produtos
+     * @param gerenciarVenda gerenciador de vendas
+     * @param gerenciarCliente gerenciador de clientes
+     */
+    public ServicoVenda(GerenciadorProduto gerenciadorProduto, GerenciarVenda gerenciarVenda, GerenciarCliente gerenciarCliente) {
         this.gerenciadorProduto = gerenciadorProduto;
         this.gerenciarVenda = gerenciarVenda;
+        this.gerenciarCliente = gerenciarCliente;
     }
 
     /**
@@ -78,7 +98,13 @@ public class ServicoVenda {
      * @return {@code true} se a venda for concluída, {@code false} caso o produto não exista
      *         ou não haja estoque suficiente
      */
-    public boolean efetuarVenda(int produtoId, int quantidade, String dataVenda) {
+    public boolean efetuarVenda(int clienteId, int produtoId, int quantidade, String dataVenda) {
+        gerenciarCliente.carregar();
+        Cliente cliente = gerenciarCliente.buscarCliente(clienteId);
+        if (cliente == null) {
+            return false;
+        }
+
         gerenciadorProduto.carregar();
 
         Produto produto = gerenciadorProduto.buscarPorId(produtoId);
@@ -91,7 +117,7 @@ public class ServicoVenda {
         }
 
         gerenciarVenda.carregar();
-        Venda venda = new Venda(produto, quantidade, dataVenda);
+        Venda venda = new Venda(produto,cliente ,quantidade, dataVenda);
         gerenciarVenda.adicionar(venda);
 
         return true;

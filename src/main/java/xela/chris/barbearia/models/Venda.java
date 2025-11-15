@@ -23,6 +23,10 @@ public class Venda {
     /** Produto associado à venda. */
     private Produto produto;
 
+    /** Cliente que realizou a compra. */
+    private Cliente cliente;
+
+
     /** Quantidade de unidades vendidas. */
     private int quantidade;
 
@@ -50,9 +54,10 @@ public class Venda {
      * @param quantidade quantidade vendida
      * @param dataVenda  data da venda no formato "dd/MM/yyyy"
      */
-    public Venda(Produto produto, int quantidade, String dataVenda) {
+    public Venda(Produto produto, Cliente cliente, int quantidade, String dataVenda) {
         this.id = contador.incrementAndGet();
         this.produto = produto;
+        this.cliente = cliente;
         this.quantidade = quantidade;
         this.valorUnitario = produto.getValor();
         this.valorTotal = quantidade * this.valorUnitario;
@@ -96,6 +101,25 @@ public class Venda {
         this.valorUnitario = produto.getValor();
         this.valorTotal = this.quantidade * this.valorUnitario;
     }
+
+    /**
+     * Retorna o cliente associado à venda.
+     *
+     * @return cliente que realizou a compra
+     */
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    /**
+     * Define o cliente responsável pela venda.
+     *
+     * @param cliente cliente associado
+     */
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
 
     /**
      * Retorna a quantidade vendida.
@@ -172,6 +196,7 @@ public class Venda {
         return "\n===============" +
                 "\n ID: " + id +
                 "\n Produto: " + produto.getNome() +
+                "\n Cliente: " + (cliente != null ? cliente.getNome() : "N/A") +
                 "\n Quantidade: " + quantidade +
                 "\n Valor Unitário: " + valorUnitario +
                 "\n Valor Total: " + valorTotal +
