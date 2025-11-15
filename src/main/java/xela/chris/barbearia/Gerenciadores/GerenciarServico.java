@@ -108,7 +108,7 @@ public class GerenciarServico {
         return List.of();
     }
 
-    public void salvarTodosProdutos(){
+    public void salvarTodosServicos(){
         repo.salvarTodos(servicos);
     }
 
