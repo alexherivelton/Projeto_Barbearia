@@ -34,6 +34,13 @@ public class GerenciadorProduto {
             new RepositorioJson<>(Produto.class, "produtos.json");
 
     /**
+     * Construtor que automaticamente carrega os produtos gravados no JSON.
+     */
+    public GerenciadorProduto() {
+        this.carregar();
+    }
+
+    /**
      * Carrega todos os produtos do arquivo JSON para a lista interna.
      * <p>
      * Também atualiza o contador estático de IDs da classe {@link Produto},

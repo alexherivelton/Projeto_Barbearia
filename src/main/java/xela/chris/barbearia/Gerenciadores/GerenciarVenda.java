@@ -30,6 +30,13 @@ public class GerenciarVenda {
     private final RepositorioJson<Venda> repo = new RepositorioJson<>(Venda.class, "vendas.json");
 
     /**
+     * Construtor que automaticamente carrega as vendas gravadas no JSON.
+     */
+    public GerenciarVenda() {
+        this.carregar();
+    }
+
+    /**
      * Carrega todas as vendas do arquivo JSON para a lista interna. Se
      * o arquivo não existir ou estiver vazio, a lista ficará vazia.
      */

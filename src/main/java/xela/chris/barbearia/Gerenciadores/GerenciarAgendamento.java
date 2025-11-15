@@ -32,6 +32,13 @@ public class GerenciarAgendamento {
     private RepositorioJson<Agendamento> repo = new RepositorioJson<>(Agendamento.class, "agendamentos.json");
 
     /**
+     * Construtor que automaticamente carrega os agendamentos gravados no JSON.
+     */
+    public GerenciarAgendamento() {
+        this.carregar();
+    }
+
+    /**
      * Carrega todos os agendamentos a partir do arquivo JSON.
      * Se a lista não estiver vazia, atualiza o contador de IDs da classe {@link Agendamento}
      * para evitar duplicação de identificadores ao reiniciar o sistema.
