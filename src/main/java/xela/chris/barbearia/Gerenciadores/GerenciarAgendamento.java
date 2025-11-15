@@ -5,7 +5,9 @@ import xela.chris.barbearia.models.Funcionario;
 import xela.chris.barbearia.negocio.Agendamento;
 import xela.chris.barbearia.enums.StatusAtendimentoCliente;
 import xela.chris.barbearia.models.NotaFiscal;
+import xela.chris.barbearia.models.Venda;
 import xela.chris.barbearia.Gerenciadores.GerenciarNotaFiscal;
+import xela.chris.barbearia.Gerenciadores.GerenciarVenda;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -178,11 +180,78 @@ public class GerenciarAgendamento {
      * <p>
      * Este método atualiza o status do agendamento identificado por {@code idAgendamento}
      * para {@link StatusAtendimentoCliente#ATENDIDO}, persiste a alteração no arquivo JSON
-     * e gera uma instância de {@link NotaFiscal} com base no agendamento.
+     * e gera automaticamente uma instância de {@link NotaFiscal} com base no agendamento
+     * e nas vendas do cliente que ainda não foram vinculadas a notas fiscais.
      * </p>
      *
      * @param idAgendamento identificador do agendamento a ser finalizado
+     * @param gerenciarNotaFiscal gerenciador de notas fiscais para gerar a nota
+     * @param gerenciarVenda gerenciador de vendas para buscar vendas do cliente
+     * @return {@code true} se o agendamento foi finalizado e a nota fiscal gerada com sucesso, {@code false} caso contrário
+     */
+    public boolean finalizarAgendamento(int idAgendamento, GerenciarNotaFiscal gerenciarNotaFiscal, GerenciarVenda gerenciarVenda) {
+        Agendamento ag = buscarPorId(idAgendamento);
+        if (ag == null) {
+            System.out.println("Agendamento não encontrado para finalizar!");
+            return false;
+        }
+
+        // Verifica se o agendamento já foi finalizado
+        if (ag.getStatusCliente() == StatusAtendimentoCliente.ATENDIDO) {
+            System.out.println("Este agendamento já foi finalizado!");
+            return false;
+        }
+
+        ag.setStatusCliente(StatusAtendimentoCliente.ATENDIDO);
+        repo.salvarTodos(agendamentos);
+
+        // Gera nota fiscal automaticamente
+        if (gerenciarNotaFiscal != null && gerenciarVenda != null) {
+            gerenciarVenda.carregar();
+            gerenciarNotaFiscal.carregar();
+
+            // Busca vendas do cliente que ainda não foram vinculadas a notas fiscais
+            List<Venda> vendasCliente = new ArrayList<>();
+            if (ag.getCliente() != null) {
+                List<Venda> todasVendas = gerenciarVenda.listar();
+                List<NotaFiscal> todasNotas = gerenciarNotaFiscal.listar();
+
+                // Filtra vendas do cliente que não estão em nenhuma nota fiscal
+                for (Venda venda : todasVendas) {
+                    if (venda.getCliente() != null &&
+                            venda.getCliente().getId() == ag.getCliente().getId()) {
+                        // Verifica se a venda já está em alguma nota fiscal
+                        boolean jaVinculada = todasNotas.stream()
+                                .anyMatch(nota -> nota.getVendasProdutos() != null &&
+                                        nota.getVendasProdutos().contains(venda));
+                        if (!jaVinculada) {
+                            vendasCliente.add(venda);
+                        }
+                    }
+                }
+            }
+
+            // Gera a nota fiscal
+            NotaFiscal nota = gerenciarNotaFiscal.gerarNotaFiscal(ag, vendasCliente);
+            if (nota != null) {
+                System.out.println("Agendamento finalizado e Nota Fiscal gerada automaticamente!");
+                System.out.println("ID da Nota Fiscal: " + nota.getId());
+                System.out.println("Valor Total: R$ " + String.format("%.2f", nota.getValorTotal()));
+                return true;
+            } else {
+                System.out.println("Agendamento finalizado, mas houve erro ao gerar a Nota Fiscal.");
+                return true; // Retorna true pois o agendamento foi finalizado
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * Finaliza um agendamento ao marcar o status como atendido (versão sem geração automática de nota fiscal).
      *
+     * @param idAgendamento identificador do agendamento a ser finalizado
+     * @return {@code true} se o agendamento foi finalizado, {@code false} caso contrário
      */
     public boolean finalizarAgendamento(int idAgendamento) {
         Agendamento ag = buscarPorId(idAgendamento);

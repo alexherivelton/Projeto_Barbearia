@@ -7,13 +7,14 @@ import xela.chris.barbearia.negocio.Agendamento;
 import java.util.List;
 
 /**
- * Classe responsável por calcular e exibir o balanço financeiro.
+ * Classe responsável por calcular e exibir o balanço financeiro da barbearia.
  *
- * O balanço é calculado com base nos dados de:
- * 1. Serviços realizados (via GerenciarAgendamento)
- * 2. Produtos vendidos (via GerenciarVenda)
+ * O balanço é calculado consolidando os dados de duas fontes principais:
+ * 1. Serviços realizados (obtidos do {@link GerenciarAgendamento}).
+ * 2. Produtos vendidos (obtidos do {@link GerenciarVenda}).
  *
- * Permite filtrar os totais por um período (dia ou mês), usando um filtro de string.
+ * Permite filtrar os totais por um período específico (dia ou mês),
+ * utilizando um filtro de string simples (ex: "11/2025").
  */
 public class GerenciadorBalanco {
 
@@ -21,7 +22,9 @@ public class GerenciadorBalanco {
     private final GerenciarVenda gerenciarVenda;
 
     /**
-     * Construtor padrão. Instancia os gerenciadores necessários.
+     * Construtor padrão.
+     * Instancia internamente novas versões dos gerenciadores
+     * {@link GerenciarAgendamento} e {@link GerenciarVenda}.
      */
     public GerenciadorBalanco() {
         this.gerenciarAgendamento = new GerenciarAgendamento();
@@ -29,7 +32,12 @@ public class GerenciadorBalanco {
     }
 
     /**
-     * Construtor para injeção de dependência (útil para testes).
+     * Construtor para injeção de dependência.
+     * Permite fornecer instâncias já existentes dos gerenciadores,
+     * o que é útil para testes unitários e desacoplamento.
+     *
+     * @param ga A instância de {@link GerenciarAgendamento} a ser usada.
+     * @param gv A instância de {@link GerenciarVenda} a ser usada.
      */
     public GerenciadorBalanco(GerenciarAgendamento ga, GerenciarVenda gv) {
         this.gerenciarAgendamento = ga;
@@ -38,10 +46,14 @@ public class GerenciadorBalanco {
 
     /**
      * Calcula o valor total de SERVIÇOS prestados em um período.
-     * O filtro de data é uma string simples (ex: "dd/MM/yyyy" ou "MM/yyyy").
+     *
+     * Este método recarrega os dados de agendamentos (chamando {@code carregar()})
+     * e, em seguida, itera sobre eles. A filtragem é feita verificando se a
+     * string {@code dataHora} do agendamento {@code contains} (contém) a
+     * string de filtro fornecida.
      *
      * @param filtroData O filtro de data (ex: "15/11/2025" ou "11/2025").
-     * @return O valor total dos serviços.
+     * @return O valor total (double) dos serviços que correspondem ao filtro.
      */
     public double calcularTotalServicos(String filtroData) {
         // Garante que os dados mais recentes sejam lidos dos arquivos JSON
@@ -68,8 +80,13 @@ public class GerenciadorBalanco {
     /**
      * Calcula o valor total de PRODUTOS vendidos em um período.
      *
+     * Este método recarrega os dados de vendas (chamando {@code carregar()})
+     * e, em seguida, itera sobre elas. A filtragem é feita verificando se a
+     * string {@code dataVenda} da venda {@code contains} (contém) a
+     * string de filtro fornecida.
+     *
      * @param filtroData O filtro de data (ex: "15/11/2025" ou "11/2025").
-     * @return O valor total dos produtos.
+     * @return O valor total (double) dos produtos vendidos que correspondem ao filtro.
      */
     public double calcularTotalProdutos(String filtroData) {
         // Garante que os dados mais recentes sejam lidos dos arquivos JSON
@@ -88,9 +105,15 @@ public class GerenciadorBalanco {
     }
 
     /**
-     * Gera e imprime no console o balanço detalhado (Serviços, Produtos e Total).
+     * Gera e imprime no console o balanço financeiro detalhado,
+     * combinando serviços e produtos para o período filtrado.
      *
-     * @param filtroData O filtro de data (ex: "15/11/2025" para dia ou "11/2025").
+     * Utiliza {@link #calcularTotalServicos(String)} e
+     * {@link #calcularTotalProdutos(String)} para obter os valores
+     * e, em seguida, exibe um relatório formatado.
+     *
+     * @param filtroData O filtro de data a ser aplicado (ex: "15/11/2025" para dia
+     * ou "11/2025" para o mês).
      */
     public void gerarBalanco(String filtroData) {
         // Calcula os totais separadamente

@@ -11,12 +11,20 @@ import java.util.stream.Collectors;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * Representa uma nota fiscal emitida para um agendamento.
- * Contém informações sobre a data de emissão, origem (agendamento)
- * e os produtos/itens adquiridos.
+ * Representa uma nota fiscal emitida na barbearia, consolidando serviços
+ * de um {@link Agendamento} e, opcionalmente, vendas de {@link Produto}.
+ *
+ * A classe é responsável por:
+ * - Atribuir um ID único (via contador estático).
+ * - Registrar a data de emissão.
+ * - Armazenar os serviços do agendamento.
+ * - Armazenar as vendas de produtos associadas.
+ * - Calcular e atualizar automaticamente o {@code valorTotal}
+ * com base nos serviços e produtos.
  */
 public class NotaFiscal {
 
+    /** Contador estático para gerar IDs únicos para novas notas fiscais. */
     private static final AtomicInteger contador = new AtomicInteger(0);
 
 
@@ -25,30 +33,39 @@ public class NotaFiscal {
     private Agendamento agendamento;
     private List<Servico> servicos = new ArrayList<>();
     private List<Venda> vendasProdutos = new ArrayList<>();
+    /** Lista de Produtos (itens) extraída das vendasProdutos. */
     private List<Produto> itens = new ArrayList<>();
+    /** Valor total (Serviços + Produtos). */
     private double valorTotal;
 
     /**
-     * Construtor padrão necessário para operações de serialização.
+     * Construtor padrão (sem argumentos).
+     * Necessário para a desserialização (ex: do JSON).
      */
     public NotaFiscal() {
     }
 
 
     /**
-     * Construtor da classe NotaFiscal.
+     * Construtor que cria uma nota fiscal baseada apenas em um agendamento
+     * (sem vendas de produtos).
      *
-     * @param agendamento o agendamento cujos serviços compõem a nota fiscal
+     * @param agendamento O agendamento que originou a nota (fonte dos serviços).
      */
     public NotaFiscal(Agendamento agendamento) {
         this(agendamento, new ArrayList<>());
     }
 
     /**
-     * Construtor da classe NotaFiscal permitindo incluir vendas de produtos.
+     * Construtor completo que cria uma nota fiscal baseada em um agendamento
+     * (serviços) e uma lista de vendas de produtos.
      *
-     * @param agendamento o agendamento cujos serviços compõem a nota fiscal
-     * @param vendasProdutos lista de vendas de produtos a serem vinculadas
+     * Ao ser chamado, atribui um novo ID, define a data de emissão atual,
+     * extrai os serviços do agendamento, processa as vendas de produtos
+     * e calcula o {@code valorTotal}.
+     *
+     * @param agendamento O agendamento que originou a nota (fonte dos serviços).
+     * @param vendasProdutos A lista de {@link Venda} (produtos) a ser incluída.
      */
     public NotaFiscal(Agendamento agendamento, List<Venda> vendasProdutos) {
         this.id = contador.incrementAndGet();
@@ -65,16 +82,17 @@ public class NotaFiscal {
     }
 
     /**
-     * Retorna o identificador da nota fiscal.
+     * Obtém o ID único desta nota fiscal.
      *
-     * @return id da nota fiscal.
+     * @return O identificador (int).
      */
     public int getId() {
         return id;
     }
 
     /**
-     * Define o identificador da nota fiscal.
+     * Define o ID da nota fiscal.
+     * (Usado principalmente pela desserialização).
      *
      * @param id Novo identificador da nota fiscal.
      */
@@ -83,16 +101,16 @@ public class NotaFiscal {
     }
 
     /**
-     * Retorna a data de emissão da nota fiscal.
+     * Obtém a data e hora em que a nota fiscal foi emitida.
      *
-     * @return data de emissão.
+     * @return O objeto {@link Date} da emissão.
      */
     public Date getDataEmissao() {
         return dataEmissao;
     }
 
     /**
-     * Define a data de emissão da nota fiscal.
+     * Define a data de emissão da nota.
      *
      * @param dataEmissao Nova data de emissão.
      */
@@ -101,16 +119,18 @@ public class NotaFiscal {
     }
 
     /**
-     * Retorna o agendamento de origem da nota fiscal.
+     * Obtém o agendamento que originou esta nota fiscal (fonte dos serviços).
      *
-     * @return agendamento relacionado.
+     * @return O objeto {@link Agendamento} associado.
      */
     public Agendamento getAgendamento() {
         return agendamento;
     }
 
     /**
-     * Define o agendamento de origem da nota fiscal.
+     * Define o agendamento associado a esta nota.
+     * Ao definir, a lista de serviços ({@code servicos}) é automaticamente
+     * extraída do agendamento e o {@code valorTotal} é recalculado.
      *
      * @param agendamento Novo agendamento relacionado.
      */
@@ -127,18 +147,19 @@ public class NotaFiscal {
 
 
     /**
-     * Obtém a lista de serviços desta nota fiscal.
+     * Obtém a lista de serviços incluídos nesta nota (geralmente vinda do agendamento).
      *
-     * @return lista de serviços
+     * @return Uma {@link List} de {@link Servico}.
      */
     public List<Servico> getServicos() {
         return servicos;
     }
 
     /**
-     * Define a lista de serviços e atualiza o valor total conforme os preços.
+     * Define a lista de serviços da nota.
+     * O {@code valorTotal} é recalculado automaticamente.
      *
-     * @param servicos nova lista de serviços
+     * @param servicos nova lista de serviços.
      */
     public void setServicos(List<Servico> servicos) {
         this.servicos = servicos != null ? servicos : new ArrayList<>();
@@ -147,17 +168,18 @@ public class NotaFiscal {
 
     /**
      * Retorna a lista de produtos/itens da nota fiscal.
+     * (Esta lista é derivada da {@code vendasProdutos}).
      *
-     * @return lista de produtos.
+     * @return Uma {@link List} de {@link Produto}.
      */
     public List<Produto> getItens() {
         return itens;
     }
 
     /**
-     * Obtém o valor total da nota fiscal.
+     * Obtém o valor total calculado da nota (Serviços + Produtos).
      *
-     * @return soma dos preços dos serviços
+     * @return O valor total (double).
      */
     public double getValorTotal() {
         return valorTotal;
@@ -166,16 +188,18 @@ public class NotaFiscal {
     /**
      * Retorna a lista de vendas de produtos associadas a esta nota.
      *
-     * @return lista de vendas de produtos
+     * @return Uma {@link List} de {@link Venda}.
      */
     public List<Venda> getVendasProdutos() {
         return vendasProdutos;
     }
 
     /**
-     * Obtém o valor total da nota fiscal.
+     * Define a lista de vendas de produtos.
+     * Ao definir, a lista {@code itens} é atualizada e o {@code valorTotal}
+     * é recalculado automaticamente.
      *
-     * @param vendasProdutos vendas de produtos a serem associadas
+     * @param vendasProdutos vendas de produtos a serem associadas.
      */
     public void setVendasProdutos(List<Venda> vendasProdutos) {
         if (vendasProdutos == null) {
@@ -188,9 +212,11 @@ public class NotaFiscal {
     }
 
     /**
-     * Adiciona uma venda de produto à nota fiscal, atualizando totais automaticamente.
+     * Adiciona uma única venda de produto à nota.
+     * A lista {@code itens} e o {@code valorTotal} são recalculados
+     * automaticamente.
      *
-     * @param venda venda a ser adicionada
+     * @param venda A {@link Venda} a ser adicionada.
      */
     public void adicionarVendaProduto(Venda venda) {
         if (venda != null) {
@@ -203,14 +229,29 @@ public class NotaFiscal {
         }
     }
 
+    /**
+     * Calcula a soma dos preços de todos os serviços na lista {@code servicos}.
+     *
+     * @return O total (double) dos serviços.
+     */
     private double calcularTotalServicos() {
         return servicos == null ? 0.0 : servicos.stream().mapToDouble(Servico::getPreco).sum();
     }
 
+    /**
+     * Calcula a soma dos valores de todas as vendas na lista {@code vendasProdutos}.
+     *
+     * @return O total (double) dos produtos.
+     */
     private double calcularTotalProdutos() {
         return vendasProdutos == null ? 0.0 : vendasProdutos.stream().mapToDouble(Venda::getValorTotal).sum();
     }
 
+    /**
+     * Sincroniza a lista {@code itens} (Produtos) com base na lista
+     * {@code vendasProdutos} (Vendas).
+     * Extrai o {@link Produto} de cada {@link Venda}.
+     */
     private void atualizarItensProdutos() {
         if (vendasProdutos == null) {
             this.itens = new ArrayList<>();
@@ -222,15 +263,22 @@ public class NotaFiscal {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Recalcula o {@code valorTotal} da nota somando o total de serviços
+     * e o total de produtos.
+     */
     private void atualizarValorTotal() {
         this.valorTotal = calcularTotalServicos() + calcularTotalProdutos();
     }
 
 
     /**
-     * Atualiza o contador estático para sincronização com IDs persistidos.
+     * Atualiza o contador estático ({@code contador}) para o último ID
+     * conhecido (geralmente o maior ID encontrado ao carregar do JSON).
      *
-     * @param ultimoId maior ID encontrado ao carregar dados
+     * Isso evita a duplicação de IDs após reiniciar a aplicação.
+     *
+     * @param ultimoId O maior ID encontrado na persistência.
      */
     public static void atualizarContador(int ultimoId) {
         contador.set(ultimoId);
@@ -238,11 +286,12 @@ public class NotaFiscal {
 
 
     /**
-     * Representação em string da nota fiscal, detalhando cada serviço
-     * e o valor total. Também formata a data de emissão para melhor
-     * legibilidade.
+     * Retorna uma representação em String formatada da nota fiscal.
      *
-     * @return string com detalhes da nota fiscal
+     * Inclui ID, data, cliente, funcionário, detalhes dos serviços,
+     * detalhes dos produtos e o valor total.
+     *
+     * @return A String formatada da nota.
      */
     @Override
     public String toString() {

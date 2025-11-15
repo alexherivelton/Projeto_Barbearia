@@ -8,16 +8,19 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Responsável por gerenciar as cadeiras da barbearia.
+ * Responsável por gerenciar as cadeiras físicas disponíveis na barbearia.
  *
- * Esta classe lida com:
- * - Carga e persistência das cadeiras em JSON;
- * - Criação automática das cadeiras padrão caso o arquivo esteja vazio;
- * - Busca por ID ou por tipo de cadeira;
- * - Listagem geral.
+ * Esta classe controla o inventário de cadeiras, que representam as
+ * posições de atendimento (ex: cadeiras de lavagem, cadeiras de corte).
  *
- * As cadeiras representam as posições de atendimento da barbearia,
- * como cadeiras de lavagem ou cadeiras de serviços corriqueiros.
+ * Ela lida com:
+ * - Carga e persistência das cadeiras no arquivo "cadeiras.json"
+ * (via {@link RepositorioJson}).
+ * - Criação automática das cadeiras padrão caso o arquivo esteja vazio
+ * na inicialização.
+ * - Sincronização do contador de IDs estático da classe {@link Cadeira}.
+ * - Métodos de busca para encontrar cadeiras por ID ou por tipo.
+ * - Listagem geral de todas as cadeiras.
  */
 public class GerenciarCadeira {
 
@@ -25,9 +28,13 @@ public class GerenciarCadeira {
     private RepositorioJson<Cadeira> repo = new RepositorioJson<>(Cadeira.class, "cadeiras.json");
 
     /**
-     * Construtor que já carrega as cadeiras do JSON.
-     * Caso o arquivo esteja vazio, cria automaticamente
-     * as cadeiras padrão da barbearia e salva no arquivo.
+     * Construtor padrão.
+     * Chama {@link #carregar()} para ler os dados do arquivo "cadeiras.json".
+     *
+     * Se a lista em memória permanecer vazia após o carregamento (indicando
+     * um primeiro uso ou arquivo vazio), o método {@link #inicializarCadeiras()}
+     * é chamado para criar as cadeiras padrão, e {@link #salvar()} é
+     * chamado para persistir essas cadeiras padrão.
      */
     public GerenciarCadeira() {
         carregar();
@@ -38,11 +45,13 @@ public class GerenciarCadeira {
     }
 
     /**
-     * Inicializa as cadeiras padrão da barbearia.
+     * Inicializa a lista de cadeiras com um conjunto padrão.
+     * Este método é privado e chamado apenas pelo construtor se
+     * nenhuma cadeira for carregada.
      *
      * Padrão usado:
-     * - 1 cadeira para lavar e secar;
-     * - 2 cadeiras para serviços comuns de barbearia.
+     * - 1 Cadeira de Lavagem.
+     * - 2 Cadeiras de Serviço Corriqueiro (corte, barba, etc.).
      */
     private void inicializarCadeiras() {
         cadeiras.add(new Cadeira("Cadeira Lavagem 1", TipoCadeira.LAVAR_SECAR));
@@ -51,9 +60,13 @@ public class GerenciarCadeira {
     }
 
     /**
-     * Carrega as cadeiras salvas no arquivo JSON.
-     * Também sincroniza o contador de IDs da classe {@link Cadeira}
-     * garantindo que novos objetos recebam IDs corretos.
+     * Carrega (ou recarrega) a lista de cadeiras do arquivo JSON
+     * para a lista em memória ({@code this.cadeiras}).
+     *
+     * Após carregar, este método varre a lista para encontrar o ID mais alto
+     * e atualiza o contador estático na classe {@link Cadeira}
+     * (via {@link Cadeira#atualizarContador(int)}) para evitar IDs
+     * duplicados em novos cadastros.
      */
     public void carregar() {
         cadeiras = repo.buscarTodos();
@@ -67,26 +80,28 @@ public class GerenciarCadeira {
     }
 
     /**
-     * Salva todas as cadeiras atuais no arquivo JSON.
+     * Salva a lista de cadeiras atualmente em memória ({@code this.cadeiras})
+     * no arquivo JSON, sobrescrevendo o conteúdo anterior do arquivo.
      */
     public void salvar() {
         repo.salvarTodos(cadeiras);
     }
 
     /**
-     * Retorna uma lista com todas as cadeiras cadastradas.
+     * Retorna a lista de cadeiras atualmente mantida em memória.
      *
-     * @return Lista de cadeiras existentes.
+     * @return Uma {@link List} de {@link Cadeira}.
      */
     public List<Cadeira> listarCadeiras() {
         return cadeiras;
     }
 
     /**
-     * Busca uma cadeira pelo seu ID.
+     * Busca uma cadeira na lista em memória pelo seu ID.
      *
-     * @param id Identificador da cadeira.
-     * @return A cadeira encontrada ou {@code null} caso não exista.
+     * @param id O identificador numérico da cadeira.
+     * @return A instância de {@link Cadeira} encontrada, ou {@code null}
+     * se nenhuma cadeira com esse ID existir na lista.
      */
     public Cadeira buscarPorId(int id) {
         return cadeiras.stream()
@@ -96,11 +111,13 @@ public class GerenciarCadeira {
     }
 
     /**
-     * Retorna todas as cadeiras de um determinado tipo,
-     * como cadeiras de lavagem ou cadeiras de serviço.
+     * Retorna uma nova lista contendo apenas as cadeiras que
+     * correspondem ao tipo especificado.
      *
-     * @param tipo Tipo de cadeira (definido no enum {@link TipoCadeira}).
-     * @return Lista de cadeiras que correspondem ao tipo informado.
+     * @param tipo O {@link TipoCadeira} desejado (ex: LAVAR_SECAR ou
+     * SERVICO_CORRIQUEIRO).
+     * @return Uma {@link List} de {@link Cadeira} filtrada pelo tipo.
+     * Pode retornar uma lista vazia se nenhum resultado for encontrado.
      */
     public List<Cadeira> buscarPorTipo(TipoCadeira tipo) {
         return cadeiras.stream()

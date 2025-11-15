@@ -13,18 +13,24 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * Responsável por gerenciar os clientes da barbearia.
+ * Responsável por gerenciar o ciclo de vida (CRUD) dos clientes da barbearia.
  *
- * Esta classe permite:
- * - Cadastrar novos clientes;
- * - Remover clientes;
- * - Atualizar dados de um cliente existente;
- * - Buscar por ID;
- * - Listar todos os clientes armazenados;
- * - Persistir os dados em arquivo JSON por meio do {@link RepositorioJson}.
+ * Esta classe centraliza as operações de cadastro, atualização, busca e
+ * remoção de clientes, mantendo uma lista em memória para acesso rápido
+ * e coordenando a persistência com um {@link RepositorioJson} (no arquivo
+ * "clientes.json").
  *
- * É usada para manter o controle dos clientes que realizam serviços
- * ou agendamentos na barbearia.
+ * Funções principais:
+ * - Carregar clientes do JSON na inicialização.
+ * - Sincronizar o contador de ID estático da classe {@link Cliente}.
+ * - Adicionar, atualizar e remover clientes (na lista em memória).
+ * - Salvar a lista em memória para o arquivo JSON (operação manual).
+ * - Métodos de busca (por ID, e buscas binárias especializadas).
+ *
+ * Atenção: A maioria das operações (adicionar, remover, atualizar)
+ * modifica apenas a lista em memória. É necessário chamar
+ * {@link #salvarTodosClientes()} para persistir as alterações no arquivo.
+ * A exceção é o método {@link #limpar()}, que persiste imediatamente.
  */
 public class GerenciarCliente {
 
@@ -32,16 +38,22 @@ public class GerenciarCliente {
     private RepositorioJson<Cliente> repo = new RepositorioJson<>(Cliente.class, "clientes.json");
 
     /**
-     * Construtor que automaticamente carrega os clientes gravados no JSON.
+     * Construtor padrão.
+     * Inicializa o gerenciador e chama {@link #carregar()} para popular
+     * a lista de clientes a partir do arquivo JSON.
      */
     public GerenciarCliente() {
         this.carregar();
     }
 
     /**
-     * Carrega todos os clientes armazenados no arquivo JSON.
-     * Também sincroniza o contador de IDs da classe {@link Cliente}
-     * garantindo que novos clientes recebam IDs corretos.
+     * Carrega (ou recarrega) todos os clientes do arquivo JSON para a lista
+     * em memória ({@code this.clientes}).
+     *
+     * Se a lista carregada não estiver vazia, este método encontra o
+     * ID mais alto e atualiza o contador estático na classe {@link Cliente}
+     * (via {@link Cliente#atualizarContador(int)}) para evitar IDs
+     * duplicados em novos cadastros.
      */
     public void carregar() {
         clientes = repo.buscarTodos();
@@ -55,10 +67,11 @@ public class GerenciarCliente {
     }
 
     /**
-     * Busca um cliente pelo seu ID.
+     * Busca um cliente na lista em memória pelo seu ID.
      *
-     * @param id Identificador único do cliente.
-     * @return O cliente encontrado ou {@code null} caso não exista.
+     * @param id O identificador único do cliente.
+     * @return O objeto {@link Cliente} encontrado, ou {@code null} se não
+     * existir na lista em memória.
      */
     public Cliente buscarCliente(int id) {
         Iterator<Cliente> iterator = clientes.iterator();
@@ -73,19 +86,26 @@ public class GerenciarCliente {
     }
 
     /**
-     * Adiciona um novo cliente ao sistema e salva no arquivo JSON.
+     * Adiciona um novo cliente à lista em memória.
      *
-     * @param cliente Cliente a ser adicionado.
+     * Atenção: Esta operação *não* persiste os dados automaticamente.
+     * Chame {@link #salvarTodosClientes()} para gravar a alteração.
+     *
+     * @param cliente O objeto {@link Cliente} a ser adicionado.
      */
     public void adicionar(Cliente cliente) {
         clientes.add(cliente);
     }
 
     /**
-     * Remove um cliente da lista a partir do seu ID.
+     * Remove um cliente da lista em memória a partir do seu ID.
      *
-     * @param id Identificador do cliente a ser removido.
-     * @return true se o cliente foi removido; false caso contrário.
+     * Atenção: Esta operação *não* persiste os dados automaticamente.
+     * Chame {@link #salvarTodosClientes()} para gravar a alteração.
+     *
+     * @param id O identificador do cliente a ser removido.
+     * @return {@code true} se o cliente foi encontrado e removido da
+     * lista em memória, {@code false} caso contrário.
      */
     public boolean removerPorId(int id) {
         boolean removido = clientes.removeIf(c -> id == c.getId());
@@ -96,15 +116,22 @@ public class GerenciarCliente {
     }
 
     /**
-     * Atualiza os dados de um cliente existente.
-     * Qualquer campo que receber {@code null} permanece inalterado.
+     * Atualiza os dados de um cliente existente na lista em memória.
+     *
+     * A atualização é feita "in-place" no objeto encontrado (via
+     * {@link #buscarCliente(int)}). Apenas os campos fornecidos como
+     * não nulos serão atualizados.
+     *
+     * Atenção: Esta operação *não* persiste os dados automaticamente.
+     * Chame {@link #salvarTodosClientes()} para gravar a alteração.
      *
      * @param id           ID do cliente que será atualizado.
-     * @param novoNome     Novo nome ou {@code null} para manter o atual.
-     * @param novoCpf      Novo CPF ou {@code null} para manter o atual.
-     * @param novoTelefone Novo telefone ou {@code null} para manter o atual.
-     * @param status       Novo status de atendimento ou {@code null}.
-     * @return true caso o cliente seja encontrado e atualizado; false caso contrário.
+     * @param novoNome     Novo nome, ou {@code null} para manter o atual.
+     * @param novoCpf      Novo CPF, ou {@code null} para manter o atual.
+     * @param novoTelefone Novo telefone, ou {@code null} para manter o atual.
+     * @param status       Novo {@link StatusAtendimentoCliente}, ou {@code null}.
+     * @return {@code true} caso o cliente seja encontrado e atualizado
+     * (na memória), {@code false} se o cliente não foi encontrado.
      */
     public boolean atualizarCliente(int id, String novoNome, String novoCpf, String novoTelefone, StatusAtendimentoCliente status) {
         Cliente cliente = buscarCliente(id);
@@ -124,9 +151,13 @@ public class GerenciarCliente {
     }
 
     /**
-     * Lista todos os clientes cadastrados, exibindo no console.
+     * Imprime todos os clientes da lista em memória no console.
      *
-     * @return Uma lista vazia (o método apenas exibe no console).
+     * Nota: Este método retorna uma lista vazia imutável (via {@code List.of()}),
+     * independentemente dos clientes em memória. Sua principal função
+     * é a exibição no console.
+     *
+     * @return Uma {@link List} vazia.
      */
     public List<Cliente> listar() {
         System.out.println("➡ Clientes carregados: " + clientes.size());
@@ -137,12 +168,21 @@ public class GerenciarCliente {
     }
 
 
+    /**
+     * Salva a lista de clientes atualmente em memória ({@code this.clientes})
+     * no arquivo JSON, sobrescrevendo o conteúdo anterior do arquivo.
+     */
     public void salvarTodosClientes(){
         repo.salvarTodos(clientes);
     }
 
     /**
-     * Remove todos os clientes tanto da memória quanto do arquivo JSON.
+     * Remove todos os clientes do sistema (memória e persistência).
+     *
+     * Este método limpa a lista em memória ({@code this.clientes}) e,
+     * em seguida, salva uma lista vazia no arquivo JSON
+     * (via {@code repo.salvarTodos}), efetivamente limpando todos os
+     * dados persistidos.
      */
     public void limpar() {
         clientes = new ArrayList<>();
@@ -150,18 +190,24 @@ public class GerenciarCliente {
     }
 
     /**
-     * Questão 17: Método find para buscar cliente usando iterator e comparator.
-     * Busca um cliente na lista ordenada usando um comparator específico.
-     * 
-     * @param clienteProcurado Cliente a ser encontrado
-     * @param comparator Comparator usado para ordenação e comparação
-     * @return Cliente encontrado ou null se não encontrado
+     * (Questão 17) Busca um cliente usando iteração linear após ordenar uma
+     * cópia da lista.
+     *
+     * Este método cria uma cópia da lista de clientes, ordena-a usando o
+     * {@link Comparator} fornecido, e então itera sobre ela, usando
+     * {@code comparator.compare()} para encontrar uma correspondência exata (retorno 0).
+     *
+     * @param clienteProcurado O objeto {@link Cliente} a ser encontrado
+     * (usado para a comparação).
+     * @param comparator O {@link Comparator} usado para ordenar e comparar.
+     * @return O objeto {@link Cliente} encontrado, ou {@code null} se não
+     * for encontrado.
      */
     public Cliente findCliente(Cliente clienteProcurado, Comparator<Cliente> comparator) {
         // Primeiro, ordena a lista usando o comparator
         List<Cliente> listaOrdenada = new ArrayList<>(clientes);
         listaOrdenada.sort(comparator);
-        
+
         // Usa iterator para percorrer a lista ordenada
         Iterator<Cliente> iterator = listaOrdenada.iterator();
         while (iterator.hasNext()) {
@@ -175,16 +221,21 @@ public class GerenciarCliente {
     }
 
     /**
-     * Questão 17: Busca cliente usando Collections.binarySearch() com Comparator por nome.
-     * A lista é ordenada antes da busca.
-     * 
-     * @param clienteProcurado Cliente a ser encontrado (deve ter o nome preenchido)
-     * @return Cliente encontrado ou null se não encontrado
+     * (Questão 17) Busca um cliente usando {@link Collections#binarySearch}
+     * com o comparador de Nomes ({@link ClienteNomeComparators}).
+     *
+     * Este método cria uma cópia da lista de clientes, ordena-a
+     * especificamente por nome, e então realiza uma busca binária.
+     *
+     * @param clienteProcurado O objeto {@link Cliente} a ser encontrado
+     * (deve ter o nome preenchido para a comparação).
+     * @return O objeto {@link Cliente} encontrado, ou {@code null} se o
+     * índice da busca for negativo.
      */
     public Cliente buscarClientePorNomeComBinarySearch(Cliente clienteProcurado) {
         List<Cliente> listaOrdenada = new ArrayList<>(clientes);
         Collections.sort(listaOrdenada, new ClienteNomeComparators());
-        
+
         int indice = Collections.binarySearch(listaOrdenada, clienteProcurado, new ClienteNomeComparators());
         if (indice >= 0) {
             return listaOrdenada.get(indice);
@@ -193,17 +244,23 @@ public class GerenciarCliente {
     }
 
     /**
-     * Questão 17: Busca cliente usando Collections.binarySearch() com Comparator genérico.
-     * A lista é ordenada antes da busca usando o comparator fornecido.
-     * 
-     * @param clienteProcurado Cliente a ser encontrado
-     * @param comparator Comparator usado para ordenação e busca
-     * @return Cliente encontrado ou null se não encontrado
+     * (Questão 17) Busca um cliente usando {@link Collections#binarySearch}
+     * com um {@link Comparator} genérico.
+     *
+     * Este método cria uma cópia da lista de clientes, ordena-a
+     * usando o {@code comparator} fornecido, e então realiza uma
+     * busca binária.
+     *
+     * @param clienteProcurado O objeto {@link Cliente} a ser encontrado.
+     * @param comparator O {@link Comparator} usado para ordenar e
+     * realizar a busca.
+     * @return O objeto {@link Cliente} encontrado, ou {@code null} se o
+     * índice da busca for negativo.
      */
     public Cliente buscarClienteComBinarySearch(Cliente clienteProcurado, Comparator<Cliente> comparator) {
         List<Cliente> listaOrdenada = new ArrayList<>(clientes);
         Collections.sort(listaOrdenada, comparator);
-        
+
         int indice = Collections.binarySearch(listaOrdenada, clienteProcurado, comparator);
         if (indice >= 0) {
             return listaOrdenada.get(indice);
@@ -212,11 +269,11 @@ public class GerenciarCliente {
     }
 
     /**
-     * Questão 17: Retorna a lista de clientes ordenada por um comparator específico.
-     * Útil para visualização antes de usar binarySearch.
-     * 
-     * @param comparator Comparator usado para ordenação
-     * @return Lista ordenada de clientes
+     * (Questão 17) Retorna uma nova lista contendo os clientes, ordenada
+     * pelo {@link Comparator} fornecido.
+     *
+     * @param comparator O {@link Comparator} usado para a ordenação.
+     * @return Uma nova {@link List} de {@link Cliente} ordenada.
      */
     public List<Cliente> getClientesOrdenados(Comparator<Cliente> comparator) {
         List<Cliente> listaOrdenada = new ArrayList<>(clientes);
@@ -225,8 +282,9 @@ public class GerenciarCliente {
     }
 
     /**
-     * Retorna a lista de clientes (cópia para evitar modificações externas).
-     * @return cópia da lista de clientes
+     * Retorna uma cópia da lista de clientes atualmente em memória.
+     *
+     * @return Uma nova {@link ArrayList} contendo todos os clientes.
      */
     public List<Cliente> getClientes() {
         return new ArrayList<>(clientes);

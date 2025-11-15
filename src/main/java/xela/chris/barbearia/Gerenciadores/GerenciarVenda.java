@@ -9,36 +9,53 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * Classe responsável pelo gerenciamento das vendas realizadas.
+ * Classe responsável pelo gerenciamento das Vendas ({@link Venda}) realizadas.
  *
- * Esta classe fornece métodos para carregar vendas a partir de um
- * arquivo JSON, adicionar novas vendas, remover vendas existentes,
- * listar todas as vendas e limpar o registro. Também possui um
- * método utilitário para calcular o valor total arrecadado em
- * vendas. A persistência é realizada via {@link RepositorioJson}.
+ * Esta classe centraliza as operações de CRUD para vendas de produtos,
+ * mantendo uma lista em memória para acesso rápido e coordenando a
+ * persistência com um {@link RepositorioJson} (no arquivo "vendas.json").
+ *
+ * Funções principais:
+ * - Carregar vendas do JSON na inicialização.
+ * - Sincronizar o contador de ID estático da classe {@link Venda}.
+ * - Adicionar, remover e buscar vendas (na lista em memória).
+ * - Salvar a lista em memória para o arquivo JSON (operação manual).
+ * - Calcular o valor total das vendas em memória.
+ *
+ * Atenção: A maioria das operações (adicionar, remover) modifica apenas
+ * a lista em memória. É necessário chamar {@link #salvarTodasVendas()}
+ * para persistir as alterações no arquivo. A exceção é o método
+ * {@link #limpar()}, que persiste imediatamente.
  */
 public class GerenciarVenda {
 
     /**
-     * Lista de vendas mantida em memória.
+     * Lista de vendas mantida em memória, carregada do JSON.
      */
     private List<Venda> vendas = new ArrayList<>();
 
     /**
-     * Repositório JSON para persistência das vendas.
+     * Repositório JSON para persistência das vendas ("vendas.json").
      */
     private final RepositorioJson<Venda> repo = new RepositorioJson<>(Venda.class, "vendas.json");
 
     /**
-     * Construtor que automaticamente carrega as vendas gravadas no JSON.
+     * Construtor padrão.
+     * Inicializa o gerenciador e chama {@link #carregar()} para popular
+     * a lista de vendas a partir do arquivo JSON.
      */
     public GerenciarVenda() {
         this.carregar();
     }
 
     /**
-     * Carrega todas as vendas do arquivo JSON para a lista interna. Se
-     * o arquivo não existir ou estiver vazio, a lista ficará vazia.
+     * Carrega (ou recarrega) todas as vendas do arquivo JSON para a lista
+     * em memória ({@code this.vendas}).
+     *
+     * Se a lista carregada não estiver vazia, este método encontra o
+     * ID mais alto e atualiza o contador estático na classe {@link Venda}
+     * (via {@link Venda#atualizarContador(int)}) para evitar IDs
+     * duplicados em novos cadastros.
      */
     public void carregar() {
         vendas = repo.buscarTodos();
@@ -52,20 +69,26 @@ public class GerenciarVenda {
     }
 
     /**
-     * Adiciona uma nova venda à lista e salva as alterações no arquivo JSON.
+     * Adiciona uma nova venda à lista em memória.
      *
-     * @param venda a venda a ser adicionada
+     * Atenção: Esta operação *não* persiste os dados automaticamente.
+     * Chame {@link #salvarTodasVendas()} para gravar a alteração.
+     *
+     * @param venda O objeto {@link Venda} a ser adicionado.
      */
     public void adicionar(Venda venda) {
         vendas.add(venda);
     }
 
     /**
-     * Remove uma venda da lista com base em seu ID.
+     * Remove uma venda da lista em memória com base em seu ID.
      *
-     * @param id identificador da venda a ser removida
-     * @return {@code true} se a venda foi removida; {@code false} caso
-     * nenhuma venda com o ID informado seja encontrada
+     * Atenção: Esta operação *não* persiste os dados automaticamente.
+     * Chame {@link #salvarTodasVendas()} para gravar a alteração.
+     *
+     * @param id O identificador da venda a ser removida.
+     * @return {@code true} se a venda foi encontrada e removida da
+     * lista em memória, {@code false} caso contrário.
      */
     public boolean removerPorId(int id) {
         boolean removido = vendas.removeIf(v -> v.getId() == id);
@@ -75,6 +98,13 @@ public class GerenciarVenda {
         return removido;
     }
 
+    /**
+     * Busca uma venda na lista em memória pelo seu ID.
+     *
+     * @param id O identificador da venda.
+     * @return O objeto {@link Venda} encontrado, ou {@code null} se não
+     * existir na lista em memória.
+     */
     public Venda buscarVenda(int id) {
         Iterator<Venda> iterator = vendas.iterator();
         while (iterator.hasNext()) {
@@ -88,16 +118,22 @@ public class GerenciarVenda {
     }
 
     /**
-     * Retorna a lista de todas as vendas atualmente registradas.
+     * Retorna a lista de todas as vendas atualmente registradas
+     * (mantidas em memória).
      *
-     * @return lista de vendas
+     * @return Uma {@link List} de {@link Venda}.
      */
     public List<Venda> listar() {
         return vendas;
     }
 
     /**
-     * Remove todas as vendas da lista e limpa o conteúdo do arquivo JSON.
+     * Remove todas as vendas do sistema (memória e persistência).
+     *
+     * Este método limpa a lista em memória ({@code this.vendas}) e,
+     * em seguida, salva uma lista vazia no arquivo JSON
+     * (via {@code repo.salvarTodos}), efetivamente limpando todos os
+     * dados persistidos.
      */
     public void limpar() {
         vendas = new ArrayList<>();
@@ -105,23 +141,30 @@ public class GerenciarVenda {
     }
 
     /**
-     * Calcula o valor total arrecadado em todas as vendas atualmente
-     * carregadas.
+     * Calcula o valor total arrecadado (soma de {@code getValorTotal()})
+     * de todas as vendas atualmente carregadas na lista em memória.
      *
-     * @return soma dos valores totais de cada venda
+     * @return A soma (double) dos valores totais de cada venda.
      */
     public double calcularTotalVendas() {
         return vendas.stream().mapToDouble(Venda::getValorTotal).sum();
     }
 
+    /**
+     * Salva a lista de vendas atualmente em memória ({@code this.vendas})
+     * no arquivo JSON, sobrescrevendo o conteúdo anterior do arquivo.
+     */
     public void salvarTodasVendas(){
         repo.salvarTodos(vendas);
     }
 
     /**
-     * Busca venda pelo id da mesma
-     * @param id
-     * @return retorna uma mensagem caso encontre e tambem caso nao encontrar
+     * Busca uma venda na lista em memória pelo ID e retorna uma
+     * mensagem (String) indicando o resultado.
+     *
+     * @param id O ID da venda a ser buscada.
+     * @return Uma String "Venda(s) encontrada(s): ..." com os dados da
+     * venda, ou "Venda(s) não encontrada!" caso contrário.
      */
     public String buscarVendaPorId(int id) {
         for (Venda p : vendas) {

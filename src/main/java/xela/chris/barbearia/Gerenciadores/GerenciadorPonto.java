@@ -9,40 +9,37 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * Classe responsável por gerenciar registros de ponto dos funcionários.
- * <p>
- * Este gerenciador realiza operações de controle de ponto, como registrar
- * entrada e saída, consultar pontos por data e persistir informações no
- * arquivo JSON. A estrutura utiliza um repositório genérico para salvamento.
- * </p>
+ * Classe responsável por gerenciar os registros de ponto (entrada e saída)
+ * dos funcionários.
  *
- * <p>Principais funcionalidades:</p>
- * <ul>
- *     <li>Registrar entrada e saída de funcionários</li>
- *     <li>Buscar registro de ponto por data</li>
- *     <li>Carregar registros salvos</li>
- *     <li>Limpar todos os registros de ponto</li>
- * </ul>
+ * Este gerenciador controla a persistência dos registros em um arquivo JSON
+ * ("pontos.json") e mantém uma lista em memória. Ele fornece a lógica
+ * principal para "bater o ponto", que registra a entrada ou a saída
+ * com base no estado atual do funcionário no dia corrente.
  */
 public class GerenciadorPonto {
 
     /** Lista de registros de ponto mantidos em memória. */
     private List<RegistroPonto> pontos = new ArrayList<>();
 
-    /** Repositório responsável por persistir registros no arquivo JSON. */
+    /** Repositório responsável por persistir registros no arquivo "pontos.json". */
     private final RepositorioJson<RegistroPonto> repo =
             new RepositorioJson<>(RegistroPonto.class, "pontos.json");
 
     /**
-     * Construtor que inicializa o gerenciador carregando registros já existentes.
+     * Construtor padrão.
+     * Inicializa o gerenciador e chama imediatamente o método {@link #carregar()}
+     * para popular a lista de pontos a partir do arquivo JSON.
      */
     public GerenciadorPonto() {
         this.carregar();
     }
 
     /**
-     * Carrega todos os registros de ponto do repositório JSON para a memória.
-     * Caso o arquivo esteja vazio, uma lista nova é criada.
+     * Carrega (ou recarrega) todos os registros de ponto do repositório JSON
+     * para a lista em memória ({@code pontos}).
+     * Se o arquivo não puder ser lido ou estiver vazio, inicializa
+     * {@code pontos} como uma nova ArrayList vazia.
      */
     public void carregar() {
         pontos = repo.buscarTodos();
@@ -52,20 +49,26 @@ public class GerenciadorPonto {
     }
 
     /**
-     * Registra o ponto (entrada ou saída) de um funcionário com base na data atual.
-     * <p>
-     * Regras:
-     * <ul>
-     *     <li>Se não existir registro para o funcionário na data atual → registra ENTRADA</li>
-     *     <li>Se existir entrada mas não houver saída → registra SAÍDA</li>
-     *     <li>Se já houver entrada e saída → uma mensagem é exibida informando que o ponto já foi finalizado</li>
-     * </ul>
-     * </p>
+     * Registra o ponto (entrada ou saída) de um funcionário para a data atual.
      *
-     * @param funcionario Funcionário que está registrando o ponto
+     * Este método é sincronizado e segue a seguinte lógica:
+     * 1. Busca no repositório (`repo.listar()`) se já existe um registro
+     * para o funcionário na data atual (`LocalDate.now()`).
+     * 2. Se não existir registro: Cria um novo {@link RegistroPonto},
+     * define a {@code horaEntrada} e o adiciona à lista.
+     * 3. Se existir registro e a {@code horaSaida} for nula: Define a
+     * {@code horaSaida} no registro existente.
+     * 4. Se existir registro e a {@code horaSaida} já estiver definida:
+     * Informa que o ponto já foi totalmente registrado no dia.
+     *
+     * Ao final, a lista em memória ({@code this.pontos}) é atualizada
+     * com o resultado das operações.
+     *
+     * @param funcionario O funcionário que está registrando o ponto.
      */
     public synchronized void baterPonto(Funcionario funcionario) {
         String dataAtual = LocalDate.now().toString();
+        // Carrega a lista do repositório para esta operação
         List<RegistroPonto> registros = repo.listar();
 
         RegistroPonto pontoHoje = null;
@@ -79,7 +82,7 @@ public class GerenciadorPonto {
             }
         }
 
-        // Se for o primeiro registro do dia → ENTRADA
+        // Se for o primeiro registro do dia -> ENTRADA
         if (pontoHoje == null) {
             RegistroPonto novoRegistro = new RegistroPonto();
             novoRegistro.setIdFuncionario(funcionario);
@@ -91,7 +94,7 @@ public class GerenciadorPonto {
             System.out.println("Ponto registrado com sucesso! " +
                     funcionario.getNome() + " no horário: " + novoRegistro.getHoraEntrada());
         }
-        // Se já existe entrada mas ainda não existe saída → SAÍDA
+        // Se já existe entrada mas ainda não existe saída -> SAÍDA
         else if (pontoHoje.getHoraSaida() == null) {
             pontoHoje.setHoraSaida(LocalTime.now().withNano(0).toString());
 
@@ -103,17 +106,25 @@ public class GerenciadorPonto {
             System.out.println("O funcionário " + funcionario.getNome() +
                     " já registrou entrada e saída hoje.");
         }
+
+        // Atualiza a lista em memória com a lista modificada
         pontos = registros;
     }
 
     /**
      * Busca o registro de ponto de um funcionário para uma data específica.
      *
-     * @param funcionario Funcionário cujo ponto será procurado
-     * @param data Data desejada no formato ISO (yyyy-MM-dd)
-     * @return o registro encontrado, ou {@code null} caso não exista
+     * Este método *recarrega* a lista de pontos do repositório
+     * ({@code repo.buscarTodos()}) antes de realizar a busca,
+     * ignorando o estado atual da lista em memória.
+     *
+     * @param funcionario O funcionário cujo ponto será procurado.
+     * @param data A data desejada no formato ISO (ex: "2025-11-15").
+     * @return O objeto {@link RegistroPonto} encontrado, ou {@code null}
+     * se não for encontrado.
      */
     public RegistroPonto buscarPorData(Funcionario funcionario, String data) {
+        // Recarrega do arquivo antes de buscar
         pontos = repo.buscarTodos();
         if (pontos == null) {
             System.out.println("Nenhum ponto foi encontrado no arquivo!");
@@ -141,12 +152,22 @@ public class GerenciadorPonto {
         return null;
     }
 
+    /**
+     * Salva a lista de registros de ponto atualmente em memória
+     * ({@code this.pontos}) no arquivo JSON.
+     *
+     * Esta ação sobrescreve o conteúdo anterior do arquivo.
+     */
     public void salvarPonto(){
         repo.salvarTodos(pontos);
     }
 
     /**
-     * Remove todos os registros de ponto do sistema, tanto da memória quanto do arquivo JSON.
+     * Remove todos os registros de ponto do sistema.
+     *
+     * Esta operação limpa a lista em memória ({@code this.pontos})
+     * e, em seguida, salva uma lista vazia no arquivo JSON,
+     * efetivamente limpando todos os dados persistidos.
      */
     public void limpar() {
         pontos = new ArrayList<>();

@@ -11,6 +11,10 @@ import java.util.List;
 
 /**
  * Serviço simples para reunir agendamentos e vendas e gerar uma ordem de serviço.
+ *
+ * Esta classe atua como um serviço de consulta (ou relatório) que
+ * consolida dados de {@link GerenciarAgendamento} e {@link GerenciarVenda}.
+ *
  * Permite filtrar os dados por data ou por cliente e imprimir um resumo direto
  * no console sem formatações complexas.
  */
@@ -19,15 +23,35 @@ public class ServicoOrdemServico {
     private final GerenciarAgendamento gerenciarAgendamento;
     private final GerenciarVenda gerenciarVenda;
 
+    /**
+     * Construtor padrão.
+     * Instancia internamente novos gerenciadores de Agendamento e Venda.
+     */
     public ServicoOrdemServico() {
         this(new GerenciarAgendamento(), new GerenciarVenda());
     }
 
+    /**
+     * Construtor com injeção de dependência.
+     * Permite que instâncias externas dos gerenciadores sejam fornecidas.
+     *
+     * @param gerenciarAgendamento O gerenciador de agendamentos a ser usado.
+     * @param gerenciarVenda O gerenciador de vendas a ser usado.
+     */
     public ServicoOrdemServico(GerenciarAgendamento gerenciarAgendamento, GerenciarVenda gerenciarVenda) {
         this.gerenciarAgendamento = gerenciarAgendamento;
         this.gerenciarVenda = gerenciarVenda;
     }
 
+    /**
+     * Busca todos os agendamentos cuja data ({@code dataHora}) contenha
+     * a string de filtro fornecida.
+     *
+     * O método recarrega os dados ({@code carregar()}) antes da busca.
+     *
+     * @param data A string de filtro de data (ex: "15/11/2025" ou "11/2025").
+     * @return Uma lista de {@link Agendamento} correspondentes.
+     */
     public List<Agendamento> buscarAgendamentosPorData(String data) {
         List<Agendamento> resultado = new ArrayList<>();
         if (data == null || data.isBlank()) {
@@ -49,6 +73,15 @@ public class ServicoOrdemServico {
         return resultado;
     }
 
+    /**
+     * Busca todas as vendas cuja data ({@code dataVenda}) contenha
+     * a string de filtro fornecida.
+     *
+     * O método recarrega os dados ({@code carregar()}) antes da busca.
+     *
+     * @param data A string de filtro de data (ex: "15/11/2025" ou "11/2025").
+     * @return Uma lista de {@link Venda} correspondentes.
+     */
     public List<Venda> buscarVendasPorData(String data) {
         List<Venda> resultado = new ArrayList<>();
         if (data == null || data.isBlank()) {
@@ -70,6 +103,14 @@ public class ServicoOrdemServico {
         return resultado;
     }
 
+    /**
+     * Busca todos os agendamentos associados a um ID de cliente específico.
+     *
+     * O método recarrega os dados ({@code carregar()}) antes da busca.
+     *
+     * @param clienteId O ID do cliente a ser filtrado.
+     * @return Uma lista de {@link Agendamento} do cliente.
+     */
     public List<Agendamento> buscarAgendamentosPorCliente(int clienteId) {
         List<Agendamento> resultado = new ArrayList<>();
 
@@ -88,6 +129,14 @@ public class ServicoOrdemServico {
         return resultado;
     }
 
+    /**
+     * Busca todas as vendas associadas a um ID de cliente específico.
+     *
+     * O método recarrega os dados ({@code carregar()}) antes da busca.
+     *
+     * @param clienteId O ID do cliente a ser filtrado.
+     * @return Uma lista de {@link Venda} do cliente.
+     */
     public List<Venda> buscarVendasPorCliente(int clienteId) {
         List<Venda> resultado = new ArrayList<>();
 
@@ -106,6 +155,12 @@ public class ServicoOrdemServico {
         return resultado;
     }
 
+    /**
+     * Consolida e imprime no console todos os agendamentos e vendas
+     * filtrados por uma data específica.
+     *
+     * @param data A string de filtro de data (ex: "11/2025").
+     */
     public void imprimirPorData(String data) {
         List<Agendamento> agendamentos = buscarAgendamentosPorData(data);
         List<Venda> vendas = buscarVendasPorData(data);
@@ -115,6 +170,12 @@ public class ServicoOrdemServico {
         imprimirVendas(vendas);
     }
 
+    /**
+     * Consolida e imprime no console todos os agendamentos e vendas
+     * filtrados por um ID de cliente específico.
+     *
+     * @param clienteId O ID do cliente.
+     */
     public void imprimirPorCliente(int clienteId) {
         List<Agendamento> agendamentos = buscarAgendamentosPorCliente(clienteId);
         List<Venda> vendas = buscarVendasPorCliente(clienteId);
@@ -124,6 +185,11 @@ public class ServicoOrdemServico {
         imprimirVendas(vendas);
     }
 
+    /**
+     * Método auxiliar para formatar e imprimir a lista de agendamentos.
+     *
+     * @param agendamentos A lista a ser impressa.
+     */
     private void imprimirAgendamentos(List<Agendamento> agendamentos) {
         System.out.println("-- Agendamentos --");
         if (agendamentos.isEmpty()) {
@@ -135,6 +201,11 @@ public class ServicoOrdemServico {
         }
     }
 
+    /**
+     * Método auxiliar para formatar e imprimir a lista de vendas.
+     *
+     * @param vendas A lista a ser impressa.
+     */
     private void imprimirVendas(List<Venda> vendas) {
         System.out.println("-- Vendas --");
         if (vendas.isEmpty()) {

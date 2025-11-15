@@ -149,6 +149,7 @@ public class Barbearia {
             }
             if (acesso.temPermissao(PermissoesEnum.CRIAR_AGENDAMENTO)) {
                 System.out.println("4. Excluir Agendamento por ID");
+                System.out.println("5. Finalizar Agendamento (gera Nota Fiscal automaticamente)");
             }
             System.out.println("0. Voltar ao Menu Principal");
             System.out.print("Escolha uma opção: ");
@@ -171,6 +172,9 @@ public class Barbearia {
                     case 4:
                         if (acesso.temPermissao(PermissoesEnum.CRIAR_AGENDAMENTO)) excluirAgendamento();
                         break;
+                    case 5:
+                        if (acesso.temPermissao(PermissoesEnum.CRIAR_AGENDAMENTO)) finalizarAgendamento();
+                        break;
                     case 0:
                         agendamentoFacade.salvarAgendamentos();
                         System.out.println("Retornando ao Menu Principal.");
@@ -190,7 +194,7 @@ public class Barbearia {
             gerenciarCliente.carregar();
             gerenciadorFuncionario.carregar();
             gerenciarServico.carregar();
-            
+
             System.out.print("ID do Cliente: ");
             int idCliente = Integer.parseInt(scanner.nextLine());
 
@@ -233,7 +237,7 @@ public class Barbearia {
         try {
             // Recarrega dados para garantir que estejam atualizados
             gerenciarAgendamento.carregar();
-            
+
             System.out.print("ID do Agendamento a buscar: ");
             int id = Integer.parseInt(scanner.nextLine());
             Agendamento ag = agendamentoFacade.buscarAgendamento(id);
@@ -249,7 +253,7 @@ public class Barbearia {
         try {
             // Recarrega dados para garantir que estejam atualizados
             gerenciarAgendamento.carregar();
-            
+
             System.out.print("ID do Agendamento a excluir: ");
             int id = Integer.parseInt(scanner.nextLine());
             if (agendamentoFacade.excluirAgendamento(id)) {
@@ -257,6 +261,27 @@ public class Barbearia {
                 agendamentoFacade.salvarAgendamentos();
             } else {
                 System.out.println("Falha ao excluir agendamento.");
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("Erro de entrada. Digite um número para o ID.");
+        }
+    }
+
+    private static void finalizarAgendamento() {
+        try {
+            // Recarrega dados para garantir que estejam atualizados
+            gerenciarAgendamento.carregar();
+            gerenciarNotaFiscal.carregar();
+            gerenciarVenda.carregar();
+
+            System.out.print("ID do Agendamento a finalizar: ");
+            int id = Integer.parseInt(scanner.nextLine());
+
+            boolean sucesso = gerenciarAgendamento.finalizarAgendamento(id, gerenciarNotaFiscal, gerenciarVenda);
+            if (sucesso) {
+                agendamentoFacade.salvarAgendamentos();
+            } else {
+                System.out.println("Falha ao finalizar agendamento.");
             }
         } catch (NumberFormatException e) {
             System.out.println("Erro de entrada. Digite um número para o ID.");
@@ -342,7 +367,7 @@ public class Barbearia {
         try {
             // Recarrega dados para garantir que estejam atualizados
             gerenciarCliente.carregar();
-            
+
             System.out.print("ID do Cliente a buscar: ");
             int id = Integer.parseInt(scanner.nextLine());
             Cliente cliente = gerenciarCliente.buscarCliente(id);
@@ -358,7 +383,7 @@ public class Barbearia {
         try {
             // Recarrega dados para garantir que estejam atualizados
             gerenciarCliente.carregar();
-            
+
             System.out.print("ID do Cliente a atualizar: ");
             int id = Integer.parseInt(scanner.nextLine());
             System.out.println("Deixe em branco para não alterar.");
@@ -391,7 +416,7 @@ public class Barbearia {
         try {
             // Recarrega dados para garantir que estejam atualizados
             gerenciarCliente.carregar();
-            
+
             System.out.print("ID do Cliente a remover: ");
             int id = Integer.parseInt(scanner.nextLine());
             if (gerenciarCliente.removerPorId(id)) {
@@ -507,7 +532,7 @@ public class Barbearia {
         try {
             // Recarrega dados para garantir que estejam atualizados
             gerenciarServico.carregar();
-            
+
             System.out.print("ID do Serviço a atualizar: ");
             int id = Integer.parseInt(scanner.nextLine());
 
@@ -547,7 +572,7 @@ public class Barbearia {
         try {
             // Recarrega dados para garantir que estejam atualizados
             gerenciarServico.carregar();
-            
+
             System.out.print("ID do Serviço a remover: ");
             int id = Integer.parseInt(scanner.nextLine());
             if (gerenciarServico.removerPorId(id)) {
@@ -565,7 +590,7 @@ public class Barbearia {
         try {
             // Recarrega dados para garantir que estejam atualizados
             gerenciarServico.carregar();
-            
+
             System.out.print("ID do Serviço a buscar: ");
             int id = Integer.parseInt(scanner.nextLine());
             Servico s = gerenciarServico.buscarPorId(id);
@@ -643,7 +668,7 @@ public class Barbearia {
         try {
             // Recarrega dados para garantir que estejam atualizados
             gerenciadorProduto.carregar();
-            
+
             System.out.print("ID do Produto: ");
             int id = Integer.parseInt(scanner.nextLine());
             System.out.print("Nova Quantidade TOTAL no estoque: ");
@@ -667,7 +692,7 @@ public class Barbearia {
         try {
             // Recarrega dados para garantir que estejam atualizados
             gerenciadorProduto.carregar();
-            
+
             System.out.print("ID do Produto a buscar: ");
             int id = Integer.parseInt(scanner.nextLine());
             xela.chris.barbearia.models.Produto p = gerenciadorProduto.buscarPorId(id);
@@ -685,7 +710,7 @@ public class Barbearia {
         try {
             // Recarrega dados para garantir que estejam atualizados
             gerenciadorProduto.carregar();
-            
+
             System.out.print("ID do Produto a remover: ");
             String idStr = scanner.nextLine();
             // O método removerPorCpf na classe GerenciadorProduto está incorreto e usa uma String como entrada para o ID.
@@ -779,7 +804,7 @@ public class Barbearia {
         try {
             // Recarrega dados para garantir que estejam atualizados
             gerenciadorFuncionario.carregar();
-            
+
             System.out.print("ID do Funcionário a atualizar: ");
             int id = Integer.parseInt(scanner.nextLine());
             System.out.println("Deixe em branco para não alterar.");
@@ -820,7 +845,7 @@ public class Barbearia {
         try {
             // Recarrega dados para garantir que estejam atualizados
             gerenciadorFuncionario.carregar();
-            
+
             System.out.print("ID do Funcionário a remover: ");
             int id = Integer.parseInt(scanner.nextLine());
             gerenciadorFuncionario.removerFuncionario(id);
@@ -835,7 +860,7 @@ public class Barbearia {
         try {
             // Recarrega dados para garantir que estejam atualizados
             gerenciadorFuncionario.carregar();
-            
+
             System.out.print("ID do Funcionário a buscar: ");
             int id = Integer.parseInt(scanner.nextLine());
             Funcionario f = gerenciadorFuncionario.buscarFuncionario(id);
@@ -929,7 +954,9 @@ public class Barbearia {
             gerenciarCliente.carregar();
             gerenciadorProduto.carregar();
             gerenciarVenda.carregar();
-            
+            gerenciarAgendamento.carregar();
+            gerenciarNotaFiscal.carregar();
+
             System.out.print("ID do Cliente: ");
             int idCliente = Integer.parseInt(scanner.nextLine());
             System.out.print("ID do Produto: ");
@@ -945,6 +972,56 @@ public class Barbearia {
                 System.out.println("Venda realizada com sucesso!");
                 gerenciarVenda.salvarTodasVendas(); // Salva a venda imediatamente
                 gerenciadorProduto.salvarTodosProdutos(); // Salva a atualização de estoque
+
+                // Busca a venda recém-criada para gerar nota fiscal
+                gerenciarVenda.carregar();
+                List<Venda> todasVendas = gerenciarVenda.listar();
+                Venda vendaRecente = todasVendas.stream()
+                        .filter(v -> v.getCliente() != null && v.getCliente().getId() == idCliente)
+                        .filter(v -> v.getProduto() != null && v.getProduto().getId() == idProduto)
+                        .filter(v -> v.getQuantidade() == quantidade)
+                        .filter(v -> v.getDataVenda().equals(dataFormatada))
+                        .max((v1, v2) -> Integer.compare(v1.getId(), v2.getId())) // Pega a mais recente (maior ID)
+                        .orElse(null);
+
+                // Verifica se há um agendamento do mesmo cliente que ainda não foi finalizado
+                if (vendaRecente != null) {
+                    List<Agendamento> agendamentosCliente = gerenciarAgendamento.listarAgendamentosOrdenadosPorData()
+                            .stream()
+                            .filter(ag -> ag.getCliente() != null && ag.getCliente().getId() == idCliente)
+                            .filter(ag -> ag.getStatusCliente() != StatusAtendimentoCliente.ATENDIDO)
+                            .toList();
+
+                    // Se houver agendamento não finalizado, gera nota fiscal automaticamente
+                    if (!agendamentosCliente.isEmpty()) {
+                        // Pega o agendamento mais recente
+                        Agendamento agendamentoRecente = agendamentosCliente.get(agendamentosCliente.size() - 1);
+
+                        // Busca todas as vendas do cliente que ainda não foram vinculadas a notas fiscais
+                        List<NotaFiscal> todasNotas = gerenciarNotaFiscal.listar();
+                        List<Venda> vendasCliente = gerenciarVenda.listar().stream()
+                                .filter(v -> v.getCliente() != null && v.getCliente().getId() == idCliente)
+                                .filter(v -> {
+                                    // Verifica se a venda já está em alguma nota fiscal
+                                    return todasNotas.stream()
+                                            .noneMatch(nota -> nota.getVendasProdutos() != null &&
+                                                    nota.getVendasProdutos().contains(v));
+                                })
+                                .toList();
+
+                        // Gera nota fiscal automaticamente
+                        NotaFiscal nota = gerenciarNotaFiscal.gerarNotaFiscal(agendamentoRecente, vendasCliente);
+                        if (nota != null) {
+                            System.out.println("Nota Fiscal gerada automaticamente após a venda!");
+                            System.out.println("ID da Nota Fiscal: " + nota.getId());
+                            System.out.println("Valor Total: R$ " + String.format("%.2f", nota.getValorTotal()));
+
+                            // Finaliza o agendamento automaticamente
+                            agendamentoRecente.setStatusCliente(StatusAtendimentoCliente.ATENDIDO);
+                            gerenciarAgendamento.salvarTodos();
+                        }
+                    }
+                }
             } else {
                 System.out.println("Falha na venda. Verifique ID do cliente/produto ou estoque.");
             }
@@ -959,7 +1036,7 @@ public class Barbearia {
             gerenciarAgendamento.carregar();
             gerenciarVenda.carregar();
             gerenciarNotaFiscal.carregar();
-            
+
             System.out.print("ID do Agendamento para gerar Nota Fiscal: ");
             int idAgendamento = Integer.parseInt(scanner.nextLine());
 
@@ -987,7 +1064,6 @@ public class Barbearia {
             System.out.println("Erro de entrada. Digite um número para o ID.");
         }
     }
-
 
     private static void menuRelatorios() {
         int opcao = -1;
@@ -1070,13 +1146,13 @@ public class Barbearia {
         try {
             System.out.print("Digite a data para o balanço (Ex: 15/11/2025): ");
             String data = scanner.nextLine();
-            
+
             // Garante que os dados estão atualizados antes de calcular
             gerenciarAgendamento.carregar();
             gerenciarVenda.carregar();
-            
+
             gerenciadorBalanco.gerarBalanco(data);
-            
+
             System.out.println("\nBalanço gerado com sucesso!");
         } catch (Exception e) {
             System.out.println("Erro ao gerar balanço: " + e.getMessage());
@@ -1087,13 +1163,13 @@ public class Barbearia {
         try {
             System.out.print("Digite o mês/ano para o balanço (Ex: 11/2025): ");
             String mesAno = scanner.nextLine();
-            
+
             // Garante que os dados estão atualizados antes de calcular
             gerenciarAgendamento.carregar();
             gerenciarVenda.carregar();
-            
+
             gerenciadorBalanco.gerarBalanco(mesAno);
-            
+
             System.out.println("\nBalanço mensal gerado com sucesso!");
         } catch (Exception e) {
             System.out.println("Erro ao gerar balanço: " + e.getMessage());
@@ -1105,12 +1181,12 @@ public class Barbearia {
             // Garante que os dados estão atualizados antes de calcular
             gerenciarAgendamento.carregar();
             gerenciarVenda.carregar();
-            
+
             // Calcula totais sem filtro (todos os registros)
             double totalServicos = gerenciadorBalanco.calcularTotalServicos("");
             double totalProdutos = gerenciadorBalanco.calcularTotalProdutos("");
             double totalGeral = totalServicos + totalProdutos;
-            
+
             System.out.println("\n=========================================");
             System.out.println("      BALANÇO FINANCEIRO COMPLETO");
             System.out.println("      (Todas as Vendas e Serviços)");
@@ -1120,7 +1196,7 @@ public class Barbearia {
             System.out.println("-----------------------------------------");
             System.out.printf("TOTAL GERAL:         R$ %.2f%n", totalGeral);
             System.out.println("=========================================");
-            
+
             System.out.println("\nBalanço completo gerado com sucesso!");
         } catch (Exception e) {
             System.out.println("Erro ao gerar balanço: " + e.getMessage());
