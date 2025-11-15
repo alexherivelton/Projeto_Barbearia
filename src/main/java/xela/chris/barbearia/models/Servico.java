@@ -13,6 +13,20 @@ public class Servico {
     /** Contador usado para geração automática e thread-safe de IDs. */
     private static final AtomicInteger contador = new AtomicInteger(0);
 
+    /** 
+     * Questão 11: Contador de instâncias usando encapsulamento (private static com get/set).
+     * Vantagens: Controle total sobre acesso, validação possível, melhor para manutenção.
+     * Desvantagens: Mais verboso, requer métodos get/set.
+     */
+    private static int contadorInstanciasEncapsulado = 0;
+
+    /**
+     * Questão 12: Contador de instâncias usando protected static.
+     * Vantagens: Acesso direto para subclasses, mais simples.
+     * Desvantagens: Menos controle, pode ser modificado diretamente por subclasses.
+     */
+    protected static int contadorInstanciasProtected = 0;
+
     /** Identificador único do serviço. */
     private int id;
 
@@ -49,6 +63,10 @@ public class Servico {
         this.preco = preco;
         this.utilizaLavagemSecagem = utilizaLavagemSecagem;
         this.descricao = descricao;
+        
+        // Incrementa os contadores de instâncias (Questões 11 e 12)
+        contadorInstanciasEncapsulado++;
+        contadorInstanciasProtected++;
     }
 
     /**
@@ -149,6 +167,38 @@ public class Servico {
      */
     public static void atualizarContador(int ultimoId) {
         contador.set(ultimoId);
+    }
+
+    /**
+     * Questão 11: Getter para contador encapsulado.
+     * @return número de instâncias criadas
+     */
+    public static int getContadorInstanciasEncapsulado() {
+        return contadorInstanciasEncapsulado;
+    }
+
+    /**
+     * Questão 11: Setter para contador encapsulado.
+     * @param valor novo valor do contador
+     */
+    public static void setContadorInstanciasEncapsulado(int valor) {
+        contadorInstanciasEncapsulado = valor;
+    }
+
+    /**
+     * Questão 12: Getter para contador protected (para demonstração).
+     * @return número de instâncias criadas usando protected
+     */
+    public static int getContadorInstanciasProtected() {
+        return contadorInstanciasProtected;
+    }
+
+    /**
+     * Questão 12: Setter para contador protected (para demonstração).
+     * @param valor novo valor do contador
+     */
+    public static void setContadorInstanciasProtected(int valor) {
+        contadorInstanciasProtected = valor;
     }
 
     /**

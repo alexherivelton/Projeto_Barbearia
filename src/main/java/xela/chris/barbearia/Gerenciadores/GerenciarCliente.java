@@ -2,11 +2,13 @@ package xela.chris.barbearia.Gerenciadores;
 
 import xela.chris.barbearia.enums.StatusAtendimentoCliente;
 import xela.chris.barbearia.models.Cliente;
-import xela.chris.barbearia.models.Funcionario;
-import xela.chris.barbearia.models.Servico;
-import xela.chris.barbearia.negocio.Agendamento;
+
+import xela.chris.barbearia.Comparators.ClienteCpfComparators;
+import xela.chris.barbearia.Comparators.ClienteNomeComparators;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
@@ -105,7 +107,6 @@ public class GerenciarCliente {
      * @return true caso o cliente seja encontrado e atualizado; false caso contrário.
      */
     public boolean atualizarCliente(int id, String novoNome, String novoCpf, String novoTelefone, StatusAtendimentoCliente status) {
-        List<Cliente> clientes = repo.listar();
         Cliente cliente = buscarCliente(id);
 
         if (cliente == null) {
@@ -146,5 +147,88 @@ public class GerenciarCliente {
     public void limpar() {
         clientes = new ArrayList<>();
         repo.salvarTodos(new ArrayList<>());
+    }
+
+    /**
+     * Questão 17: Método find para buscar cliente usando iterator e comparator.
+     * Busca um cliente na lista ordenada usando um comparator específico.
+     * 
+     * @param clienteProcurado Cliente a ser encontrado
+     * @param comparator Comparator usado para ordenação e comparação
+     * @return Cliente encontrado ou null se não encontrado
+     */
+    public Cliente findCliente(Cliente clienteProcurado, Comparator<Cliente> comparator) {
+        // Primeiro, ordena a lista usando o comparator
+        List<Cliente> listaOrdenada = new ArrayList<>(clientes);
+        listaOrdenada.sort(comparator);
+        
+        // Usa iterator para percorrer a lista ordenada
+        Iterator<Cliente> iterator = listaOrdenada.iterator();
+        while (iterator.hasNext()) {
+            Cliente cliente = iterator.next();
+            // Compara usando o comparator (retorna 0 se forem iguais)
+            if (comparator.compare(cliente, clienteProcurado) == 0) {
+                return cliente;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Questão 17: Busca cliente usando Collections.binarySearch() com Comparator por nome.
+     * A lista é ordenada antes da busca.
+     * 
+     * @param clienteProcurado Cliente a ser encontrado (deve ter o nome preenchido)
+     * @return Cliente encontrado ou null se não encontrado
+     */
+    public Cliente buscarClientePorNomeComBinarySearch(Cliente clienteProcurado) {
+        List<Cliente> listaOrdenada = new ArrayList<>(clientes);
+        Collections.sort(listaOrdenada, new ClienteNomeComparators());
+        
+        int indice = Collections.binarySearch(listaOrdenada, clienteProcurado, new ClienteNomeComparators());
+        if (indice >= 0) {
+            return listaOrdenada.get(indice);
+        }
+        return null;
+    }
+
+    /**
+     * Questão 17: Busca cliente usando Collections.binarySearch() com Comparator genérico.
+     * A lista é ordenada antes da busca usando o comparator fornecido.
+     * 
+     * @param clienteProcurado Cliente a ser encontrado
+     * @param comparator Comparator usado para ordenação e busca
+     * @return Cliente encontrado ou null se não encontrado
+     */
+    public Cliente buscarClienteComBinarySearch(Cliente clienteProcurado, Comparator<Cliente> comparator) {
+        List<Cliente> listaOrdenada = new ArrayList<>(clientes);
+        Collections.sort(listaOrdenada, comparator);
+        
+        int indice = Collections.binarySearch(listaOrdenada, clienteProcurado, comparator);
+        if (indice >= 0) {
+            return listaOrdenada.get(indice);
+        }
+        return null;
+    }
+
+    /**
+     * Questão 17: Retorna a lista de clientes ordenada por um comparator específico.
+     * Útil para visualização antes de usar binarySearch.
+     * 
+     * @param comparator Comparator usado para ordenação
+     * @return Lista ordenada de clientes
+     */
+    public List<Cliente> getClientesOrdenados(Comparator<Cliente> comparator) {
+        List<Cliente> listaOrdenada = new ArrayList<>(clientes);
+        Collections.sort(listaOrdenada, comparator);
+        return listaOrdenada;
+    }
+
+    /**
+     * Retorna a lista de clientes (cópia para evitar modificações externas).
+     * @return cópia da lista de clientes
+     */
+    public List<Cliente> getClientes() {
+        return new ArrayList<>(clientes);
     }
 }
