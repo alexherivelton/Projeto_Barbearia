@@ -6,6 +6,7 @@
     "valor" : 14.5,
     "quantidade" : 33
   },
+  "cliente" : null,
   "quantidade" : 2,
   "valorUnitario" : 14.5,
   "valorTotal" : 29.0,
@@ -18,6 +19,7 @@
     "valor" : 12.5,
     "quantidade" : 33
   },
+  "cliente" : null,
   "quantidade" : 2,
   "valorUnitario" : 12.5,
   "valorTotal" : 25.0,
@@ -30,6 +32,7 @@
     "valor" : 14.5,
     "quantidade" : 33
   },
+  "cliente" : null,
   "quantidade" : 2,
   "valorUnitario" : 14.5,
   "valorTotal" : 29.0,
@@ -42,6 +45,7 @@
     "valor" : 12.5,
     "quantidade" : 33
   },
+  "cliente" : null,
   "quantidade" : 2,
   "valorUnitario" : 12.5,
   "valorTotal" : 25.0,
@@ -54,6 +58,7 @@
     "valor" : 14.5,
     "quantidade" : 31
   },
+  "cliente" : null,
   "quantidade" : 2,
   "valorUnitario" : 14.5,
   "valorTotal" : 29.0,
@@ -66,6 +71,7 @@
     "valor" : 12.5,
     "quantidade" : 31
   },
+  "cliente" : null,
   "quantidade" : 2,
   "valorUnitario" : 12.5,
   "valorTotal" : 25.0,
@@ -78,6 +84,7 @@
     "valor" : 14.5,
     "quantidade" : 29
   },
+  "cliente" : null,
   "quantidade" : 2,
   "valorUnitario" : 14.5,
   "valorTotal" : 29.0,
@@ -90,6 +97,7 @@
     "valor" : 12.5,
     "quantidade" : 21
   },
+  "cliente" : null,
   "quantidade" : 10,
   "valorUnitario" : 12.5,
   "valorTotal" : 125.0,
@@ -102,6 +110,7 @@
     "valor" : 14.5,
     "quantidade" : 27
   },
+  "cliente" : null,
   "quantidade" : 2,
   "valorUnitario" : 14.5,
   "valorTotal" : 29.0,
@@ -114,6 +123,7 @@
     "valor" : 12.5,
     "quantidade" : 11
   },
+  "cliente" : null,
   "quantidade" : 10,
   "valorUnitario" : 12.5,
   "valorTotal" : 125.0,
@@ -126,6 +136,7 @@
     "valor" : 14.5,
     "quantidade" : 25
   },
+  "cliente" : null,
   "quantidade" : 2,
   "valorUnitario" : 14.5,
   "valorTotal" : 29.0,
@@ -138,6 +149,7 @@
     "valor" : 12.5,
     "quantidade" : 1
   },
+  "cliente" : null,
   "quantidade" : 10,
   "valorUnitario" : 12.5,
   "valorTotal" : 125.0,
@@ -150,6 +162,7 @@
     "valor" : 14.5,
     "quantidade" : 33
   },
+  "cliente" : null,
   "quantidade" : 2,
   "valorUnitario" : 14.5,
   "valorTotal" : 29.0,
@@ -162,10 +175,11 @@
     "valor" : 12.5,
     "quantidade" : 25
   },
+  "cliente" : null,
   "quantidade" : 10,
   "valorUnitario" : 12.5,
   "valorTotal" : 125.0,
-  "dataVenda" : "05/11/2025"
+  "dataVenda" : "02/10/2032"
 }, {
   "id" : 13,
   "produto" : {
@@ -174,6 +188,7 @@
     "valor" : 14.5,
     "quantidade" : 31
   },
+  "cliente" : null,
   "quantidade" : 2,
   "valorUnitario" : 14.5,
   "valorTotal" : 29.0,
@@ -186,8 +201,28 @@
     "valor" : 12.5,
     "quantidade" : 15
   },
+  "cliente" : null,
   "quantidade" : 10,
   "valorUnitario" : 12.5,
   "valorTotal" : 125.0,
   "dataVenda" : "05/11/2025"
+}, {
+  "id" : 15,
+  "produto" : {
+    "id" : 2,
+    "nome" : "Barbeleiro",
+    "valor" : 50.0,
+    "quantidade" : 48
+  },
+  "cliente" : {
+    "nome" : "Christian",
+    "cpf" : "17600724600",
+    "telefone" : "33998642761",
+    "id" : 1,
+    "statusAtendimentoCliente" : "EM_ESPERA"
+  },
+  "quantidade" : 2,
+  "valorUnitario" : 50.0,
+  "valorTotal" : 100.0,
+  "dataVenda" : "15/11/2025"
 } ]

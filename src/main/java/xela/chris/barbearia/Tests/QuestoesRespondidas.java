@@ -62,7 +62,6 @@ public class QuestoesRespondidas {
         // }
         //Questão 10:{
         System.out.println("====Questão 10====");
-        System.out.println("Precisa fazer!");
         // Acredito que seja resolvido com a Nota Fiscal
 
         //Questão 11:{
