@@ -43,7 +43,7 @@ public class TestNota {
         vendasCliente.add(gv.buscarVenda(6));
 
         // Gerando a nota fiscal a partir do agendamento e das vendas do cliente
-        NotaFiscal nota = gnf.gerarNotaFiscal(agendamento, vendasCliente);
+        NotaFiscal nota = gnf.gerarNotaFiscal( vendasCliente);
 
         System.out.println("=================================================================");
         System.out.println("Nota fiscal gerada:");

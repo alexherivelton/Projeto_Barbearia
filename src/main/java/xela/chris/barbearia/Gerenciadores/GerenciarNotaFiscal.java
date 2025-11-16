@@ -79,22 +79,40 @@ public class GerenciarNotaFiscal {
     }
 
     /**
+     * (NOVO) Gera uma nota fiscal baseada apenas em uma lista de vendas de produtos
+     * (sem agendamento de serviços).
+     *
+     * @param vendasProdutos A lista de vendas de produtos a ser incluída.
+     * @return A {@link NotaFiscal} gerada e persistida.
+     */
+    public NotaFiscal gerarNotaFiscal(List<Venda> vendasProdutos) {
+        // Chama o construtor principal passando 'null' para o agendamento
+        return gerarNotaFiscal(null, vendasProdutos);
+    }
+
+
+    /**
      * Cria, adiciona e persiste uma nova nota fiscal baseada em um agendamento
      * e uma lista de vendas de produtos associadas.
      *
-     * Se o agendamento for nulo, a operação é abortada.
+     * (MODIFICADO) Agora permite que o agendamento seja nulo, desde que
+     * a lista de vendas não esteja vazia.
+     *
      * A nota fiscal criada é imediatamente salva no arquivo JSON
      * através do método {@link #adicionar(NotaFiscal)}.
      *
-     * @param agendamento O agendamento (serviços) a ser incluído na nota.
+     * @param agendamento O agendamento (serviços) a ser incluído na nota (pode ser nulo).
      * @param vendasProdutos A lista de vendas de produtos a ser incluída.
      * @return A {@link NotaFiscal} gerada e persistida, ou {@code null}
-     * se o agendamento fornecido for nulo.
+     * se tanto o agendamento quanto as vendas forem nulos/vazios.
      */
     public NotaFiscal gerarNotaFiscal(Agendamento agendamento, List<Venda> vendasProdutos) {
-        if (agendamento == null) {
+        // Validação: Não pode gerar nota vazia
+        if (agendamento == null && (vendasProdutos == null || vendasProdutos.isEmpty())) {
+            System.out.println("Erro: Nota fiscal nao pode ser gerada sem agendamento ou sem produtos.");
             return null;
         }
+
         NotaFiscal nota = new NotaFiscal(agendamento, vendasProdutos);
         adicionar(nota); // O método adicionar já salva
         return nota;

@@ -17,6 +17,7 @@ import xela.chris.barbearia.servicos.ServicoVenda;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -920,9 +921,10 @@ public class Barbearia {
         while (opcao != 0) {
             System.out.println("\n--- MENU VENDAS E NOTA FISCAL ---");
             System.out.println("1. Realizar Venda de Produto");
-            System.out.println("2. Gerar Nota Fiscal de Agendamento");
-            System.out.println("3. Listar Todas as Vendas");
-            System.out.println("4. Listar Todas as Notas Fiscais");
+            System.out.println("2. Gerar Nota Fiscal (baseada em Agendamento)");
+            System.out.println("3. Gerar Nota Fiscal Avulsa (baseada somente em Vendas)"); // NOVA OPÇÃO
+            System.out.println("4. Listar Todas as Vendas");
+            System.out.println("5. Listar Todas as Notas Fiscais");
             System.out.println("0. Voltar ao Menu Principal");
             System.out.print("Escolha uma opção: ");
 
@@ -933,13 +935,19 @@ public class Barbearia {
                         realizarVenda();
                         break;
                     case 2:
-                        gerarNotaFiscal();
+                        gerarNotaFiscal(); // Método antigo, focado em agendamento
                         break;
                     case 3:
+                        // (NOVO) Chama o método para gerar nota só de vendas
+                        if (acesso.temPermissao(PermissoesEnum.GERAR_NOTA)) gerarNotaFiscalAvulsa();
+                        break;
+                    case 4:
+                        // (Era 3) Listar Vendas
                         gerenciarVenda.carregar(); // Recarrega antes de listar
                         gerenciarVenda.listar().forEach(System.out::println);
                         break;
-                    case 4:
+                    case 5:
+                        // (Era 4) Listar Notas
                         gerenciarNotaFiscal.carregar(); // Recarrega antes de listar
                         gerenciarNotaFiscal.listar().forEach(System.out::println);
                         break;
@@ -1010,10 +1018,10 @@ public class Barbearia {
                         List<Venda> vendasCliente = gerenciarVenda.listar().stream()
                                 .filter(v -> v.getCliente() != null && v.getCliente().getId() == idCliente)
                                 .filter(v -> {
-                                    // Verifica se a venda já está em alguma nota fiscal
+                                    // Verifica se a venda já está em alguma nota fiscal (por ID)
                                     return todasNotas.stream()
                                             .noneMatch(nota -> nota.getVendasProdutos() != null &&
-                                                    nota.getVendasProdutos().contains(v));
+                                                    nota.getVendasProdutos().stream().anyMatch(vn -> vn.getId() == v.getId()));
                                 })
                                 .toList();
 
@@ -1054,17 +1062,56 @@ public class Barbearia {
                 return;
             }
 
-            // Simplesmente obtém todas as vendas do cliente (idealmente, as não vinculadas a notas)
-            Cliente clienteAgendamento = agendamento.getCliente();
-            List<Venda> vendasCliente = gerenciarVenda.listar().stream()
-                    .filter(v -> v.getCliente() != null && clienteAgendamento != null && v.getCliente().getId() == clienteAgendamento.getId())
-                    .toList();
+            if (agendamento.getCliente() == null) {
+                System.out.println("Agendamento não possui cliente associado.");
+                return;
+            }
+
+            // Busca vendas do cliente que ainda não foram vinculadas a notas fiscais
+            List<Venda> vendasNaoFaturadas = new ArrayList<>();
+            List<Venda> todasVendas = gerenciarVenda.listar();
+            List<NotaFiscal> todasNotas = gerenciarNotaFiscal.listar();
+            int idCliente = agendamento.getCliente().getId();
+
+            for (Venda venda : todasVendas) {
+                // Verifica se a venda pertence ao cliente
+                if (venda.getCliente() != null && venda.getCliente().getId() == idCliente) {
+
+                    // Verifica se esta venda (pelo ID) já está em alguma nota fiscal existente
+                    boolean jaVinculada = false;
+                    for (NotaFiscal nota : todasNotas) {
+                        if (nota.getVendasProdutos() != null) {
+                            // Compara por ID, pois a instância do objeto pode ser diferente
+                            if (nota.getVendasProdutos().stream().anyMatch(v -> v.getId() == venda.getId())) {
+                                jaVinculada = true;
+                                break;
+                            }
+                        }
+                    }
+
+                    if (!jaVinculada) {
+                        vendasNaoFaturadas.add(venda);
+                    }
+                }
+            }
+
+            if (!vendasNaoFaturadas.isEmpty()) {
+                System.out.println("Encontradas " + vendasNaoFaturadas.size() + " vendas de produtos não faturadas para este cliente, que serão adicionadas à nota.");
+            }
 
             // O método gerarNotaFiscal já salva automaticamente no JSON através do método adicionar()
-            NotaFiscal nota = gerenciarNotaFiscal.gerarNotaFiscal(agendamento, vendasCliente);
+            NotaFiscal nota = gerenciarNotaFiscal.gerarNotaFiscal(agendamento, vendasNaoFaturadas);
+
             if (nota != null) {
                 System.out.println("Nota Fiscal gerada e salva no JSON!");
                 System.out.println("ID da Nota Fiscal: " + nota.getId());
+                System.out.println(nota); // Imprime a nota
+
+                // Finaliza o agendamento
+                agendamento.setStatusCliente(StatusAtendimentoCliente.ATENDIDO);
+                gerenciarAgendamento.salvarTodos();
+                System.out.println("Agendamento ID " + agendamento.getId() + " finalizado.");
+
             } else {
                 System.out.println("Erro ao gerar nota fiscal.");
             }
@@ -1072,6 +1119,74 @@ public class Barbearia {
             System.out.println("Erro de entrada. Digite um número para o ID.");
         }
     }
+
+    /**
+     * (NOVO) Gera uma nota fiscal avulsa baseada apenas em vendas de produtos
+     * de um cliente que ainda não foram faturadas.
+     */
+    private static void gerarNotaFiscalAvulsa() {
+        try {
+            // Recarrega dados para garantir que estejam atualizados
+            gerenciarVenda.carregar();
+            gerenciarNotaFiscal.carregar();
+            gerenciarCliente.carregar();
+
+            System.out.print("ID do Cliente para gerar a nota fiscal de vendas: ");
+            int idCliente = Integer.parseInt(scanner.nextLine());
+
+            Cliente cliente = gerenciarCliente.buscarCliente(idCliente);
+            if (cliente == null) {
+                System.out.println("Cliente com ID " + idCliente + " não encontrado.");
+                return;
+            }
+
+            // Busca vendas do cliente que ainda não foram vinculadas a notas fiscais
+            List<Venda> vendasNaoFaturadas = new ArrayList<>();
+            List<Venda> todasVendas = gerenciarVenda.listar();
+            List<NotaFiscal> todasNotas = gerenciarNotaFiscal.listar();
+
+            for (Venda venda : todasVendas) {
+                // Verifica se a venda pertence ao cliente
+                if (venda.getCliente() != null && venda.getCliente().getId() == idCliente) {
+
+                    // Verifica se esta venda (pelo ID) já está em alguma nota fiscal existente
+                    boolean jaVinculada = false;
+                    for (NotaFiscal nota : todasNotas) {
+                        if (nota.getVendasProdutos() != null) {
+                            // Compara por ID, pois a instância do objeto pode ser diferente
+                            if (nota.getVendasProdutos().stream().anyMatch(v -> v.getId() == venda.getId())) {
+                                jaVinculada = true;
+                                break;
+                            }
+                        }
+                    }
+
+                    if (!jaVinculada) {
+                        vendasNaoFaturadas.add(venda);
+                    }
+                }
+            }
+
+            if (vendasNaoFaturadas.isEmpty()) {
+                System.out.println("Nenhuma venda nova (não faturada) encontrada para o cliente: " + cliente.getNome());
+                return;
+            }
+
+            // Chama o método do gerenciador que aceita apenas vendas (passando null para agendamento)
+            NotaFiscal nota = gerenciarNotaFiscal.gerarNotaFiscal(null, vendasNaoFaturadas);
+
+            if (nota != null) {
+                System.out.println("Nota Fiscal de Venda Avulsa gerada e salva com sucesso!");
+                System.out.println(nota);
+            } else {
+                System.out.println("Erro ao gerar nota fiscal de venda avulsa.");
+            }
+
+        } catch (NumberFormatException e) {
+            System.out.println("Erro de entrada. Certifique-se de digitar um número para o ID do Cliente.");
+        }
+    }
+
 
     private static void menuRelatorios() {
         int opcao = -1;

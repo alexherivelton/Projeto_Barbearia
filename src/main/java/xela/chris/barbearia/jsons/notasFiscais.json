@@ -212,4 +212,30 @@
     "quantidade" : 48
   } ],
   "valorTotal" : 135.0
+}, {
+  "id" : 5,
+  "dataEmissao" : 1763307115249,
+  "agendamento" : null,
+  "servicos" : [ ],
+  "vendasProdutos" : [ {
+    "id" : 6,
+    "produto" : {
+      "id" : 2,
+      "nome" : "Gel de cabelo",
+      "valor" : 12.5,
+      "quantidade" : 21
+    },
+    "cliente" : null,
+    "quantidade" : 10,
+    "valorUnitario" : 12.5,
+    "valorTotal" : 125.0,
+    "dataVenda" : "02/11/2025"
+  } ],
+  "itens" : [ {
+    "id" : 2,
+    "nome" : "Gel de cabelo",
+    "valor" : 12.5,
+    "quantidade" : 21
+  } ],
+  "valorTotal" : 125.0
 } ]

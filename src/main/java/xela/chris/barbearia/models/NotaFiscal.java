@@ -57,6 +57,16 @@ public class NotaFiscal {
     }
 
     /**
+     * (NOVO) Construtor que cria uma nota fiscal baseada apenas em uma lista
+     * de vendas de produtos (sem agendamento de serviços).
+     *
+     * @param vendasProdutos A lista de {@link Venda} (produtos) a ser incluída.
+     */
+    public NotaFiscal(List<Venda> vendasProdutos) {
+        this(null, vendasProdutos);
+    }
+
+    /**
      * Construtor completo que cria uma nota fiscal baseada em um agendamento
      * (serviços) e uma lista de vendas de produtos.
      *
