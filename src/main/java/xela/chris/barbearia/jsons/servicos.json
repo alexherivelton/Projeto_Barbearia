@@ -1,0 +1,7 @@
+[ {
+  "id" : 1,
+  "nome" : "Corte Teste",
+  "preco" : 25.0,
+  "utilizaLavagemSecagem" : false,
+  "descricao" : "Corte de cabelo para teste"
+} ]

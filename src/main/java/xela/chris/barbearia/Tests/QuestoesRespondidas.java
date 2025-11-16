@@ -117,9 +117,11 @@ public class QuestoesRespondidas {
 
         // Questão 07
         System.out.println("\n====Questão 07====");
+        System.out.println("Acessar a classe GerenciadorClientes.");
 
         // Questão 08
         System.out.println("\n====Questão 08====");
+        System.out.println("Acessar a classe ServicoOrdemServico.");
 
         // Questão 09
         System.out.println("\n====Questão 09====");
