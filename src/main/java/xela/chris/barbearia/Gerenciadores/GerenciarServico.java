@@ -101,7 +101,7 @@ public class GerenciarServico {
                 return servico;
             }
         }
-        System.out.println("Diabo nao encontrado!");
+        System.out.println("Servico nao encontrado!");
         return null;
     }
 

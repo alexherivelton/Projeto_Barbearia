@@ -33,7 +33,7 @@ public class TestNota {
 
 
         System.out.println("=================================================================");
-        System.out.println("Agendamento criado:");
+//        System.out.println("Agendamento criado:");
         Agendamento agendamento = ga.buscarPorId(56);
         System.out.println(agendamento);
 
@@ -41,11 +41,6 @@ public class TestNota {
 
         List<Venda> vendasCliente = new ArrayList<>();
         vendasCliente.add(gv.buscarVenda(6));
-
-//                gv.listar().stream()
-//                .filter(v -> v.getCliente() != null && agendamento != null && agendamento.getCliente() != null
-//                        && v.getCliente().getId() == agendamento.getCliente().getId())
-//                .collect(Collectors.toList());
 
         // Gerando a nota fiscal a partir do agendamento e das vendas do cliente
         NotaFiscal nota = gnf.gerarNotaFiscal(agendamento, vendasCliente);

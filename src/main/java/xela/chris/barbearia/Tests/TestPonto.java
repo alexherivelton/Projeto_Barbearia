@@ -16,7 +16,7 @@ public class TestPonto {
         if(f != null){
             gp.baterPonto(f);
         } else{
-            System.out.println("FUncionario do diabo nao encontrado!");
+            System.out.println("FUncionario nao encontrado!");
         }
 //        gp.buscarPorData(gf.buscarFuncionario(f.getId()),"2025-11-13");
     }

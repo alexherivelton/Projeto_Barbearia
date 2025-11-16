@@ -112,7 +112,7 @@ public class GerenciadorFuncionario {
                 return funcionario;
             }
         }
-        System.out.println("Diabo nao encontrado!");
+        System.out.println("Funcionario nao encontrado!");
         return null;
     }
 

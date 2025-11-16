@@ -71,13 +71,15 @@ public class QuestoesRespondidas {
         // Questão 06
         System.out.println("\n====Questão 06====");
         System.out.println("Acessar a classe GerenciadorFuncionario");
-        // ex para adicionar: Funcionario f1 = new Funcionario("Maria", "12345678900", "33998642761", "Atendente","chris" , "1234");
+        // ex para criar: Funcionario f1 = new Funcionario("Maria", "12345678900", "33998642761", "Atendente","chris" , "1234");
+        // ex para adicionar: gerenciadorFuncionario.adicionarFuncionario(f1);
         // ex para alterar: gerenciadorFuncionario.atualizarFuncionario(3, "Jose do Grau", null, null, null, "jose123", "jose1234545");
         // ex para excluir: gerenciadorFuncionario.removerFuncionario(3);
 
         // Questão 07
         System.out.println("\n====Questão 07====");
-        // ex para adicionar: Cliente cliente1 = new Cliente("Christian", "17600724600", "33998642761", StatusAtendimentoCliente.EM_ESPERA);
+        // ex para criar: Cliente cliente1 = new Cliente("Christian", "17600724600", "33998642761", StatusAtendimentoCliente.EM_ESPERA);
+        // ex para adicionar: gerenciarCliente.adicionar(cliente1);
         // ex para alterar: gerenciarCliente.atualizarCliente(2, "Alex", null, null, StatusAtendimentoCliente.EM_ATENDIMENTO);
         // ex para excluir: gerenciarCliente.removerPorId(2);
 
@@ -85,6 +87,7 @@ public class QuestoesRespondidas {
         System.out.println("\n====Questão 08====");
         // Imprimi os atendimentos e serviços realizados em determinado dia
         // Imprimi também os serviços realizados por clientes
+        // TesteServicoOrdemServico
 
         // Questão 09
         System.out.println("\n====Questão 09====");
@@ -93,6 +96,7 @@ public class QuestoesRespondidas {
         // Questão 10
         System.out.println("\n====Questão 10====");
         System.out.println("Resolvido com a Nota Fiscal");
+        //TestNota
 
         // Questão 11
         System.out.println("\n====Questão 11====");
