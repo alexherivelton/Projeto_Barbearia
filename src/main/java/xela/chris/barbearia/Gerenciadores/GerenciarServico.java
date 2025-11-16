@@ -145,7 +145,7 @@ public class GerenciarServico {
         for (Servico s : servicos) {
             System.out.println(s);
         }
-        return List.of();
+        return this.servicos;
     }
 
     /**
