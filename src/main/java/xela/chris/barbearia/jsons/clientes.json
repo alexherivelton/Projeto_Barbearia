@@ -178,4 +178,22 @@
   "telefone" : "31900000010",
   "id" : 51,
   "statusAtendimentoCliente" : "AGENDADO"
+}, {
+  "nome" : "Maria",
+  "cpf" : "98765432109",
+  "telefone" : "31987654321",
+  "id" : 59,
+  "statusAtendimentoCliente" : "EM_ESPERA"
+}, {
+  "nome" : "Maria",
+  "cpf" : "98765432109",
+  "telefone" : "31987654321",
+  "id" : 67,
+  "statusAtendimentoCliente" : "EM_ESPERA"
+}, {
+  "nome" : "Maria",
+  "cpf" : "98765432109",
+  "telefone" : "31987654321",
+  "id" : 75,
+  "statusAtendimentoCliente" : "EM_ESPERA"
 } ]

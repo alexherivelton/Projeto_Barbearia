@@ -49,4 +49,637 @@
     "descricao" : "Design de sobrancelha masculino"
   },
   "status" : "EM_ESPERA"
-}]
+}, {
+  "horarioData" : "14/11/25 - 14:30",
+  "cliente" : null,
+  "servicoDesejado" : {
+    "id" : 1,
+    "nome" : "Corte Teste",
+    "preco" : 25.0,
+    "utilizaLavagemSecagem" : false,
+    "descricao" : "Corte de cabelo para teste"
+  },
+  "status" : "EM_ESPERA"
+}, {
+  "horarioData" : "14/11/25 - 14:30",
+  "cliente" : null,
+  "servicoDesejado" : null,
+  "status" : "EM_ESPERA"
+}, {
+  "horarioData" : "14/11/25 - 14:30",
+  "cliente" : null,
+  "servicoDesejado" : null,
+  "status" : "EM_ESPERA"
+}, {
+  "horarioData" : "14/11/25 - 14:30",
+  "cliente" : {
+    "nome" : "Roberto Souza",
+    "cpf" : "12345678900",
+    "telefone" : "33998487867",
+    "id" : 60,
+    "statusAtendimentoCliente" : "AGENDADO"
+  },
+  "servicoDesejado" : {
+    "id" : 1,
+    "nome" : "Corte Teste",
+    "preco" : 25.0,
+    "utilizaLavagemSecagem" : false,
+    "descricao" : "Corte de cabelo para teste"
+  },
+  "status" : "EM_ESPERA"
+}, {
+  "horarioData" : "14/11/25 - 15:30",
+  "cliente" : {
+    "nome" : "Gustavo Nascimento",
+    "cpf" : "09876543211",
+    "telefone" : "31998769756",
+    "id" : 61,
+    "statusAtendimentoCliente" : "AGENDADO"
+  },
+  "servicoDesejado" : null,
+  "status" : "EM_ESPERA"
+}, {
+  "horarioData" : "14/11/25 - 16:30",
+  "cliente" : {
+    "nome" : "Hugo Loures",
+    "cpf" : "09876543222",
+    "telefone" : "21998377645",
+    "id" : 62,
+    "statusAtendimentoCliente" : "AGENDADO"
+  },
+  "servicoDesejado" : null,
+  "status" : "EM_ESPERA"
+}, {
+  "horarioData" : "14/11/25 - 14:30",
+  "cliente" : null,
+  "servicoDesejado" : {
+    "id" : 1,
+    "nome" : "Corte Teste",
+    "preco" : 25.0,
+    "utilizaLavagemSecagem" : false,
+    "descricao" : "Corte de cabelo para teste"
+  },
+  "status" : "EM_ESPERA"
+}, {
+  "horarioData" : "14/11/25 - 14:30",
+  "cliente" : null,
+  "servicoDesejado" : null,
+  "status" : "EM_ESPERA"
+}, {
+  "horarioData" : "14/11/25 - 14:30",
+  "cliente" : null,
+  "servicoDesejado" : null,
+  "status" : "EM_ESPERA"
+}, {
+  "horarioData" : "14/11/25 - 14:30",
+  "cliente" : {
+    "nome" : "Roberto Souza",
+    "cpf" : "12345678900",
+    "telefone" : "33998487867",
+    "id" : 60,
+    "statusAtendimentoCliente" : "AGENDADO"
+  },
+  "servicoDesejado" : {
+    "id" : 1,
+    "nome" : "Corte Teste",
+    "preco" : 25.0,
+    "utilizaLavagemSecagem" : false,
+    "descricao" : "Corte de cabelo para teste"
+  },
+  "status" : "EM_ESPERA"
+}, {
+  "horarioData" : "14/11/25 - 15:30",
+  "cliente" : {
+    "nome" : "Gustavo Nascimento",
+    "cpf" : "09876543211",
+    "telefone" : "31998769756",
+    "id" : 61,
+    "statusAtendimentoCliente" : "AGENDADO"
+  },
+  "servicoDesejado" : null,
+  "status" : "EM_ESPERA"
+}, {
+  "horarioData" : "14/11/25 - 16:30",
+  "cliente" : {
+    "nome" : "Hugo Loures",
+    "cpf" : "09876543222",
+    "telefone" : "21998377645",
+    "id" : 62,
+    "statusAtendimentoCliente" : "AGENDADO"
+  },
+  "servicoDesejado" : null,
+  "status" : "EM_ESPERA"
+}, {
+  "horarioData" : "14/11/25 - 14:30",
+  "cliente" : null,
+  "servicoDesejado" : {
+    "id" : 1,
+    "nome" : "Corte Teste",
+    "preco" : 25.0,
+    "utilizaLavagemSecagem" : false,
+    "descricao" : "Corte de cabelo para teste"
+  },
+  "status" : "EM_ESPERA"
+}, {
+  "horarioData" : "14/11/25 - 14:30",
+  "cliente" : null,
+  "servicoDesejado" : null,
+  "status" : "EM_ESPERA"
+}, {
+  "horarioData" : "14/11/25 - 14:30",
+  "cliente" : null,
+  "servicoDesejado" : null,
+  "status" : "EM_ESPERA"
+}, {
+  "horarioData" : "14/11/25 - 14:30",
+  "cliente" : {
+    "nome" : "Roberto Souza",
+    "cpf" : "12345678900",
+    "telefone" : "33998487867",
+    "id" : 60,
+    "statusAtendimentoCliente" : "AGENDADO"
+  },
+  "servicoDesejado" : {
+    "id" : 1,
+    "nome" : "Corte Teste",
+    "preco" : 25.0,
+    "utilizaLavagemSecagem" : false,
+    "descricao" : "Corte de cabelo para teste"
+  },
+  "status" : "EM_ESPERA"
+}, {
+  "horarioData" : "14/11/25 - 15:30",
+  "cliente" : {
+    "nome" : "Gustavo Nascimento",
+    "cpf" : "09876543211",
+    "telefone" : "31998769756",
+    "id" : 61,
+    "statusAtendimentoCliente" : "AGENDADO"
+  },
+  "servicoDesejado" : {
+    "id" : 1,
+    "nome" : "Corte Teste",
+    "preco" : 25.0,
+    "utilizaLavagemSecagem" : false,
+    "descricao" : "Corte de cabelo para teste"
+  },
+  "status" : "EM_ESPERA"
+}, {
+  "horarioData" : "14/11/25 - 16:30",
+  "cliente" : {
+    "nome" : "Hugo Loures",
+    "cpf" : "09876543222",
+    "telefone" : "21998377645",
+    "id" : 62,
+    "statusAtendimentoCliente" : "AGENDADO"
+  },
+  "servicoDesejado" : {
+    "id" : 1,
+    "nome" : "Corte Teste",
+    "preco" : 25.0,
+    "utilizaLavagemSecagem" : false,
+    "descricao" : "Corte de cabelo para teste"
+  },
+  "status" : "EM_ESPERA"
+}, {
+  "horarioData" : "14/11/25 - 14:30",
+  "cliente" : null,
+  "servicoDesejado" : {
+    "id" : 1,
+    "nome" : "Corte Teste",
+    "preco" : 25.0,
+    "utilizaLavagemSecagem" : false,
+    "descricao" : "Corte de cabelo para teste"
+  },
+  "status" : "EM_ESPERA"
+}, {
+  "horarioData" : "14/11/25 - 14:30",
+  "cliente" : null,
+  "servicoDesejado" : {
+    "id" : 1,
+    "nome" : "Corte Teste",
+    "preco" : 25.0,
+    "utilizaLavagemSecagem" : false,
+    "descricao" : "Corte de cabelo para teste"
+  },
+  "status" : "EM_ESPERA"
+}, {
+  "horarioData" : "14/11/25 - 14:30",
+  "cliente" : null,
+  "servicoDesejado" : {
+    "id" : 1,
+    "nome" : "Corte Teste",
+    "preco" : 25.0,
+    "utilizaLavagemSecagem" : false,
+    "descricao" : "Corte de cabelo para teste"
+  },
+  "status" : "EM_ESPERA"
+}, {
+  "horarioData" : "14/11/25 - 14:30",
+  "cliente" : {
+    "nome" : "Roberto Souza",
+    "cpf" : "12345678900",
+    "telefone" : "33998487867",
+    "id" : 60,
+    "statusAtendimentoCliente" : "AGENDADO"
+  },
+  "servicoDesejado" : {
+    "id" : 1,
+    "nome" : "Corte Teste",
+    "preco" : 25.0,
+    "utilizaLavagemSecagem" : false,
+    "descricao" : "Corte de cabelo para teste"
+  },
+  "status" : "EM_ESPERA"
+}, {
+  "horarioData" : "14/11/25 - 15:30",
+  "cliente" : {
+    "nome" : "Gustavo Nascimento",
+    "cpf" : "09876543211",
+    "telefone" : "31998769756",
+    "id" : 61,
+    "statusAtendimentoCliente" : "AGENDADO"
+  },
+  "servicoDesejado" : {
+    "id" : 1,
+    "nome" : "Corte Teste",
+    "preco" : 25.0,
+    "utilizaLavagemSecagem" : false,
+    "descricao" : "Corte de cabelo para teste"
+  },
+  "status" : "EM_ESPERA"
+}, {
+  "horarioData" : "14/11/25 - 16:30",
+  "cliente" : {
+    "nome" : "Hugo Loures",
+    "cpf" : "09876543222",
+    "telefone" : "21998377645",
+    "id" : 62,
+    "statusAtendimentoCliente" : "AGENDADO"
+  },
+  "servicoDesejado" : {
+    "id" : 1,
+    "nome" : "Corte Teste",
+    "preco" : 25.0,
+    "utilizaLavagemSecagem" : false,
+    "descricao" : "Corte de cabelo para teste"
+  },
+  "status" : "EM_ESPERA"
+}, {
+  "horarioData" : "14/11/25 - 14:30",
+  "cliente" : {
+    "nome" : "Christian",
+    "cpf" : "17600724600",
+    "telefone" : "33998642761",
+    "id" : 1,
+    "statusAtendimentoCliente" : "EM_ESPERA"
+  },
+  "servicoDesejado" : {
+    "id" : 1,
+    "nome" : "Corte Teste",
+    "preco" : 25.0,
+    "utilizaLavagemSecagem" : false,
+    "descricao" : "Corte de cabelo para teste"
+  },
+  "status" : "EM_ESPERA"
+}, {
+  "horarioData" : "14/11/25 - 14:30",
+  "cliente" : {
+    "nome" : "João",
+    "cpf" : "12345678901",
+    "telefone" : "31912345678",
+    "id" : 9,
+    "statusAtendimentoCliente" : "AGENDADO"
+  },
+  "servicoDesejado" : {
+    "id" : 1,
+    "nome" : "Corte Teste",
+    "preco" : 25.0,
+    "utilizaLavagemSecagem" : false,
+    "descricao" : "Corte de cabelo para teste"
+  },
+  "status" : "EM_ESPERA"
+}, {
+  "horarioData" : "14/11/25 - 14:30",
+  "cliente" : {
+    "nome" : "Maria",
+    "cpf" : "98765432109",
+    "telefone" : "31987654321",
+    "id" : 10,
+    "statusAtendimentoCliente" : "EM_ESPERA"
+  },
+  "servicoDesejado" : {
+    "id" : 1,
+    "nome" : "Corte Teste",
+    "preco" : 25.0,
+    "utilizaLavagemSecagem" : false,
+    "descricao" : "Corte de cabelo para teste"
+  },
+  "status" : "EM_ESPERA"
+}, {
+  "horarioData" : "14/11/25 - 14:30",
+  "cliente" : {
+    "nome" : "Roberto Souza",
+    "cpf" : "12345678900",
+    "telefone" : "33998487867",
+    "id" : 60,
+    "statusAtendimentoCliente" : "AGENDADO"
+  },
+  "servicoDesejado" : {
+    "id" : 1,
+    "nome" : "Corte Teste",
+    "preco" : 25.0,
+    "utilizaLavagemSecagem" : false,
+    "descricao" : "Corte de cabelo para teste"
+  },
+  "status" : "EM_ESPERA"
+}, {
+  "horarioData" : "14/11/25 - 15:30",
+  "cliente" : {
+    "nome" : "Gustavo Nascimento",
+    "cpf" : "09876543211",
+    "telefone" : "31998769756",
+    "id" : 61,
+    "statusAtendimentoCliente" : "AGENDADO"
+  },
+  "servicoDesejado" : {
+    "id" : 1,
+    "nome" : "Corte Teste",
+    "preco" : 25.0,
+    "utilizaLavagemSecagem" : false,
+    "descricao" : "Corte de cabelo para teste"
+  },
+  "status" : "EM_ESPERA"
+}, {
+  "horarioData" : "14/11/25 - 16:30",
+  "cliente" : {
+    "nome" : "Hugo Loures",
+    "cpf" : "09876543222",
+    "telefone" : "21998377645",
+    "id" : 62,
+    "statusAtendimentoCliente" : "AGENDADO"
+  },
+  "servicoDesejado" : {
+    "id" : 1,
+    "nome" : "Corte Teste",
+    "preco" : 25.0,
+    "utilizaLavagemSecagem" : false,
+    "descricao" : "Corte de cabelo para teste"
+  },
+  "status" : "EM_ESPERA"
+}, {
+  "horarioData" : "14/11/25 - 14:30",
+  "cliente" : {
+    "nome" : "Christian",
+    "cpf" : "17600724600",
+    "telefone" : "33998642761",
+    "id" : 1,
+    "statusAtendimentoCliente" : "EM_ESPERA"
+  },
+  "servicoDesejado" : {
+    "id" : 1,
+    "nome" : "Corte Teste",
+    "preco" : 25.0,
+    "utilizaLavagemSecagem" : false,
+    "descricao" : "Corte de cabelo para teste"
+  },
+  "status" : "EM_ESPERA"
+}, {
+  "horarioData" : "14/11/25 - 14:30",
+  "cliente" : {
+    "nome" : "João",
+    "cpf" : "12345678901",
+    "telefone" : "31912345678",
+    "id" : 9,
+    "statusAtendimentoCliente" : "AGENDADO"
+  },
+  "servicoDesejado" : {
+    "id" : 1,
+    "nome" : "Corte Teste",
+    "preco" : 25.0,
+    "utilizaLavagemSecagem" : false,
+    "descricao" : "Corte de cabelo para teste"
+  },
+  "status" : "EM_ESPERA"
+}, {
+  "horarioData" : "14/11/25 - 14:30",
+  "cliente" : {
+    "nome" : "Maria",
+    "cpf" : "98765432109",
+    "telefone" : "31987654321",
+    "id" : 10,
+    "statusAtendimentoCliente" : "EM_ESPERA"
+  },
+  "servicoDesejado" : {
+    "id" : 1,
+    "nome" : "Corte Teste",
+    "preco" : 25.0,
+    "utilizaLavagemSecagem" : false,
+    "descricao" : "Corte de cabelo para teste"
+  },
+  "status" : "EM_ESPERA"
+}, {
+  "horarioData" : "14/11/25 - 14:30",
+  "cliente" : {
+    "nome" : "Roberto Souza",
+    "cpf" : "12345678900",
+    "telefone" : "33998487867",
+    "id" : 60,
+    "statusAtendimentoCliente" : "AGENDADO"
+  },
+  "servicoDesejado" : {
+    "id" : 1,
+    "nome" : "Corte Teste",
+    "preco" : 25.0,
+    "utilizaLavagemSecagem" : false,
+    "descricao" : "Corte de cabelo para teste"
+  },
+  "status" : "EM_ESPERA"
+}, {
+  "horarioData" : "14/11/25 - 15:30",
+  "cliente" : {
+    "nome" : "Gustavo Nascimento",
+    "cpf" : "09876543211",
+    "telefone" : "31998769756",
+    "id" : 61,
+    "statusAtendimentoCliente" : "AGENDADO"
+  },
+  "servicoDesejado" : {
+    "id" : 1,
+    "nome" : "Corte Teste",
+    "preco" : 25.0,
+    "utilizaLavagemSecagem" : false,
+    "descricao" : "Corte de cabelo para teste"
+  },
+  "status" : "EM_ESPERA"
+}, {
+  "horarioData" : "14/11/25 - 16:30",
+  "cliente" : {
+    "nome" : "Hugo Loures",
+    "cpf" : "09876543222",
+    "telefone" : "21998377645",
+    "id" : 62,
+    "statusAtendimentoCliente" : "AGENDADO"
+  },
+  "servicoDesejado" : {
+    "id" : 1,
+    "nome" : "Corte Teste",
+    "preco" : 25.0,
+    "utilizaLavagemSecagem" : false,
+    "descricao" : "Corte de cabelo para teste"
+  },
+  "status" : "EM_ESPERA"
+}, {
+  "horarioData" : "14/11/25 - 14:30",
+  "cliente" : {
+    "nome" : "Christian",
+    "cpf" : "17600724600",
+    "telefone" : "33998642761",
+    "id" : 1,
+    "statusAtendimentoCliente" : "EM_ESPERA"
+  },
+  "servicoDesejado" : {
+    "id" : 1,
+    "nome" : "Corte Teste",
+    "preco" : 25.0,
+    "utilizaLavagemSecagem" : false,
+    "descricao" : "Corte de cabelo para teste"
+  },
+  "status" : "EM_ESPERA"
+}, {
+  "horarioData" : "14/11/25 - 14:30",
+  "cliente" : {
+    "nome" : "João",
+    "cpf" : "12345678901",
+    "telefone" : "31912345678",
+    "id" : 9,
+    "statusAtendimentoCliente" : "AGENDADO"
+  },
+  "servicoDesejado" : {
+    "id" : 1,
+    "nome" : "Corte Teste",
+    "preco" : 25.0,
+    "utilizaLavagemSecagem" : false,
+    "descricao" : "Corte de cabelo para teste"
+  },
+  "status" : "EM_ESPERA"
+}, {
+  "horarioData" : "14/11/25 - 14:30",
+  "cliente" : {
+    "nome" : "Maria",
+    "cpf" : "98765432109",
+    "telefone" : "31987654321",
+    "id" : 10,
+    "statusAtendimentoCliente" : "EM_ESPERA"
+  },
+  "servicoDesejado" : {
+    "id" : 1,
+    "nome" : "Corte Teste",
+    "preco" : 25.0,
+    "utilizaLavagemSecagem" : false,
+    "descricao" : "Corte de cabelo para teste"
+  },
+  "status" : "EM_ESPERA"
+}, {
+  "horarioData" : "14/11/25 - 14:30",
+  "cliente" : {
+    "nome" : "Roberto Souza",
+    "cpf" : "12345678900",
+    "telefone" : "33998487867",
+    "id" : 60,
+    "statusAtendimentoCliente" : "AGENDADO"
+  },
+  "servicoDesejado" : {
+    "id" : 1,
+    "nome" : "Corte Teste",
+    "preco" : 25.0,
+    "utilizaLavagemSecagem" : false,
+    "descricao" : "Corte de cabelo para teste"
+  },
+  "status" : "EM_ESPERA"
+}, {
+  "horarioData" : "14/11/25 - 15:30",
+  "cliente" : {
+    "nome" : "Gustavo Nascimento",
+    "cpf" : "09876543211",
+    "telefone" : "31998769756",
+    "id" : 61,
+    "statusAtendimentoCliente" : "AGENDADO"
+  },
+  "servicoDesejado" : {
+    "id" : 1,
+    "nome" : "Corte Teste",
+    "preco" : 25.0,
+    "utilizaLavagemSecagem" : false,
+    "descricao" : "Corte de cabelo para teste"
+  },
+  "status" : "EM_ESPERA"
+}, {
+  "horarioData" : "14/11/25 - 16:30",
+  "cliente" : {
+    "nome" : "Hugo Loures",
+    "cpf" : "09876543222",
+    "telefone" : "21998377645",
+    "id" : 62,
+    "statusAtendimentoCliente" : "AGENDADO"
+  },
+  "servicoDesejado" : {
+    "id" : 1,
+    "nome" : "Corte Teste",
+    "preco" : 25.0,
+    "utilizaLavagemSecagem" : false,
+    "descricao" : "Corte de cabelo para teste"
+  },
+  "status" : "EM_ESPERA"
+}, {
+  "horarioData" : "14/11/25 - 14:30",
+  "cliente" : {
+    "nome" : "Christian",
+    "cpf" : "17600724600",
+    "telefone" : "33998642761",
+    "id" : 1,
+    "statusAtendimentoCliente" : "EM_ESPERA"
+  },
+  "servicoDesejado" : {
+    "id" : 1,
+    "nome" : "Corte Teste",
+    "preco" : 25.0,
+    "utilizaLavagemSecagem" : false,
+    "descricao" : "Corte de cabelo para teste"
+  },
+  "status" : "EM_ESPERA"
+}, {
+  "horarioData" : "14/11/25 - 14:30",
+  "cliente" : {
+    "nome" : "João",
+    "cpf" : "12345678901",
+    "telefone" : "31912345678",
+    "id" : 9,
+    "statusAtendimentoCliente" : "AGENDADO"
+  },
+  "servicoDesejado" : {
+    "id" : 1,
+    "nome" : "Corte Teste",
+    "preco" : 25.0,
+    "utilizaLavagemSecagem" : false,
+    "descricao" : "Corte de cabelo para teste"
+  },
+  "status" : "EM_ESPERA"
+}, {
+  "horarioData" : "14/11/25 - 14:30",
+  "cliente" : {
+    "nome" : "Maria",
+    "cpf" : "98765432109",
+    "telefone" : "31987654321",
+    "id" : 10,
+    "statusAtendimentoCliente" : "EM_ESPERA"
+  },
+  "servicoDesejado" : {
+    "id" : 1,
+    "nome" : "Corte Teste",
+    "preco" : 25.0,
+    "utilizaLavagemSecagem" : false,
+    "descricao" : "Corte de cabelo para teste"
+  },
+  "status" : "EM_ESPERA"
+} ]

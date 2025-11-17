@@ -134,6 +134,7 @@ public class QuestoesRespondidas {
         // Questão 11
         System.out.println("\n====Questão 11====");
         System.out.println("Testando contador de instâncias de Servico com ENCAPSULAMENTO (private static com get/set):");
+        System.out.println("Funciona em conjuto com a classe MAIN");
 
         // ... (código da Questão 11) ...
 
@@ -141,11 +142,7 @@ public class QuestoesRespondidas {
         System.out.println("\n====Questão 12====");
         System.out.println("Testando contador de instâncias de Servico com PROTECTED STATIC:");
 
-        // ... (código da Questão 12) ...
-
-        System.out.println("\nTestando método de classe para retornar total de OrdemDeServico:");
-        int totalOS = Barbearia.getTotalOrdensDeServico();
-        System.out.println("Total de Ordens de Serviço criadas: " + totalOS);
+        System.out.println("Funciona em conjuto com a classe MAIN");
 
         // Questão 13
         System.out.println("\n====Questão 13====");
@@ -159,56 +156,60 @@ public class QuestoesRespondidas {
         System.out.println("Mostrar as JSON prontas!");
         System.out.println("Sistema salva e recupera dados em arquivos JSON:");
 
+        //Questão 15
+        System.out.println("\n====Questão 15====");
+        System.out.println("Classe TestFilaDeEspera");
+
         // Questão 15
         System.out.println("\n====Questão 15====");
         System.out.println("Testando ITERATOR e FOREACH:");
 
-//        // Criar alguns clientes de exemplo
-//        List<Cliente> listaClientes = new ArrayList<>();
-//        listaClientes.add(new Cliente("Ana", "11111111111", "31999999999", StatusAtendimentoCliente.AGENDADO));
-//        listaClientes.add(new Cliente("Bruno", "22222222222", "31888888888", StatusAtendimentoCliente.EM_ESPERA));
-//        listaClientes.add(new Cliente("Carlos", "33333333333", "31777777777", StatusAtendimentoCliente.EM_ATENDIMENTO));
-//
-//    // 1. Pecorrendo ArrayList com ITERATOR:
-//        System.out.println("\n1. Percorrendo ArrayList com ITERATOR:");
-//        Iterator<Cliente> iterator = listaClientes.iterator();
-//        while (iterator.hasNext()) {
-//            Cliente cliente = iterator.next();
-//            System.out.println(cliente);
-//        }
-//
-//    // 2. Pecorrendo ArrayList com FOREACH:
-//        System.out.println("\n2. Percorrendo ArrayList com FOREACH:");
-//        for (Cliente cliente : listaClientes) {
-//            System.out.println(cliente);
-//        }
-//        System.out.println("\nExplicação da Relação:");
-//        System.out.println("O FOREACH em Java é um 'açúcar sintático' para o Iterator. A sintaxe 'for (Tipo item : colecao)' é convertida pelo compilador para usar 'iterator.hasNext()' e 'iterator.next()'.");
-//        System.out.println("Relação: O foreach é a forma mais simples e legível de usar o padrão Iterator.");
+        // Criar alguns clientes de exemplo
+        List<Cliente> listaClientes = new ArrayList<>();
+        listaClientes.add(new Cliente("Ana", "11111111111", "31999999999", StatusAtendimentoCliente.AGENDADO));
+        listaClientes.add(new Cliente("Bruno", "22222222222", "31888888888", StatusAtendimentoCliente.EM_ESPERA));
+        listaClientes.add(new Cliente("Carlos", "33333333333", "31777777777", StatusAtendimentoCliente.EM_ATENDIMENTO));
+
+        // 1. Pecorrendo ArrayList com ITERATOR:
+        System.out.println("\n1. Percorrendo ArrayList com ITERATOR:");
+        Iterator<Cliente> iterator = listaClientes.iterator();
+        while (iterator.hasNext()) {
+            Cliente cliente = iterator.next();
+            System.out.println(cliente);
+        }
+
+        // 2. Pecorrendo ArrayList com FOREACH:
+        System.out.println("\n2. Percorrendo ArrayList com FOREACH:");
+        for (Cliente cliente : listaClientes) {
+            System.out.println(cliente);
+        }
+        System.out.println("\nExplicação da Relação:");
+        System.out.println("O FOREACH em Java é um 'açúcar sintático' para o Iterator. A sintaxe 'for (Tipo item : colecao)' é convertida pelo compilador para usar 'iterator.hasNext()' e 'iterator.next()'.");
+        System.out.println("Relação: O foreach é a forma mais simples e legível de usar o padrão Iterator.");
 
         // Questão 16
         System.out.println("\n====Questão 16====");
         System.out.println("Testando COMPARATOR e Collections.sort():");
 
-//        // Criar lista de clientes para ordenar
-//        List<Cliente> clientesParaOrdenar = new ArrayList<>();
-//        clientesParaOrdenar.add(new Cliente("Zeca", "99999999999", "31911111111", StatusAtendimentoCliente.AGENDADO));
-//        clientesParaOrdenar.add(new Cliente("Ana", "11111111111", "31922222222", StatusAtendimentoCliente.EM_ESPERA));
-//        clientesParaOrdenar.add(new Cliente("Carlos", "33333333333", "31933333333", StatusAtendimentoCliente.EM_ATENDIMENTO));
-//        clientesParaOrdenar.add(new Cliente("Bruno", "22222222222", "31944444444", StatusAtendimentoCliente.AGENDADO));
-//
-//        System.out.println("\nLista original (desordenada):");
-//        clientesParaOrdenar.forEach(System.out::println);
-//
-//// 1. Ordenando por NOME
-//        System.out.println("\n1. Ordenando por NOME usando ClienteNomeComparators:");
-//        Collections.sort(clientesParaOrdenar, new ClienteNomeComparators());
-//        clientesParaOrdenar.forEach(System.out::println);
-//
-//// 2. Ordenando por CPF
-//        System.out.println("\n2. Ordenando por CPF usando ClienteCpfComparators:");
-//        Collections.sort(clientesParaOrdenar, new ClienteCpfComparators());
-//        clientesParaOrdenar.forEach(System.out::println);
+        // Criar lista de clientes para ordenar
+        List<Cliente> clientesParaOrdenar = new ArrayList<>();
+        clientesParaOrdenar.add(new Cliente("Zeca", "99999999999", "31911111111", StatusAtendimentoCliente.AGENDADO));
+        clientesParaOrdenar.add(new Cliente("Ana", "11111111111", "31922222222", StatusAtendimentoCliente.EM_ESPERA));
+        clientesParaOrdenar.add(new Cliente("Carlos", "33333333333", "31933333333", StatusAtendimentoCliente.EM_ATENDIMENTO));
+        clientesParaOrdenar.add(new Cliente("Bruno", "22222222222", "31944444444", StatusAtendimentoCliente.AGENDADO));
+
+        System.out.println("\nLista original (desordenada):");
+        clientesParaOrdenar.forEach(System.out::println);
+
+        // 1. Ordenando por NOME
+        System.out.println("\n1. Ordenando por NOME usando ClienteNomeComparators:");
+        Collections.sort(clientesParaOrdenar, new ClienteNomeComparators());
+        clientesParaOrdenar.forEach(System.out::println);
+
+        // 2. Ordenando por CPF
+        System.out.println("\n2. Ordenando por CPF usando ClienteCpfComparators:");
+        Collections.sort(clientesParaOrdenar, new ClienteCpfComparators());
+        clientesParaOrdenar.forEach(System.out::println);
 
         // Questão 17
         System.out.println("\n====Questão 17====");
@@ -216,37 +217,41 @@ public class QuestoesRespondidas {
         System.out.println("O método FIND foi implementado na classe GERENCIARCLIENTE, apresentamos aqui as chamadas:");
 
         // Cria um cliente com os dados de busca
-//        Cliente clienteProcuradoNome = new Cliente("Maria", "98765432109", "31987654321", StatusAtendimentoCliente.EM_ESPERA);
-//
-    //// 1. Busca usando FIND (Implementação com Iterator)
-//        System.out.println("\n1. Buscando cliente usando método FIND implementado (por nome):");
-//        Cliente encontradoFind = gerenciarCliente.findCliente(clienteProcuradoNome, new ClienteNomeComparators());
-//        if (encontradoFind != null) {
-//            System.out.println("✓ Cliente encontrado com FIND: " + encontradoFind.getNome());
-//        } else {
-//            System.out.println("✗ Cliente não encontrado com FIND!");
-//        }
-//
-//    // 2. Busca usando binarySearch()
-//        System.out.println("\n2. Buscando cliente usando Collections.binarySearch() (por nome):");
-//    // O método buscarClientePorNomeComBinarySearch garante que a lista esteja ordenada antes de chamar o binarySearch.
-//        Cliente encontradoBinaryNome = gerenciarCliente.buscarClientePorNomeComBinarySearch(clienteProcuradoNome);
-//        if (encontradoBinaryNome != null) {
-//            System.out.println("✓ Cliente encontrado com binarySearch: " + encontradoBinaryNome.getNome());
-//        } else {
-//            System.out.println("✗ Cliente não encontrado com binarySearch!");
-//        }
-//
-//        System.out.println("\n=== COMPARAÇÃO ENTRE FIND E BINARYSEARCH ===");
-//        System.out.println("\nMétodo FIND implementado (Busca Linear via Iterator):");
-//        System.out.println("- Utiliza iteração sequencial (Iterator) sobre a lista.");
-//        System.out.println("- Complexidade: O(n) (tempo linear), percorre a lista no pior caso.");
-//        System.out.println("- Vantagem: Simples e não requer que a lista esteja ordenada.");
-//
-//        System.out.println("\nCollections.binarySearch() (Busca Binária):");
-//        System.out.println("- Requer que a lista esteja \\textbf{ordenada} pelo mesmo Comparator antes de ser chamada.");
-//        System.out.println("- Complexidade: O(log n) (tempo logarítmico), muito mais eficiente para listas grandes.");
-//        System.out.println("- Desvantagem: Requer uma etapa de ordenação prévia (sort é O(n log n)).");
+        Cliente clienteProcuradoNome = new Cliente("Maria", "98765432109", "31987654321", StatusAtendimentoCliente.EM_ESPERA);
+        // Adiciona este cliente ao gerenciador para que ele possa ser encontrado
+        gerenciarCliente.adicionar(clienteProcuradoNome);
+        gerenciarCliente.salvarTodosClientes();
+
+
+        // 1. Busca usando FIND (Implementação com Iterator)
+        System.out.println("\n1. Buscando cliente usando método FIND implementado (por nome):");
+        Cliente encontradoFind = gerenciarCliente.findCliente(clienteProcuradoNome, new ClienteNomeComparators());
+        if (encontradoFind != null) {
+            System.out.println("✓ Cliente encontrado com FIND: " + encontradoFind.getNome());
+        } else {
+            System.out.println("✗ Cliente não encontrado com FIND!");
+        }
+
+        // 2. Busca usando binarySearch()
+        System.out.println("\n2. Buscando cliente usando Collections.binarySearch() (por nome):");
+        // O método buscarClientePorNomeComBinarySearch garante que a lista esteja ordenada antes de chamar o binarySearch.
+        Cliente encontradoBinaryNome = gerenciarCliente.buscarClientePorNomeComBinarySearch(clienteProcuradoNome);
+        if (encontradoBinaryNome != null) {
+            System.out.println("✓ Cliente encontrado com binarySearch: " + encontradoBinaryNome.getNome());
+        } else {
+            System.out.println("✗ Cliente não encontrado com binarySearch!");
+        }
+
+        System.out.println("\n=== COMPARAÇÃO ENTRE FIND E BINARYSEARCH ===");
+        System.out.println("\nMétodo FIND implementado (Busca Linear via Iterator):");
+        System.out.println("- Utiliza iteração sequencial (Iterator) sobre a lista.");
+        System.out.println("- Complexidade: O(n) (tempo linear), percorre a lista no pior caso.");
+        System.out.println("- Vantagem: Simples e não requer que a lista esteja ordenada.");
+
+        System.out.println("\nCollections.binarySearch() (Busca Binária):");
+        System.out.println("- Requer que a lista esteja \\textbf{ordenada} pelo mesmo Comparator antes de ser chamada.");
+        System.out.println("- Complexidade: O(log n) (tempo logarítmico), muito mais eficiente para listas grandes.");
+        System.out.println("- Desvantagem: Requer uma etapa de ordenação prévia (sort é O(n log n)).");
 
         // Questão 18
         System.out.println("\n====Questão 18====");

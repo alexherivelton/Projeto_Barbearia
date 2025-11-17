@@ -118,6 +118,7 @@ public class FilaDeEspera {
      *
      * @return Uma String formatada com os detalhes do objeto.
      */
+    // ...
     @Override
     public String toString() {
         return "FilaDeEspera{" +
@@ -127,5 +128,6 @@ public class FilaDeEspera {
                 ",\n status=" + status +
                 '}';
     }
+// ...
 
 }
