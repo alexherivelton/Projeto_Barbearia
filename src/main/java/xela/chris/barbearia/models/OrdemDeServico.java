@@ -108,6 +108,15 @@ public class OrdemDeServico {
     }
 
     /**
+     * Retorna o identificador único desta Ordem de Serviço.
+     *
+     * @return O ID (int) da OS.
+     */
+    public int getId() {
+        return id;
+    }
+
+    /**
      * Retorna uma representação em String da Ordem de Serviço.
      *
      * Inclui o ID, nome do cliente, data, contagem de agendamentos
@@ -117,7 +126,8 @@ public class OrdemDeServico {
      */
     @Override
     public String toString() {
-        return "Ordem de Serviço #" + id +
+        return "\n===============" +
+                "Ordem de Serviço #" + id +
                 "\nCliente: " + cliente.getNome() +
                 "\nData: " + data +
                 "\nAgendamentos: " + agendamentos.size() +

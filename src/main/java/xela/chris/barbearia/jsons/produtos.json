@@ -2,10 +2,10 @@
   "id" : 1,
   "nome" : "Barbeleiro",
   "valor" : 50.0,
-  "quantidade" : 40
+  "quantidade" : 45
 }, {
   "id" : 2,
   "nome" : "Barbeleiro",
   "valor" : 50.0,
-  "quantidade" : 48
+  "quantidade" : 8
 } ]

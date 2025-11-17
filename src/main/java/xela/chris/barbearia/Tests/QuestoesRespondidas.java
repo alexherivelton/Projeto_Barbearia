@@ -83,6 +83,10 @@ public class QuestoesRespondidas {
         Servico servicoPadrao = servicos.get(0);
         Produto produtoPadrao = produtos.get(0);
 
+        // CORREÇÃO DE ESTOQUE: Garante que o produto padrão tenha estoque suficiente para o teste
+        produtoPadrao.setQuantidade(50);
+        gerenciadorProduto.salvarTodosProdutos();
+
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         String dataAtual = LocalDate.now().format(formatter);
 
@@ -258,18 +262,35 @@ public class QuestoesRespondidas {
         System.out.println("Simulação de atendimento de 10 clientes:");
         System.out.println("==========================================");
 
+        // Lista para armazenar as Ordens de Serviço criadas
+        List<OrdemDeServico> ordensDeServicoGeradas = new ArrayList<>();
+
         // Simular atendimento de 10 clientes
         for (int i = 1; i <= 10; i++) {
             System.out.println("\n--- Cliente " + i + " ---");
 
-            // 1. Cadastro do cliente e Agendamento (Serviço)
-            Cliente cliente = new Cliente("Cliente " + i, String.format("%011d", 100 + i), "319" + String.format("%08d", i), StatusAtendimentoCliente.AGENDADO);
+            // 1. Cadastro do cliente
+            String cpf = String.format("%011d", 100 + i);
+            Cliente cliente = new Cliente("Cliente " + i, cpf, "319" + String.format("%08d", i), StatusAtendimentoCliente.AGENDADO);
             gerenciarCliente.adicionar(cliente);
+            // CORREÇÃO: Salva o cliente imediatamente para que o ServicoVenda.efetuarVenda()
+            // que chama gerenciarCliente.carregar() possa encontrá-lo.
+            gerenciarCliente.salvarTodosClientes();
 
-            // Agendamento (com status EM_ATENDIMENTO)
-            List<Servico> servicosAgendamento = List.of(servicoPadrao);
+            // 2. Criação da Ordem de Serviço (OS)
+            OrdemDeServico ordemServico = new OrdemDeServico(cliente, dataAtual);
+
+            // 3. Denotação correta dos serviços realizados (e Agendamento)
+            List<Servico> servicosAgendamento = new ArrayList<>();
+            servicosAgendamento.add(servicoPadrao); // Ex: Corte Teste (R$ 25.0)
+
+            // Simula um segundo serviço para clientes ímpares (ex: Barba)
+            if (i % 2 != 0) {
+                // Adiciona o mesmo serviço para simplificar, mas representa um serviço extra
+                servicosAgendamento.add(servicoPadrao);
+            }
+
             String dataHora = dataAtual + " " + String.format("%02d:00", 9 + i);
-
             Agendamento agendamento = new Agendamento(
                     dataHora,
                     cliente,
@@ -279,30 +300,39 @@ public class QuestoesRespondidas {
                     1 // Cadeira ID 1
             );
             gerenciarAgendamento.criarAgendamento(agendamento);
-            System.out.println("Agendamento criado.");
-
-            // 2. Criação da Ordem de Serviço (OS)
-            OrdemDeServico ordemServico = new OrdemDeServico(cliente, dataAtual);
             ordemServico.adicionarAgendamento(agendamento);
-            System.out.println("Ordem de Serviço criada.");
+            System.out.println("Serviço(s) registrado(s) na OS. Total de serviços: " + servicosAgendamento.size());
 
-            // 3. Simulação de Venda de Produto (com baixa no estoque)
-            if (i % 2 == 0) { // Simula venda para clientes pares
+            // 4. Baixa no estoque (Simulação de Venda de Produto)
+            List<Venda> vendasCliente = new ArrayList<>();
+            if (i % 2 == 0) { // Clientes pares compram um produto (baixa de estoque)
+                // O ServicoVenda.efetuarVenda já faz a baixa no estoque do Produto
                 if (servicoVenda.efetuarVenda(cliente.getId(), produtoPadrao.getId(), 1, dataAtual)) {
-                    System.out.println("Venda de produto realizada (baixa em estoque).");
+                    // Recupera a venda recém-criada para incluir na OS e na NF
+                    // A venda foi adicionada ao gerenciarVenda dentro do ServicoVenda.efetuarVenda()
+                    gerenciarVenda.carregar();
+                    Venda ultimaVenda = gerenciarVenda.listar().stream()
+                            .filter(v -> v.getCliente() != null && v.getCliente().getId() == cliente.getId())
+                            .reduce((first, second) -> second) // Pega a última venda
+                            .orElse(null);
+
+                    if (ultimaVenda != null) {
+                        ordemServico.adicionarVenda(ultimaVenda);
+                        vendasCliente.add(ultimaVenda);
+                        System.out.println("Venda de produto realizada (baixa em estoque). Produto: " + ultimaVenda.getProduto().getNome());
+                    }
+                } else {
+                    System.out.println("Falha na venda de produto (estoque insuficiente ou erro de busca).");
                 }
             }
 
-            // 4. Emissão de Nota Fiscal
-            gerenciarVenda.carregar();
-            // Filtra as vendas recém-criadas para o cliente (necessário para a NF)
-            List<Venda> vendasCliente = gerenciarVenda.listar().stream()
-                    .filter(v -> v.getCliente() != null && v.getCliente().getId() == cliente.getId())
-                    .collect(Collectors.toList());
+            // Adiciona a OS à lista de geradas
+            ordensDeServicoGeradas.add(ordemServico);
+            System.out.printf("Ordem de Serviço #%d criada. Total: R$ %.2f%n", ordemServico.getId(), ordemServico.calcularTotal());
 
-            // CAPTURA A NOTA FISCAL
+            // 5. Finalização e Emissão de Nota Fiscal
+            // A Nota Fiscal deve consolidar o Agendamento (Serviços) e as Vendas (Produtos)
             NotaFiscal notaEmitida = gerenciarNotaFiscal.gerarNotaFiscal(agendamento, vendasCliente);
-
             if (notaEmitida != null) {
                 notasFiscaisGeradas.add(notaEmitida); // ADICIONA À LISTA
                 System.out.println("Nota Fiscal emitida (ID: " + notaEmitida.getId() + ").");
@@ -310,7 +340,7 @@ public class QuestoesRespondidas {
                 System.out.println("Falha ao emitir Nota Fiscal.");
             }
 
-            // 5. Finalização
+            // Atualiza o status do cliente
             cliente.setStatusAtendimentoCliente(StatusAtendimentoCliente.ATENDIDO);
             System.out.println("Status finalizado para ATENDIDO.");
         }
@@ -322,21 +352,22 @@ public class QuestoesRespondidas {
         gerenciadorProduto.salvarTodosProdutos();
         gerenciadorFuncionario.salvarTodosFuncionarios();
 
-
         // ----------------------------------------------------
-        // REQUISITO FINAL: MOSTRAR AS NOTAS FISCAIS
+        // REQUISITO FINAL: MOSTRAR AS NOTAS FISCAIS E OS
         // ----------------------------------------------------
-        System.out.println("### NOTAS FISCAIS EMITIDAS POR CLIENTE ###");
+        System.out.println("\n### RESUMO DAS 10 ORDENS DE SERVIÇO ###");
+        for (OrdemDeServico os : ordensDeServicoGeradas) {
+            System.out.println(os);
+        }
 
+        System.out.println("\n### NOTAS FISCAIS EMITIDAS POR CLIENTE ###");
         for (NotaFiscal nota : notasFiscaisGeradas) {
             System.out.println(nota); // NotaFiscal.toString() exibe os detalhes formatados
         }
-
-
         System.out.println("\n==========================================");
         System.out.println("Simulação concluída!");
         System.out.println("Total de clientes atendidos: 10");
-        System.out.println("Total de Ordens de Serviço: " + Barbearia.getTotalOrdensDeServico());
+        System.out.println("Total de Ordens de Serviço: " + OrdemDeServico.getTotalOS());
         System.out.println("==========================================");
     }
 }
