@@ -1,12 +1,12 @@
 [ {
   "id" : 1,
-  "dataEmissao" : 1763343543220,
+  "dataEmissao" : 1763345169306,
   "agendamento" : {
     "cliente" : {
-      "nome" : "Cliente 1",
-      "cpf" : "00000000101",
-      "telefone" : "31900000001",
-      "id" : 68,
+      "nome" : "Cliente 6",
+      "cpf" : "00000000106",
+      "telefone" : "31900000006",
+      "id" : 14,
       "statusAtendimentoCliente" : "ATENDIDO"
     },
     "funcionario" : {
@@ -25,17 +25,11 @@
       "preco" : 25.0,
       "utilizaLavagemSecagem" : false,
       "descricao" : "Corte de cabelo para teste"
-    }, {
-      "id" : 1,
-      "nome" : "Corte Teste",
-      "preco" : 25.0,
-      "utilizaLavagemSecagem" : false,
-      "descricao" : "Corte de cabelo para teste"
     } ],
     "statusCliente" : "EM_ATENDIMENTO",
     "idCadeira" : 1,
-    "id" : 111,
-    "dataHora" : "16/11/2025 10:00"
+    "id" : 96,
+    "dataHora" : "16/11/2025 15:00"
   },
   "servicos" : [ {
     "id" : 1,
@@ -43,25 +37,43 @@
     "preco" : 25.0,
     "utilizaLavagemSecagem" : false,
     "descricao" : "Corte de cabelo para teste"
-  }, {
-    "id" : 1,
-    "nome" : "Corte Teste",
-    "preco" : 25.0,
-    "utilizaLavagemSecagem" : false,
-    "descricao" : "Corte de cabelo para teste"
   } ],
-  "vendasProdutos" : [ ],
-  "itens" : [ ],
-  "valorTotal" : 50.0
+  "vendasProdutos" : [ {
+    "id" : 22,
+    "produto" : {
+      "id" : 3,
+      "nome" : "Doidera",
+      "valor" : 80.0,
+      "quantidade" : 18
+    },
+    "cliente" : {
+      "nome" : "Cliente 6",
+      "cpf" : "00000000106",
+      "telefone" : "31900000006",
+      "id" : 14,
+      "statusAtendimentoCliente" : "AGENDADO"
+    },
+    "quantidade" : 2,
+    "valorUnitario" : 80.0,
+    "valorTotal" : 160.0,
+    "dataVenda" : "16/11/2025"
+  } ],
+  "itens" : [ {
+    "id" : 3,
+    "nome" : "Doidera",
+    "valor" : 80.0,
+    "quantidade" : 18
+  } ],
+  "valorTotal" : 185.0
 }, {
   "id" : 2,
-  "dataEmissao" : 1763343543251,
+  "dataEmissao" : 1763345241107,
   "agendamento" : {
     "cliente" : {
-      "nome" : "Cliente 2",
-      "cpf" : "00000000102",
-      "telefone" : "31900000002",
-      "id" : 69,
+      "nome" : "Cliente 10",
+      "cpf" : "00000000110",
+      "telefone" : "31900000010",
+      "id" : 95,
       "statusAtendimentoCliente" : "ATENDIDO"
     },
     "funcionario" : {
@@ -83,8 +95,8 @@
     } ],
     "statusCliente" : "EM_ATENDIMENTO",
     "idCadeira" : 1,
-    "id" : 112,
-    "dataHora" : "16/11/2025 11:00"
+    "id" : 130,
+    "dataHora" : "16/11/2025 19:00"
   },
   "servicos" : [ {
     "id" : 1,
@@ -98,68 +110,45 @@
   "valorTotal" : 25.0
 }, {
   "id" : 3,
-  "dataEmissao" : 1763343543255,
-  "agendamento" : {
+  "dataEmissao" : 1763345624492,
+  "agendamento" : null,
+  "servicos" : [ ],
+  "vendasProdutos" : [ {
+    "id" : 6,
+    "produto" : {
+      "id" : 1,
+      "nome" : "Barbeleiro",
+      "valor" : 50.0,
+      "quantidade" : 43
+    },
     "cliente" : {
-      "nome" : "Cliente 3",
-      "cpf" : "00000000103",
-      "telefone" : "31900000003",
-      "id" : 70,
+      "nome" : "Cliente Teste",
+      "cpf" : "12345678900",
+      "telefone" : "11999999999",
+      "id" : 114,
       "statusAtendimentoCliente" : "ATENDIDO"
     },
-    "funcionario" : {
-      "nome" : "Maria",
-      "cpf" : "12345678900",
-      "telefone" : "33998642761",
-      "cargo" : "Atendente",
-      "usuario" : "chris",
-      "id" : 1,
-      "senha" : "1234",
-      "permissoes" : [ "CADASTRAR_CLIENTE", "VERIFICAR_CLIENTE", "CRIAR_AGENDAMENTO", "GERAR_NOTA", "GERAR_BALANCO_MENSAL" ]
-    },
-    "servicos" : [ {
-      "id" : 1,
-      "nome" : "Corte Teste",
-      "preco" : 25.0,
-      "utilizaLavagemSecagem" : false,
-      "descricao" : "Corte de cabelo para teste"
-    }, {
-      "id" : 1,
-      "nome" : "Corte Teste",
-      "preco" : 25.0,
-      "utilizaLavagemSecagem" : false,
-      "descricao" : "Corte de cabelo para teste"
-    } ],
-    "statusCliente" : "EM_ATENDIMENTO",
-    "idCadeira" : 1,
-    "id" : 113,
-    "dataHora" : "16/11/2025 12:00"
-  },
-  "servicos" : [ {
-    "id" : 1,
-    "nome" : "Corte Teste",
-    "preco" : 25.0,
-    "utilizaLavagemSecagem" : false,
-    "descricao" : "Corte de cabelo para teste"
-  }, {
-    "id" : 1,
-    "nome" : "Corte Teste",
-    "preco" : 25.0,
-    "utilizaLavagemSecagem" : false,
-    "descricao" : "Corte de cabelo para teste"
+    "quantidade" : 2,
+    "valorUnitario" : 50.0,
+    "valorTotal" : 100.0,
+    "dataVenda" : "16/11/2025"
   } ],
-  "vendasProdutos" : [ ],
-  "itens" : [ ],
-  "valorTotal" : 50.0
+  "itens" : [ {
+    "id" : 1,
+    "nome" : "Barbeleiro",
+    "valor" : 50.0,
+    "quantidade" : 43
+  } ],
+  "valorTotal" : 100.0
 }, {
   "id" : 4,
-  "dataEmissao" : 1763343543262,
+  "dataEmissao" : 1763346292245,
   "agendamento" : {
     "cliente" : {
-      "nome" : "Cliente 4",
-      "cpf" : "00000000104",
-      "telefone" : "31900000004",
-      "id" : 71,
+      "nome" : "Cliente 1",
+      "cpf" : "00000000101",
+      "telefone" : "31900000001",
+      "id" : 52,
       "statusAtendimentoCliente" : "ATENDIDO"
     },
     "funcionario" : {
@@ -179,10 +168,10 @@
       "utilizaLavagemSecagem" : false,
       "descricao" : "Corte de cabelo para teste"
     } ],
-    "statusCliente" : "EM_ATENDIMENTO",
+    "statusCliente" : "ATENDIDO",
     "idCadeira" : 1,
-    "id" : 114,
-    "dataHora" : "16/11/2025 13:00"
+    "id" : 1,
+    "dataHora" : "16/11/2025 10:00"
   },
   "servicos" : [ {
     "id" : 1,
@@ -196,68 +185,13 @@
   "valorTotal" : 25.0
 }, {
   "id" : 5,
-  "dataEmissao" : 1763343543265,
+  "dataEmissao" : 1763346329359,
   "agendamento" : {
     "cliente" : {
-      "nome" : "Cliente 5",
-      "cpf" : "00000000105",
-      "telefone" : "31900000005",
-      "id" : 72,
-      "statusAtendimentoCliente" : "ATENDIDO"
-    },
-    "funcionario" : {
-      "nome" : "Maria",
-      "cpf" : "12345678900",
-      "telefone" : "33998642761",
-      "cargo" : "Atendente",
-      "usuario" : "chris",
-      "id" : 1,
-      "senha" : "1234",
-      "permissoes" : [ "CADASTRAR_CLIENTE", "VERIFICAR_CLIENTE", "CRIAR_AGENDAMENTO", "GERAR_NOTA", "GERAR_BALANCO_MENSAL" ]
-    },
-    "servicos" : [ {
-      "id" : 1,
-      "nome" : "Corte Teste",
-      "preco" : 25.0,
-      "utilizaLavagemSecagem" : false,
-      "descricao" : "Corte de cabelo para teste"
-    }, {
-      "id" : 1,
-      "nome" : "Corte Teste",
-      "preco" : 25.0,
-      "utilizaLavagemSecagem" : false,
-      "descricao" : "Corte de cabelo para teste"
-    } ],
-    "statusCliente" : "EM_ATENDIMENTO",
-    "idCadeira" : 1,
-    "id" : 115,
-    "dataHora" : "16/11/2025 14:00"
-  },
-  "servicos" : [ {
-    "id" : 1,
-    "nome" : "Corte Teste",
-    "preco" : 25.0,
-    "utilizaLavagemSecagem" : false,
-    "descricao" : "Corte de cabelo para teste"
-  }, {
-    "id" : 1,
-    "nome" : "Corte Teste",
-    "preco" : 25.0,
-    "utilizaLavagemSecagem" : false,
-    "descricao" : "Corte de cabelo para teste"
-  } ],
-  "vendasProdutos" : [ ],
-  "itens" : [ ],
-  "valorTotal" : 50.0
-}, {
-  "id" : 6,
-  "dataEmissao" : 1763343543272,
-  "agendamento" : {
-    "cliente" : {
-      "nome" : "Cliente 6",
-      "cpf" : "00000000106",
-      "telefone" : "31900000006",
-      "id" : 73,
+      "nome" : "Cliente 1",
+      "cpf" : "00000000101",
+      "telefone" : "31900000001",
+      "id" : 52,
       "statusAtendimentoCliente" : "ATENDIDO"
     },
     "funcionario" : {
@@ -277,206 +211,10 @@
       "utilizaLavagemSecagem" : false,
       "descricao" : "Corte de cabelo para teste"
     } ],
-    "statusCliente" : "EM_ATENDIMENTO",
+    "statusCliente" : "ATENDIDO",
     "idCadeira" : 1,
-    "id" : 116,
-    "dataHora" : "16/11/2025 15:00"
-  },
-  "servicos" : [ {
     "id" : 1,
-    "nome" : "Corte Teste",
-    "preco" : 25.0,
-    "utilizaLavagemSecagem" : false,
-    "descricao" : "Corte de cabelo para teste"
-  } ],
-  "vendasProdutos" : [ ],
-  "itens" : [ ],
-  "valorTotal" : 25.0
-}, {
-  "id" : 7,
-  "dataEmissao" : 1763343543276,
-  "agendamento" : {
-    "cliente" : {
-      "nome" : "Cliente 7",
-      "cpf" : "00000000107",
-      "telefone" : "31900000007",
-      "id" : 74,
-      "statusAtendimentoCliente" : "ATENDIDO"
-    },
-    "funcionario" : {
-      "nome" : "Maria",
-      "cpf" : "12345678900",
-      "telefone" : "33998642761",
-      "cargo" : "Atendente",
-      "usuario" : "chris",
-      "id" : 1,
-      "senha" : "1234",
-      "permissoes" : [ "CADASTRAR_CLIENTE", "VERIFICAR_CLIENTE", "CRIAR_AGENDAMENTO", "GERAR_NOTA", "GERAR_BALANCO_MENSAL" ]
-    },
-    "servicos" : [ {
-      "id" : 1,
-      "nome" : "Corte Teste",
-      "preco" : 25.0,
-      "utilizaLavagemSecagem" : false,
-      "descricao" : "Corte de cabelo para teste"
-    }, {
-      "id" : 1,
-      "nome" : "Corte Teste",
-      "preco" : 25.0,
-      "utilizaLavagemSecagem" : false,
-      "descricao" : "Corte de cabelo para teste"
-    } ],
-    "statusCliente" : "EM_ATENDIMENTO",
-    "idCadeira" : 1,
-    "id" : 117,
-    "dataHora" : "16/11/2025 16:00"
-  },
-  "servicos" : [ {
-    "id" : 1,
-    "nome" : "Corte Teste",
-    "preco" : 25.0,
-    "utilizaLavagemSecagem" : false,
-    "descricao" : "Corte de cabelo para teste"
-  }, {
-    "id" : 1,
-    "nome" : "Corte Teste",
-    "preco" : 25.0,
-    "utilizaLavagemSecagem" : false,
-    "descricao" : "Corte de cabelo para teste"
-  } ],
-  "vendasProdutos" : [ ],
-  "itens" : [ ],
-  "valorTotal" : 50.0
-}, {
-  "id" : 8,
-  "dataEmissao" : 1763343543283,
-  "agendamento" : {
-    "cliente" : {
-      "nome" : "Cliente 8",
-      "cpf" : "00000000108",
-      "telefone" : "31900000008",
-      "id" : 75,
-      "statusAtendimentoCliente" : "ATENDIDO"
-    },
-    "funcionario" : {
-      "nome" : "Maria",
-      "cpf" : "12345678900",
-      "telefone" : "33998642761",
-      "cargo" : "Atendente",
-      "usuario" : "chris",
-      "id" : 1,
-      "senha" : "1234",
-      "permissoes" : [ "CADASTRAR_CLIENTE", "VERIFICAR_CLIENTE", "CRIAR_AGENDAMENTO", "GERAR_NOTA", "GERAR_BALANCO_MENSAL" ]
-    },
-    "servicos" : [ {
-      "id" : 1,
-      "nome" : "Corte Teste",
-      "preco" : 25.0,
-      "utilizaLavagemSecagem" : false,
-      "descricao" : "Corte de cabelo para teste"
-    } ],
-    "statusCliente" : "EM_ATENDIMENTO",
-    "idCadeira" : 1,
-    "id" : 118,
-    "dataHora" : "16/11/2025 17:00"
-  },
-  "servicos" : [ {
-    "id" : 1,
-    "nome" : "Corte Teste",
-    "preco" : 25.0,
-    "utilizaLavagemSecagem" : false,
-    "descricao" : "Corte de cabelo para teste"
-  } ],
-  "vendasProdutos" : [ ],
-  "itens" : [ ],
-  "valorTotal" : 25.0
-}, {
-  "id" : 9,
-  "dataEmissao" : 1763343543286,
-  "agendamento" : {
-    "cliente" : {
-      "nome" : "Cliente 9",
-      "cpf" : "00000000109",
-      "telefone" : "31900000009",
-      "id" : 76,
-      "statusAtendimentoCliente" : "ATENDIDO"
-    },
-    "funcionario" : {
-      "nome" : "Maria",
-      "cpf" : "12345678900",
-      "telefone" : "33998642761",
-      "cargo" : "Atendente",
-      "usuario" : "chris",
-      "id" : 1,
-      "senha" : "1234",
-      "permissoes" : [ "CADASTRAR_CLIENTE", "VERIFICAR_CLIENTE", "CRIAR_AGENDAMENTO", "GERAR_NOTA", "GERAR_BALANCO_MENSAL" ]
-    },
-    "servicos" : [ {
-      "id" : 1,
-      "nome" : "Corte Teste",
-      "preco" : 25.0,
-      "utilizaLavagemSecagem" : false,
-      "descricao" : "Corte de cabelo para teste"
-    }, {
-      "id" : 1,
-      "nome" : "Corte Teste",
-      "preco" : 25.0,
-      "utilizaLavagemSecagem" : false,
-      "descricao" : "Corte de cabelo para teste"
-    } ],
-    "statusCliente" : "EM_ATENDIMENTO",
-    "idCadeira" : 1,
-    "id" : 119,
-    "dataHora" : "16/11/2025 18:00"
-  },
-  "servicos" : [ {
-    "id" : 1,
-    "nome" : "Corte Teste",
-    "preco" : 25.0,
-    "utilizaLavagemSecagem" : false,
-    "descricao" : "Corte de cabelo para teste"
-  }, {
-    "id" : 1,
-    "nome" : "Corte Teste",
-    "preco" : 25.0,
-    "utilizaLavagemSecagem" : false,
-    "descricao" : "Corte de cabelo para teste"
-  } ],
-  "vendasProdutos" : [ ],
-  "itens" : [ ],
-  "valorTotal" : 50.0
-}, {
-  "id" : 10,
-  "dataEmissao" : 1763343543295,
-  "agendamento" : {
-    "cliente" : {
-      "nome" : "Cliente 10",
-      "cpf" : "00000000110",
-      "telefone" : "31900000010",
-      "id" : 77,
-      "statusAtendimentoCliente" : "AGENDADO"
-    },
-    "funcionario" : {
-      "nome" : "Maria",
-      "cpf" : "12345678900",
-      "telefone" : "33998642761",
-      "cargo" : "Atendente",
-      "usuario" : "chris",
-      "id" : 1,
-      "senha" : "1234",
-      "permissoes" : [ "CADASTRAR_CLIENTE", "VERIFICAR_CLIENTE", "CRIAR_AGENDAMENTO", "GERAR_NOTA", "GERAR_BALANCO_MENSAL" ]
-    },
-    "servicos" : [ {
-      "id" : 1,
-      "nome" : "Corte Teste",
-      "preco" : 25.0,
-      "utilizaLavagemSecagem" : false,
-      "descricao" : "Corte de cabelo para teste"
-    } ],
-    "statusCliente" : "EM_ATENDIMENTO",
-    "idCadeira" : 1,
-    "id" : 120,
-    "dataHora" : "16/11/2025 19:00"
+    "dataHora" : "16/11/2025 10:00"
   },
   "servicos" : [ {
     "id" : 1,

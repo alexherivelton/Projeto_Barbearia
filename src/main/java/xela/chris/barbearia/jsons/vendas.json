@@ -1,1 +1,457 @@
-[ ]
+[ {
+  "id" : 1,
+  "produto" : {
+    "id" : 1,
+    "nome" : "Barbeleiro",
+    "valor" : 50.0,
+    "quantidade" : 49
+  },
+  "cliente" : {
+    "nome" : "Cliente 2",
+    "cpf" : "00000000102",
+    "telefone" : "31900000002",
+    "id" : 105,
+    "statusAtendimentoCliente" : "AGENDADO"
+  },
+  "quantidade" : 1,
+  "valorUnitario" : 50.0,
+  "valorTotal" : 50.0,
+  "dataVenda" : "16/11/2025"
+}, {
+  "id" : 2,
+  "produto" : {
+    "id" : 1,
+    "nome" : "Barbeleiro",
+    "valor" : 50.0,
+    "quantidade" : 48
+  },
+  "cliente" : {
+    "nome" : "Cliente 4",
+    "cpf" : "00000000104",
+    "telefone" : "31900000004",
+    "id" : 107,
+    "statusAtendimentoCliente" : "AGENDADO"
+  },
+  "quantidade" : 1,
+  "valorUnitario" : 50.0,
+  "valorTotal" : 50.0,
+  "dataVenda" : "16/11/2025"
+}, {
+  "id" : 3,
+  "produto" : {
+    "id" : 1,
+    "nome" : "Barbeleiro",
+    "valor" : 50.0,
+    "quantidade" : 47
+  },
+  "cliente" : {
+    "nome" : "Cliente 6",
+    "cpf" : "00000000106",
+    "telefone" : "31900000006",
+    "id" : 109,
+    "statusAtendimentoCliente" : "AGENDADO"
+  },
+  "quantidade" : 1,
+  "valorUnitario" : 50.0,
+  "valorTotal" : 50.0,
+  "dataVenda" : "16/11/2025"
+}, {
+  "id" : 4,
+  "produto" : {
+    "id" : 1,
+    "nome" : "Barbeleiro",
+    "valor" : 50.0,
+    "quantidade" : 46
+  },
+  "cliente" : {
+    "nome" : "Cliente 8",
+    "cpf" : "00000000108",
+    "telefone" : "31900000008",
+    "id" : 111,
+    "statusAtendimentoCliente" : "AGENDADO"
+  },
+  "quantidade" : 1,
+  "valorUnitario" : 50.0,
+  "valorTotal" : 50.0,
+  "dataVenda" : "16/11/2025"
+}, {
+  "id" : 5,
+  "produto" : {
+    "id" : 1,
+    "nome" : "Barbeleiro",
+    "valor" : 50.0,
+    "quantidade" : 45
+  },
+  "cliente" : {
+    "nome" : "Cliente 10",
+    "cpf" : "00000000110",
+    "telefone" : "31900000010",
+    "id" : 113,
+    "statusAtendimentoCliente" : "AGENDADO"
+  },
+  "quantidade" : 1,
+  "valorUnitario" : 50.0,
+  "valorTotal" : 50.0,
+  "dataVenda" : "16/11/2025"
+}, {
+  "id" : 6,
+  "produto" : {
+    "id" : 1,
+    "nome" : "Barbeleiro",
+    "valor" : 50.0,
+    "quantidade" : 43
+  },
+  "cliente" : {
+    "nome" : "Cliente Teste",
+    "cpf" : "12345678900",
+    "telefone" : "11999999999",
+    "id" : 114,
+    "statusAtendimentoCliente" : "ATENDIDO"
+  },
+  "quantidade" : 2,
+  "valorUnitario" : 50.0,
+  "valorTotal" : 100.0,
+  "dataVenda" : "16/11/2025"
+}, {
+  "id" : 7,
+  "produto" : {
+    "id" : 1,
+    "nome" : "Barbeleiro",
+    "valor" : 50.0,
+    "quantidade" : 49
+  },
+  "cliente" : {
+    "nome" : "Cliente 2",
+    "cpf" : "00000000102",
+    "telefone" : "31900000002",
+    "id" : 124,
+    "statusAtendimentoCliente" : "AGENDADO"
+  },
+  "quantidade" : 1,
+  "valorUnitario" : 50.0,
+  "valorTotal" : 50.0,
+  "dataVenda" : "16/11/2025"
+}, {
+  "id" : 8,
+  "produto" : {
+    "id" : 1,
+    "nome" : "Barbeleiro",
+    "valor" : 50.0,
+    "quantidade" : 48
+  },
+  "cliente" : {
+    "nome" : "Cliente 4",
+    "cpf" : "00000000104",
+    "telefone" : "31900000004",
+    "id" : 126,
+    "statusAtendimentoCliente" : "AGENDADO"
+  },
+  "quantidade" : 1,
+  "valorUnitario" : 50.0,
+  "valorTotal" : 50.0,
+  "dataVenda" : "16/11/2025"
+}, {
+  "id" : 9,
+  "produto" : {
+    "id" : 1,
+    "nome" : "Barbeleiro",
+    "valor" : 50.0,
+    "quantidade" : 47
+  },
+  "cliente" : {
+    "nome" : "Cliente 6",
+    "cpf" : "00000000106",
+    "telefone" : "31900000006",
+    "id" : 128,
+    "statusAtendimentoCliente" : "AGENDADO"
+  },
+  "quantidade" : 1,
+  "valorUnitario" : 50.0,
+  "valorTotal" : 50.0,
+  "dataVenda" : "16/11/2025"
+}, {
+  "id" : 10,
+  "produto" : {
+    "id" : 1,
+    "nome" : "Barbeleiro",
+    "valor" : 50.0,
+    "quantidade" : 46
+  },
+  "cliente" : {
+    "nome" : "Cliente 8",
+    "cpf" : "00000000108",
+    "telefone" : "31900000008",
+    "id" : 130,
+    "statusAtendimentoCliente" : "AGENDADO"
+  },
+  "quantidade" : 1,
+  "valorUnitario" : 50.0,
+  "valorTotal" : 50.0,
+  "dataVenda" : "16/11/2025"
+}, {
+  "id" : 11,
+  "produto" : {
+    "id" : 1,
+    "nome" : "Barbeleiro",
+    "valor" : 50.0,
+    "quantidade" : 45
+  },
+  "cliente" : {
+    "nome" : "Cliente 10",
+    "cpf" : "00000000110",
+    "telefone" : "31900000010",
+    "id" : 132,
+    "statusAtendimentoCliente" : "AGENDADO"
+  },
+  "quantidade" : 1,
+  "valorUnitario" : 50.0,
+  "valorTotal" : 50.0,
+  "dataVenda" : "16/11/2025"
+}, {
+  "id" : 12,
+  "produto" : {
+    "id" : 1,
+    "nome" : "Barbeleiro",
+    "valor" : 50.0,
+    "quantidade" : 43
+  },
+  "cliente" : {
+    "nome" : "Cliente Teste",
+    "cpf" : "12345678900",
+    "telefone" : "11999999999",
+    "id" : 133,
+    "statusAtendimentoCliente" : "ATENDIDO"
+  },
+  "quantidade" : 2,
+  "valorUnitario" : 50.0,
+  "valorTotal" : 100.0,
+  "dataVenda" : "16/11/2025"
+}, {
+  "id" : 13,
+  "produto" : {
+    "id" : 1,
+    "nome" : "Barbeleiro",
+    "valor" : 50.0,
+    "quantidade" : 41
+  },
+  "cliente" : {
+    "nome" : "Cliente Teste",
+    "cpf" : "12345678900",
+    "telefone" : "11999999999",
+    "id" : 134,
+    "statusAtendimentoCliente" : "ATENDIDO"
+  },
+  "quantidade" : 2,
+  "valorUnitario" : 50.0,
+  "valorTotal" : 100.0,
+  "dataVenda" : "16/11/2025"
+}, {
+  "id" : 14,
+  "produto" : {
+    "id" : 1,
+    "nome" : "Barbeleiro",
+    "valor" : 50.0,
+    "quantidade" : 49
+  },
+  "cliente" : {
+    "nome" : "Cliente 2",
+    "cpf" : "00000000102",
+    "telefone" : "31900000002",
+    "id" : 144,
+    "statusAtendimentoCliente" : "AGENDADO"
+  },
+  "quantidade" : 1,
+  "valorUnitario" : 50.0,
+  "valorTotal" : 50.0,
+  "dataVenda" : "16/11/2025"
+}, {
+  "id" : 15,
+  "produto" : {
+    "id" : 1,
+    "nome" : "Barbeleiro",
+    "valor" : 50.0,
+    "quantidade" : 48
+  },
+  "cliente" : {
+    "nome" : "Cliente 4",
+    "cpf" : "00000000104",
+    "telefone" : "31900000004",
+    "id" : 146,
+    "statusAtendimentoCliente" : "AGENDADO"
+  },
+  "quantidade" : 1,
+  "valorUnitario" : 50.0,
+  "valorTotal" : 50.0,
+  "dataVenda" : "16/11/2025"
+}, {
+  "id" : 16,
+  "produto" : {
+    "id" : 1,
+    "nome" : "Barbeleiro",
+    "valor" : 50.0,
+    "quantidade" : 47
+  },
+  "cliente" : {
+    "nome" : "Cliente 6",
+    "cpf" : "00000000106",
+    "telefone" : "31900000006",
+    "id" : 148,
+    "statusAtendimentoCliente" : "AGENDADO"
+  },
+  "quantidade" : 1,
+  "valorUnitario" : 50.0,
+  "valorTotal" : 50.0,
+  "dataVenda" : "16/11/2025"
+}, {
+  "id" : 17,
+  "produto" : {
+    "id" : 1,
+    "nome" : "Barbeleiro",
+    "valor" : 50.0,
+    "quantidade" : 46
+  },
+  "cliente" : {
+    "nome" : "Cliente 8",
+    "cpf" : "00000000108",
+    "telefone" : "31900000008",
+    "id" : 150,
+    "statusAtendimentoCliente" : "AGENDADO"
+  },
+  "quantidade" : 1,
+  "valorUnitario" : 50.0,
+  "valorTotal" : 50.0,
+  "dataVenda" : "16/11/2025"
+}, {
+  "id" : 18,
+  "produto" : {
+    "id" : 1,
+    "nome" : "Barbeleiro",
+    "valor" : 50.0,
+    "quantidade" : 45
+  },
+  "cliente" : {
+    "nome" : "Cliente 10",
+    "cpf" : "00000000110",
+    "telefone" : "31900000010",
+    "id" : 152,
+    "statusAtendimentoCliente" : "AGENDADO"
+  },
+  "quantidade" : 1,
+  "valorUnitario" : 50.0,
+  "valorTotal" : 50.0,
+  "dataVenda" : "16/11/2025"
+}, {
+  "id" : 19,
+  "produto" : {
+    "id" : 1,
+    "nome" : "Barbeleiro",
+    "valor" : 50.0,
+    "quantidade" : 49
+  },
+  "cliente" : {
+    "nome" : "Cliente 2",
+    "cpf" : "00000000102",
+    "telefone" : "31900000002",
+    "id" : 162,
+    "statusAtendimentoCliente" : "AGENDADO"
+  },
+  "quantidade" : 1,
+  "valorUnitario" : 50.0,
+  "valorTotal" : 50.0,
+  "dataVenda" : "16/11/2025"
+}, {
+  "id" : 20,
+  "produto" : {
+    "id" : 1,
+    "nome" : "Barbeleiro",
+    "valor" : 50.0,
+    "quantidade" : 48
+  },
+  "cliente" : {
+    "nome" : "Cliente 4",
+    "cpf" : "00000000104",
+    "telefone" : "31900000004",
+    "id" : 164,
+    "statusAtendimentoCliente" : "AGENDADO"
+  },
+  "quantidade" : 1,
+  "valorUnitario" : 50.0,
+  "valorTotal" : 50.0,
+  "dataVenda" : "16/11/2025"
+}, {
+  "id" : 21,
+  "produto" : {
+    "id" : 1,
+    "nome" : "Barbeleiro",
+    "valor" : 50.0,
+    "quantidade" : 47
+  },
+  "cliente" : {
+    "nome" : "Cliente 6",
+    "cpf" : "00000000106",
+    "telefone" : "31900000006",
+    "id" : 166,
+    "statusAtendimentoCliente" : "AGENDADO"
+  },
+  "quantidade" : 1,
+  "valorUnitario" : 50.0,
+  "valorTotal" : 50.0,
+  "dataVenda" : "16/11/2025"
+}, {
+  "id" : 22,
+  "produto" : {
+    "id" : 3,
+    "nome" : "Doidera",
+    "valor" : 80.0,
+    "quantidade" : 18
+  },
+  "cliente" : {
+    "nome" : "Cliente 6",
+    "cpf" : "00000000106",
+    "telefone" : "31900000006",
+    "id" : 14,
+    "statusAtendimentoCliente" : "AGENDADO"
+  },
+  "quantidade" : 2,
+  "valorUnitario" : 80.0,
+  "valorTotal" : 160.0,
+  "dataVenda" : "16/11/2025"
+}, {
+  "id" : 23,
+  "produto" : {
+    "id" : 1,
+    "nome" : "Barbeleiro",
+    "valor" : 50.0,
+    "quantidade" : 57
+  },
+  "cliente" : {
+    "nome" : "Cliente Teste",
+    "cpf" : "12345678900",
+    "telefone" : "11999999999",
+    "id" : 168,
+    "statusAtendimentoCliente" : "ATENDIDO"
+  },
+  "quantidade" : 2,
+  "valorUnitario" : 50.0,
+  "valorTotal" : 100.0,
+  "dataVenda" : "16/11/2025"
+}, {
+  "id" : 24,
+  "produto" : {
+    "id" : 3,
+    "nome" : "Doidera",
+    "valor" : 80.0,
+    "quantidade" : 6
+  },
+  "cliente" : {
+    "nome" : "Cliente Teste",
+    "cpf" : "12345678900",
+    "telefone" : "11999999999",
+    "id" : 19,
+    "statusAtendimentoCliente" : "ATENDIDO"
+  },
+  "quantidade" : 12,
+  "valorUnitario" : 80.0,
+  "valorTotal" : 960.0,
+  "dataVenda" : "16/11/2025"
+} ]

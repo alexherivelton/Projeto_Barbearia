@@ -12,23 +12,23 @@ import java.time.LocalDate;
 /**
  * Serviço responsável por realizar operações relacionadas a vendas na barbearia.
  *
- * <p>
+ *
  * Esta classe atua como uma camada de regra de negócio, intermediando a comunicação
- * entre os gerenciadores de produtos e vendas.
+ * entre os gerenciadores de produtos, vendas e clientes.
  * Suas principais responsabilidades são:
- * </p>
  *
- * <ul>
- *     <li>Realizar a venda de um produto</li>
- *     <li>Atualizar o estoque após a venda</li>
- *     <li>Registrar e salvar vendas</li>
- *     <li>Calcular o total arrecadado em vendas</li>
- * </ul>
  *
- * <p>
+ *
+ *     Realizar a venda de um produto
+ *     Atualizar o estoque após a venda
+ *     Registrar e salvar vendas
+ *     Calcular o total arrecadado em vendas
+ *
+ *
+ *
  * O serviço sempre carrega os dados de produtos e vendas antes de cada operação,
  * garantindo consistência com os arquivos JSON utilizados no sistema.
- * </p>
+ *
  */
 public class ServicoVenda {
 
@@ -44,9 +44,9 @@ public class ServicoVenda {
 
     /**
      * Construtor padrão que inicializa os gerenciadores internamente.
-     * <p>
+     *
      * Ideal para uso direto no sistema principal.
-     * </p>
+     *
      */
     public ServicoVenda() {
         this.gerenciadorProduto = new GerenciadorProduto();
@@ -56,9 +56,9 @@ public class ServicoVenda {
 
     /**
      * Construtor alternativo que recebe instâncias externas dos gerenciadores.
-     * <p>
+     *
      * Útil em cenários de testes unitários ou injeção de dependência.
-     * </p>
+     *
      *
      * @param gerenciadorProduto gerenciador de produtos
      * @param gerenciarVenda gerenciador de vendas
@@ -74,7 +74,9 @@ public class ServicoVenda {
      * @param gerenciarVenda gerenciador de vendas
      * @param gerenciarCliente gerenciador de clientes
      */
-    public ServicoVenda(GerenciadorProduto gerenciadorProduto, GerenciarVenda gerenciarVenda, GerenciarCliente gerenciarCliente) {
+    public ServicoVenda(GerenciadorProduto gerenciadorProduto,
+                        GerenciarVenda gerenciarVenda,
+                        GerenciarCliente gerenciarCliente) {
         this.gerenciadorProduto = gerenciadorProduto;
         this.gerenciarVenda = gerenciarVenda;
         this.gerenciarCliente = gerenciarCliente;
@@ -83,42 +85,52 @@ public class ServicoVenda {
     /**
      * Efetua uma venda de produto, atualizando o estoque e registrando a venda.
      *
-     * <p>A operação consiste nos seguintes passos:</p>
-     * <ol>
-     *     <li>Carregar lista de produtos</li>
-     *     <li>Buscar o produto pelo ID</li>
-     *     <li>Verificar se existe estoque suficiente</li>
-     *     <li>Atualizar o estoque</li>
-     *     <li>Registrar a venda no gerenciador de vendas</li>
-     * </ol>
+     * A operação consiste nos seguintes passos:
      *
+     *     Carregar lista de clientes e buscar o cliente pelo ID
+     *     Carregar lista de produtos
+     *     Buscar o produto pelo ID
+     *     Verificar se existe estoque suficiente
+     *     Atualizar o estoque
+     *     Registrar a venda no gerenciador de vendas e persistir em JSON
+     *
+     *
+     * @param clienteId ID do cliente que está comprando
      * @param produtoId ID do produto a ser vendido
      * @param quantidade quantidade vendida
      * @param dataVenda data da venda no formato "dd/MM/yyyy"
-     * @return {@code true} se a venda for concluída, {@code false} caso o produto não exista
-     *         ou não haja estoque suficiente
+     * @return {@code true} se a venda for concluída, {@code false} caso o cliente ou
+     *         o produto não existam, ou não haja estoque suficiente
      */
     public boolean efetuarVenda(int clienteId, int produtoId, int quantidade, String dataVenda) {
+        // Carrega e busca o cliente
         gerenciarCliente.carregar();
         Cliente cliente = gerenciarCliente.buscarCliente(clienteId);
         if (cliente == null) {
             return false;
         }
 
+        // Carrega e busca o produto
         gerenciadorProduto.carregar();
-
         Produto produto = gerenciadorProduto.buscarPorId(produtoId);
         if (produto == null) {
             return false;
         }
 
+        // Atualiza estoque
         if (!gerenciadorProduto.atualizarEstoque(produtoId, quantidade)) {
             return false;
         }
 
+        // Carrega vendas atuais
         gerenciarVenda.carregar();
-        Venda venda = new Venda(produto,cliente ,quantidade, dataVenda);
+
+        // Cria e adiciona a venda
+        Venda venda = new Venda(produto, cliente, quantidade, dataVenda);
         gerenciarVenda.adicionar(venda);
+
+        // Agora a venda é persistida em vendas.json antes de qualquer novo carregar()
+        gerenciarVenda.salvarTodasVendas();
 
         return true;
     }

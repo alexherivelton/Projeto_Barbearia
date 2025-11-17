@@ -266,7 +266,7 @@ public class Barbearia {
             System.out.print("ID do Agendamento a excluir: ");
             int id = Integer.parseInt(scanner.nextLine());
             if (agendamentoFacade.excluirAgendamento(id)) {
-                System.out.println("✅ Agendamento excluído e lista salva.");
+                System.out.println(" Agendamento excluído e lista salva.");
                 agendamentoFacade.salvarAgendamentos();
             } else {
                 System.out.println("Falha ao excluir agendamento.");

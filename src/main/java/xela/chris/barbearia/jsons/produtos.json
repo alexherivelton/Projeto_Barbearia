@@ -2,10 +2,15 @@
   "id" : 1,
   "nome" : "Barbeleiro",
   "valor" : 50.0,
-  "quantidade" : 45
+  "quantidade" : 57
 }, {
   "id" : 2,
   "nome" : "Barbeleiro",
   "valor" : 50.0,
   "quantidade" : 8
+}, {
+  "id" : 3,
+  "nome" : "Doidera",
+  "valor" : 80.0,
+  "quantidade" : 6
 } ]
