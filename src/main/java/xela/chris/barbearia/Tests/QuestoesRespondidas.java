@@ -35,9 +35,8 @@ public class QuestoesRespondidas {
         GerenciarVenda gerenciarVenda = new GerenciarVenda();
         GerenciarNotaFiscal gerenciarNotaFiscal = new GerenciarNotaFiscal();
         ServicoVenda servicoVenda = new ServicoVenda(gerenciadorProduto, gerenciarVenda, gerenciarCliente);
-        ServicoOrdemServico servicoOrdemServico = new ServicoOrdemServico(gerenciarAgendamento, gerenciarVenda);
+        ServicoOrdemServico servicoOrdemServico = new ServicoOrdemServico();
 
-        // Carrega todos os dados persistentes (chamado no construtor, mas reforçado)
         gerenciarCliente.carregar();
         gerenciadorFuncionario.carregar();
         gerenciarServico.carregar();
@@ -46,7 +45,6 @@ public class QuestoesRespondidas {
         gerenciarVenda.carregar();
 
 
-        // 1. Funcionario Check: Se a lista estiver vazia, cria e salva
         if (gerenciadorFuncionario.listarFuncionarios().isEmpty()) {
             Funcionario func1 = new Funcionario("Barbeiro Teste", "11111111111", "31911111111", "barbeiro", "barbeiro1", "1234");
             gerenciadorFuncionario.adicionarFuncionario(func1);
@@ -54,43 +52,33 @@ public class QuestoesRespondidas {
             gerenciadorFuncionario.carregar();
         }
 
-        // 2. Servico Check: Se a lista estiver vazia, cria e salva
         if (gerenciarServico.listar().isEmpty()) {
             gerenciarServico.adicionar(new Servico("Corte Teste", 25.0, false, "Corte de cabelo para teste"));
             gerenciarServico.salvarTodosServicos();
             gerenciarServico.carregar();
         }
 
-        // 3. Produto Check: Se a lista estiver vazia, cria e salva
         if (gerenciadorProduto.listar().isEmpty()) {
             gerenciadorProduto.adicionar(new Produto("Pomada Teste", 20.0, 50));
             gerenciadorProduto.salvarTodosProdutos();
             gerenciadorProduto.carregar();
         }
 
-        // Reatribuição e Checagem final
         List<Funcionario> funcionarios = gerenciadorFuncionario.listarFuncionarios();
         List<Servico> servicos = gerenciarServico.listar();
         List<Produto> produtos = gerenciadorProduto.listar();
 
-        if (funcionarios.isEmpty() || servicos.isEmpty() || produtos.isEmpty()) {
-            System.err.println("ERRO CRÍTICO: O sistema não conseguiu inicializar Funcionario, Servico ou Produto.");
-            return;
-        }
-
-        // Variáveis de escopo global para o loop
         Funcionario funcionarioPadrao = funcionarios.get(0);
         Servico servicoPadrao = servicos.get(0);
         Produto produtoPadrao = produtos.get(0);
 
-        // CORREÇÃO DE ESTOQUE: Garante que o produto padrão tenha estoque suficiente para o teste
         produtoPadrao.setQuantidade(50);
         gerenciadorProduto.salvarTodosProdutos();
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         String dataAtual = LocalDate.now().format(formatter);
 
-        // LISTA PARA ARMAZENAR AS NOTAS FISCAIS GERADAS
+
         List<NotaFiscal> notasFiscaisGeradas = new ArrayList<>();
         // ----------------------------------------------------
 
@@ -140,7 +128,6 @@ public class QuestoesRespondidas {
         System.out.println("Testando contador de instâncias de Servico com ENCAPSULAMENTO (private static com get/set):");
         System.out.println("Funciona em conjuto com a classe MAIN");
 
-        // ... (código da Questão 11) ...
 
         // Questão 12
         System.out.println("\n====Questão 12====");
@@ -170,9 +157,9 @@ public class QuestoesRespondidas {
 
         // Criar alguns clientes de exemplo
         List<Cliente> listaClientes = new ArrayList<>();
-        listaClientes.add(new Cliente("Ana", "11111111111", "31999999999", StatusAtendimentoCliente.AGENDADO));
-        listaClientes.add(new Cliente("Bruno", "22222222222", "31888888888", StatusAtendimentoCliente.EM_ESPERA));
-        listaClientes.add(new Cliente("Carlos", "33333333333", "31777777777", StatusAtendimentoCliente.EM_ATENDIMENTO));
+        listaClientes.add(new Cliente("Chris", "11111111111", "31999999999", StatusAtendimentoCliente.AGENDADO));
+        listaClientes.add(new Cliente("Xela", "22222222222", "31888888888", StatusAtendimentoCliente.EM_ESPERA));
+        listaClientes.add(new Cliente("Paulo", "33333333333", "31777777777", StatusAtendimentoCliente.EM_ATENDIMENTO));
 
         // 1. Pecorrendo ArrayList com ITERATOR:
         System.out.println("\n1. Percorrendo ArrayList com ITERATOR:");
@@ -187,9 +174,6 @@ public class QuestoesRespondidas {
         for (Cliente cliente : listaClientes) {
             System.out.println(cliente);
         }
-        System.out.println("\nExplicação da Relação:");
-        System.out.println("O FOREACH em Java é um 'açúcar sintático' para o Iterator. A sintaxe 'for (Tipo item : colecao)' é convertida pelo compilador para usar 'iterator.hasNext()' e 'iterator.next()'.");
-        System.out.println("Relação: O foreach é a forma mais simples e legível de usar o padrão Iterator.");
 
         // Questão 16
         System.out.println("\n====Questão 16====");
@@ -238,7 +222,6 @@ public class QuestoesRespondidas {
 
         // 2. Busca usando binarySearch()
         System.out.println("\n2. Buscando cliente usando Collections.binarySearch() (por nome):");
-        // O método buscarClientePorNomeComBinarySearch garante que a lista esteja ordenada antes de chamar o binarySearch.
         Cliente encontradoBinaryNome = gerenciarCliente.buscarClientePorNomeComBinarySearch(clienteProcuradoNome);
         if (encontradoBinaryNome != null) {
             System.out.println("✓ Cliente encontrado com binarySearch: " + encontradoBinaryNome.getNome());
@@ -246,39 +229,22 @@ public class QuestoesRespondidas {
             System.out.println("✗ Cliente não encontrado com binarySearch!");
         }
 
-        System.out.println("\n=== COMPARAÇÃO ENTRE FIND E BINARYSEARCH ===");
-        System.out.println("\nMétodo FIND implementado (Busca Linear via Iterator):");
-        System.out.println("- Utiliza iteração sequencial (Iterator) sobre a lista.");
-        System.out.println("- Complexidade: O(n) (tempo linear), percorre a lista no pior caso.");
-        System.out.println("- Vantagem: Simples e não requer que a lista esteja ordenada.");
-
-        System.out.println("\nCollections.binarySearch() (Busca Binária):");
-        System.out.println("- Requer que a lista esteja \\textbf{ordenada} pelo mesmo Comparator antes de ser chamada.");
-        System.out.println("- Complexidade: O(log n) (tempo logarítmico), muito mais eficiente para listas grandes.");
-        System.out.println("- Desvantagem: Requer uma etapa de ordenação prévia (sort é O(n log n)).");
 
         // Questão 18
         System.out.println("\n====Questão 18====");
         System.out.println("Simulação de atendimento de 10 clientes:");
         System.out.println("==========================================");
 
-        // Lista para armazenar as Ordens de Serviço criadas
-        List<OrdemDeServico> ordensDeServicoGeradas = new ArrayList<>();
 
-        // Simular atendimento de 10 clientes
         for (int i = 1; i <= 10; i++) {
             System.out.println("\n--- Cliente " + i + " ---");
 
-            // 1. Cadastro do cliente
             String cpf = String.format("%011d", 100 + i);
             Cliente cliente = new Cliente("Cliente " + i, cpf, "319" + String.format("%08d", i), StatusAtendimentoCliente.AGENDADO);
             gerenciarCliente.adicionar(cliente);
-            // CORREÇÃO: Salva o cliente imediatamente para que o ServicoVenda.efetuarVenda()
-            // que chama gerenciarCliente.carregar() possa encontrá-lo.
             gerenciarCliente.salvarTodosClientes();
 
-            // 2. Criação da Ordem de Serviço (OS)
-            OrdemDeServico ordemServico = new OrdemDeServico(cliente, dataAtual);
+            // REMOVIDO: 2. Criação da Ordem de Serviço (OS) manual
 
             // 3. Denotação correta dos serviços realizados (e Agendamento)
             List<Servico> servicosAgendamento = new ArrayList<>();
@@ -300,24 +266,20 @@ public class QuestoesRespondidas {
                     1 // Cadeira ID 1
             );
             gerenciarAgendamento.criarAgendamento(agendamento);
-            ordemServico.adicionarAgendamento(agendamento);
-            System.out.println("Serviço(s) registrado(s) na OS. Total de serviços: " + servicosAgendamento.size());
+            System.out.printf("Agendamento #%d criado para %s. Serviços: %d%n", agendamento.getId(), cliente.getNome(), servicosAgendamento.size());
 
             // 4. Baixa no estoque (Simulação de Venda de Produto)
-            List<Venda> vendasCliente = new ArrayList<>();
+            List<Venda> vendasCliente = new ArrayList<>(); // Mantida para simular a venda
             if (i % 2 == 0) { // Clientes pares compram um produto (baixa de estoque)
-                // O ServicoVenda.efetuarVenda já faz a baixa no estoque do Produto
                 if (servicoVenda.efetuarVenda(cliente.getId(), produtoPadrao.getId(), 1, dataAtual)) {
-                    // Recupera a venda recém-criada para incluir na OS e na NF
-                    // A venda foi adicionada ao gerenciarVenda dentro do ServicoVenda.efetuarVenda()
+                    // Recupera a venda recém-criada (necessário para a NF/OS)
                     gerenciarVenda.carregar();
                     Venda ultimaVenda = gerenciarVenda.listar().stream()
                             .filter(v -> v.getCliente() != null && v.getCliente().getId() == cliente.getId())
-                            .reduce((first, second) -> second) // Pega a última venda
+                            .max((v1, v2) -> Integer.compare(v1.getId(), v2.getId())) // Pega a última venda
                             .orElse(null);
 
                     if (ultimaVenda != null) {
-                        ordemServico.adicionarVenda(ultimaVenda);
                         vendasCliente.add(ultimaVenda);
                         System.out.println("Venda de produto realizada (baixa em estoque). Produto: " + ultimaVenda.getProduto().getNome());
                     }
@@ -326,39 +288,52 @@ public class QuestoesRespondidas {
                 }
             }
 
-            // Adiciona a OS à lista de geradas
-            ordensDeServicoGeradas.add(ordemServico);
-            System.out.printf("Ordem de Serviço #%d criada. Total: R$ %.2f%n", ordemServico.getId(), ordemServico.calcularTotal());
+            boolean finalizado = gerenciarAgendamento.finalizarAgendamento(
+                    agendamento.getId(),
+                    gerenciarNotaFiscal,
+                    gerenciarVenda,
+                    servicoOrdemServico
+            );
 
-            // 5. Finalização e Emissão de Nota Fiscal
-            // A Nota Fiscal deve consolidar o Agendamento (Serviços) e as Vendas (Produtos)
-            NotaFiscal notaEmitida = gerenciarNotaFiscal.gerarNotaFiscal(agendamento, vendasCliente);
-            if (notaEmitida != null) {
-                notasFiscaisGeradas.add(notaEmitida); // ADICIONA À LISTA
-                System.out.println("Nota Fiscal emitida (ID: " + notaEmitida.getId() + ").");
+            if (finalizado) {
+                // Busca a NF gerada para adicionar ao relatório de NFs
+                gerenciarNotaFiscal.carregar();
+                NotaFiscal notaEmitida = gerenciarNotaFiscal.listar().stream()
+                        .filter(nota -> nota.getAgendamento() != null && nota.getAgendamento().getId() == agendamento.getId())
+                        .max((n1, n2) -> Integer.compare(n1.getId(), n2.getId()))
+                        .orElse(null);
+
+                if(notaEmitida != null) {
+                    notasFiscaisGeradas.add(notaEmitida);
+                    System.out.println("Nota Fiscal emitida (ID: " + notaEmitida.getId() + ").");
+                }
+
+                System.out.println("Status finalizado para ATENDIDO.");
             } else {
-                System.out.println("Falha ao emitir Nota Fiscal.");
+                System.out.println("Falha ao finalizar o agendamento/gerar documentos.");
             }
-
-            // Atualiza o status do cliente
-            cliente.setStatusAtendimentoCliente(StatusAtendimentoCliente.ATENDIDO);
-            System.out.println("Status finalizado para ATENDIDO.");
         }
 
-        // Salvar tudo
         gerenciarCliente.salvarTodosClientes();
         gerenciarAgendamento.salvarTodos();
         gerenciarVenda.salvarTodasVendas();
         gerenciadorProduto.salvarTodosProdutos();
         gerenciadorFuncionario.salvarTodosFuncionarios();
+        servicoOrdemServico.salvarTodos();
 
-        // ----------------------------------------------------
-        // REQUISITO FINAL: MOSTRAR AS NOTAS FISCAIS E OS
-        // ----------------------------------------------------
-        System.out.println("\n### RESUMO DAS 10 ORDENS DE SERVIÇO ###");
-        for (OrdemDeServico os : ordensDeServicoGeradas) {
-            System.out.println(os);
+
+        System.out.println("\n### RESUMO DAS ORDENS DE SERVIÇO PERSISTIDAS ###");
+        servicoOrdemServico.carregar(); // Recarrega do JSON o histórico de OS
+        List<OrdemDeServico> ordensDeServicoPersistidas = servicoOrdemServico.listar();
+
+        if (ordensDeServicoPersistidas.isEmpty()) {
+            System.out.println("Nenhuma Ordem de Serviço foi persistida.");
+        } else {
+            for (OrdemDeServico os : ordensDeServicoPersistidas) {
+                System.out.println(os);
+            }
         }
+
 
         System.out.println("\n### NOTAS FISCAIS EMITIDAS POR CLIENTE ###");
         for (NotaFiscal nota : notasFiscaisGeradas) {

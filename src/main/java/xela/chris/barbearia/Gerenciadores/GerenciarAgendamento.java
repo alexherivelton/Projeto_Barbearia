@@ -8,11 +8,13 @@ import xela.chris.barbearia.models.NotaFiscal;
 import xela.chris.barbearia.models.Venda;
 import xela.chris.barbearia.Gerenciadores.GerenciarNotaFiscal;
 import xela.chris.barbearia.Gerenciadores.GerenciarVenda;
+import xela.chris.barbearia.servicos.ServicoOrdemServico;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Responsável por gerenciar todos os agendamentos da barbearia.
@@ -197,14 +199,22 @@ public class GerenciarAgendamento {
      * @param gerenciarVenda gerenciador de vendas para buscar vendas do cliente
      * @return {@code true} se o agendamento foi finalizado e a nota fiscal gerada com sucesso, {@code false} caso contrário
      */
-    public boolean finalizarAgendamento(int idAgendamento, GerenciarNotaFiscal gerenciarNotaFiscal, GerenciarVenda gerenciarVenda) {
+    /**
+     * SOBRECARGA CORRIGIDA. Finaliza um agendamento, gera nota fiscal E Ordem de Serviço.
+     *
+     * @param idAgendamento identificador do agendamento a ser finalizado
+     * @param gerenciarNotaFiscal gerenciador de notas fiscais para gerar a nota
+     * @param gerenciarVenda gerenciador de vendas para buscar vendas do cliente
+     * @param servicoOrdemServico serviço para geração e persistência da Ordem de Serviço (OS).
+     * @return {@code true} se o agendamento foi finalizado, nota fiscal e OS geradas, {@code false} caso contrário
+     */
+    public boolean finalizarAgendamento(int idAgendamento, GerenciarNotaFiscal gerenciarNotaFiscal, GerenciarVenda gerenciarVenda, ServicoOrdemServico servicoOrdemServico) {
         Agendamento ag = buscarPorId(idAgendamento);
         if (ag == null) {
             System.out.println("Agendamento não encontrado para finalizar!");
             return false;
         }
 
-        // Verifica se o agendamento já foi finalizado
         if (ag.getStatusCliente() == StatusAtendimentoCliente.ATENDIDO) {
             System.out.println("Este agendamento já foi finalizado!");
             return false;
@@ -213,43 +223,45 @@ public class GerenciarAgendamento {
         ag.setStatusCliente(StatusAtendimentoCliente.ATENDIDO);
         repo.salvarTodos(agendamentos);
 
-        // Gera nota fiscal automaticamente
-        if (gerenciarNotaFiscal != null && gerenciarVenda != null) {
+        List<Venda> vendasCliente = new ArrayList<>();
+        if (gerenciarNotaFiscal != null && gerenciarVenda != null && ag.getCliente() != null) {
+
             gerenciarVenda.carregar();
             gerenciarNotaFiscal.carregar();
+            List<Venda> todasVendas = gerenciarVenda.listar();
+            List<NotaFiscal> todasNotas = gerenciarNotaFiscal.listar();
 
-            // Busca vendas do cliente que ainda não foram vinculadas a notas fiscais
-            List<Venda> vendasCliente = new ArrayList<>();
-            if (ag.getCliente() != null) {
-                List<Venda> todasVendas = gerenciarVenda.listar();
-                List<NotaFiscal> todasNotas = gerenciarNotaFiscal.listar();
-
-                // Filtra vendas do cliente que não estão em nenhuma nota fiscal
-                for (Venda venda : todasVendas) {
-                    if (venda.getCliente() != null &&
-                            venda.getCliente().getId() == ag.getCliente().getId()) {
-                        // Verifica se a venda já está em alguma nota fiscal
-                        boolean jaVinculada = todasNotas.stream()
-                                .anyMatch(nota -> nota.getVendasProdutos() != null &&
-                                        nota.getVendasProdutos().contains(venda));
-                        if (!jaVinculada) {
-                            vendasCliente.add(venda);
-                        }
+            for (Venda venda : todasVendas) {
+                if (venda.getCliente() != null && venda.getCliente().getId() == ag.getCliente().getId()) {
+                    boolean jaVinculada = todasNotas.stream()
+                            .anyMatch(nota -> nota.getVendasProdutos() != null &&
+                                    nota.getVendasProdutos().stream().anyMatch(v -> v.getId() == venda.getId()));
+                    if (!jaVinculada) {
+                        vendasCliente.add(venda);
                     }
                 }
             }
 
-            // Gera a nota fiscal
+
             NotaFiscal nota = gerenciarNotaFiscal.gerarNotaFiscal(ag, vendasCliente);
             if (nota != null) {
                 System.out.println("Agendamento finalizado e Nota Fiscal gerada automaticamente!");
                 System.out.println("ID da Nota Fiscal: " + nota.getId());
-                System.out.println("Valor Total: R$ " + String.format("%.2f", nota.getValorTotal()));
-                return true;
-            } else {
-                System.out.println("Agendamento finalizado, mas houve erro ao gerar a Nota Fiscal.");
-                return true; // Retorna true pois o agendamento foi finalizado
             }
+        }
+
+
+        if (servicoOrdemServico != null && ag.getCliente() != null) {
+
+            String agendamentoDate = ag.getDataHora().split(" ")[0];
+            List<Venda> vendasNoDia = gerenciarVenda.listar().stream()
+                    .filter(venda -> venda.getCliente() != null && venda.getCliente().getId() == ag.getCliente().getId())
+                    .filter(venda -> venda.getDataVenda() != null && venda.getDataVenda().equals(agendamentoDate))
+                    .collect(Collectors.toList());
+
+            servicoOrdemServico.criarEsalvarOS(ag, vendasNoDia); // SALVA A OS NO JSON
+        } else {
+            System.out.println("Nao foi possivel gerar e salvar a Ordem de Servico, faltando cliente ou ServicoOrdemServico.");
         }
 
         return true;

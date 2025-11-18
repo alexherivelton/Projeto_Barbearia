@@ -286,7 +286,13 @@ public class Barbearia {
             System.out.print("ID do Agendamento a finalizar: ");
             int id = Integer.parseInt(scanner.nextLine());
 
-            boolean sucesso = gerenciarAgendamento.finalizarAgendamento(id, gerenciarNotaFiscal, gerenciarVenda);
+            boolean sucesso = gerenciarAgendamento.finalizarAgendamento(
+                    id,
+                    gerenciarNotaFiscal,
+                    gerenciarVenda,
+                    servicoOrdemServico // O serviço que agora gerencia e persiste a OS
+            );
+
             if (sucesso) {
                 agendamentoFacade.salvarAgendamentos();
             } else {

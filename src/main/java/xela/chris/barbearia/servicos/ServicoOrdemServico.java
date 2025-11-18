@@ -2,218 +2,216 @@ package xela.chris.barbearia.servicos;
 
 import xela.chris.barbearia.Gerenciadores.GerenciarAgendamento;
 import xela.chris.barbearia.Gerenciadores.GerenciarVenda;
+import xela.chris.barbearia.Gerenciadores.RepositorioJson;
 import xela.chris.barbearia.models.Cliente;
 import xela.chris.barbearia.models.Venda;
 import xela.chris.barbearia.negocio.Agendamento;
+import xela.chris.barbearia.models.Servico;
+import xela.chris.barbearia.models.Funcionario;
+import xela.chris.barbearia.models.OrdemDeServico;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
- * Serviço simples para reunir agendamentos e vendas e gerar uma ordem de serviço.
+ * Serviço responsável por gerar relatórios baseados em um novo conceito
+ * simplificado de Ordem de Serviço (OS), utilizando apenas dados brutos
+ * (IDs, CPFs, Valores) extraídos de Agendamentos e Vendas.
  *
- * Esta classe atua como um serviço de consulta (ou relatório) que
- * consolida dados de {@link GerenciarAgendamento} e {@link GerenciarVenda}.
- *
- * Permite filtrar os dados por data ou por cliente e imprimir um resumo direto
- * no console sem formatações complexas.
+ * Esta classe também atua como Repositório/Gerenciador para persistir as OS.
  */
 public class ServicoOrdemServico {
 
     private final GerenciarAgendamento gerenciarAgendamento;
     private final GerenciarVenda gerenciarVenda;
 
+    // Lista e Repositório para gerenciar a persistência das Ordens de Serviço
+    private List<OrdemDeServico> ordensDeServico = new ArrayList<>();
+    private final RepositorioJson<OrdemDeServico> repoOS =
+            new RepositorioJson<>(OrdemDeServico.class, "ordensDeServico.json");
+
+    /**
+     * Construtor com injeção de dependência.
+     */
+    public ServicoOrdemServico(GerenciarAgendamento gerenciarAgendamento, GerenciarVenda gerenciarVenda) {
+        this.gerenciarAgendamento = gerenciarAgendamento;
+        this.gerenciarVenda = gerenciarVenda;
+        this.carregar(); // Carrega as OS na inicialização
+    }
+
     /**
      * Construtor padrão.
-     * Instancia internamente novos gerenciadores de Agendamento e Venda.
      */
     public ServicoOrdemServico() {
         this(new GerenciarAgendamento(), new GerenciarVenda());
     }
 
     /**
-     * Construtor com injeção de dependência.
-     * Permite que instâncias externas dos gerenciadores sejam fornecidas.
-     *
-     * @param gerenciarAgendamento O gerenciador de agendamentos a ser usado.
-     * @param gerenciarVenda O gerenciador de vendas a ser usado.
+     * Carrega (ou recarrega) todas as ordens de serviço do arquivo JSON.
      */
-    public ServicoOrdemServico(GerenciarAgendamento gerenciarAgendamento, GerenciarVenda gerenciarVenda) {
-        this.gerenciarAgendamento = gerenciarAgendamento;
-        this.gerenciarVenda = gerenciarVenda;
+    public void carregar() {
+        ordensDeServico = repoOS.buscarTodos();
+        if (ordensDeServico == null) {
+            ordensDeServico = new ArrayList<>();
+            return;
+        }
+        if (!ordensDeServico.isEmpty()) {
+            int maiorId = ordensDeServico.stream()
+                    .mapToInt(OrdemDeServico::getId)
+                    .max()
+                    .orElse(0);
+            OrdemDeServico.atualizarContador(maiorId);
+        }
     }
 
     /**
-     * Busca todos os agendamentos cuja data ({@code dataHora}) contenha
-     * a string de filtro fornecida.
-     *
-     * O método recarrega os dados ({@code carregar()}) antes da busca.
-     *
-     * @param data A string de filtro de data (ex: "15/11/2025" ou "11/2025").
-     * @return Uma lista de {@link Agendamento} correspondentes.
+     * Salva a lista de ordens de serviço atualmente em memória no arquivo JSON.
      */
+    public void salvarTodos(){
+        repoOS.salvarTodos(ordensDeServico);
+    }
+
+    /**
+     * Adiciona uma lista de novas ordens de serviço à lista em memória e persiste
+     * imediatamente a lista atualizada no arquivo JSON.
+     *
+     * @param oss A lista de {@link OrdemDeServico} a ser adicionada e salva.
+     */
+    public void adicionarTodos(List<OrdemDeServico> oss) {
+        if (oss != null && !oss.isEmpty()) {
+            ordensDeServico.addAll(oss);
+        }
+    }
+
+    /**
+     * Retorna a lista de Ordens de Serviço do gerenciador.
+     */
+    public List<OrdemDeServico> listar() {
+        return this.ordensDeServico;
+    }
+
+    /**
+     * Extrai os dados relevantes de um agendamento e suas vendas
+     * para criar uma representação do novo modelo OrdemDeServico.
+     * @param ag O agendamento base.
+     * @param vendasDoAgendamento Lista de vendas associadas à data/cliente.
+     * @return Uma lista de objetos OrdemDeServico (um por serviço no agendamento).
+     */
+    private List<OrdemDeServico> extrairNovasOS(Agendamento ag, List<Venda> vendasDoAgendamento) {
+        List<OrdemDeServico> novasOS = new ArrayList<>();
+
+        Cliente cliente = ag.getCliente();
+        Funcionario funcionario = ag.getFuncionario();
+        String data = ag.getDataHora().split(" ")[0];
+
+        String clienteCpf = (cliente != null) ? cliente.getCpf() : "N/A";
+        String funcionarioCpf = (funcionario != null) ? funcionario.getCpf() : "N/A";
+
+        double totalVendas = vendasDoAgendamento.stream().mapToDouble(Venda::getValorTotal).sum();
+
+        for (Servico s : ag.getServicos()) {
+            double valorTotalOS = s.getPreco() + totalVendas;
+
+            OrdemDeServico novaOs = new OrdemDeServico(
+                    s.getId(),
+                    clienteCpf,
+                    funcionarioCpf,
+                    valorTotalOS,
+                    s.getNome(),
+                    data,
+                    totalVendas > 0 ? vendasDoAgendamento : new ArrayList<>()
+            );
+            novasOS.add(novaOs);
+
+            totalVendas = 0.0;
+        }
+
+        return novasOS;
+    }
+
+    /**
+     * **MÉTODO DE PERSISTÊNCIA**: Cria e salva as Ordens de Serviço geradas a partir de um Agendamento.
+     * @param ag Agendamento que foi finalizado.
+     * @param vendasDoAgendamento Vendas associadas à data/cliente.
+     */
+    public void criarEsalvarOS(Agendamento ag, List<Venda> vendasDoAgendamento) {
+        List<OrdemDeServico> novasOS = extrairNovasOS(ag, vendasDoAgendamento);
+
+        if (!novasOS.isEmpty()) {
+            this.adicionarTodos(novasOS);
+            System.out.println(novasOS.size() + " Ordem(s) de Serviço gerada(s) e salva(s) em 'ordensDeServico.json'.");
+        } else {
+            System.out.println("Nenhuma Ordem de Serviço gerada a partir do Agendamento.");
+        }
+    }
+    // ... (restante dos métodos de busca e impressão) ...
+
     public List<Agendamento> buscarAgendamentosPorData(String data) {
-        List<Agendamento> resultado = new ArrayList<>();
-        if (data == null || data.isBlank()) {
-            return resultado;
-        }
-
         gerenciarAgendamento.carregar();
-        List<Agendamento> todos = gerenciarAgendamento.listarAgendamentosOrdenadosPorData();
-        if (todos == null) {
-            return resultado;
-        }
-
-        for (Agendamento agendamento : todos) {
-            String dataHora = agendamento.getDataHora();
-            if (dataHora != null && dataHora.contains(data)) {
-                resultado.add(agendamento);
-            }
-        }
-        return resultado;
+        return gerenciarAgendamento.listarAgendamentosOrdenadosPorData().stream()
+                .filter(ag -> ag.getDataHora() != null && ag.getDataHora().contains(data))
+                .collect(Collectors.toList());
     }
 
-    /**
-     * Busca todas as vendas cuja data ({@code dataVenda}) contenha
-     * a string de filtro fornecida.
-     *
-     * O método recarrega os dados ({@code carregar()}) antes da busca.
-     *
-     * @param data A string de filtro de data (ex: "15/11/2025" ou "11/2025").
-     * @return Uma lista de {@link Venda} correspondentes.
-     */
-    public List<Venda> buscarVendasPorData(String data) {
-        List<Venda> resultado = new ArrayList<>();
-        if (data == null || data.isBlank()) {
-            return resultado;
-        }
-
-        gerenciarVenda.carregar();
-        List<Venda> todas = gerenciarVenda.listar();
-        if (todas == null) {
-            return resultado;
-        }
-
-        for (Venda venda : todas) {
-            String dataVenda = venda.getDataVenda();
-            if (dataVenda != null && dataVenda.contains(data)) {
-                resultado.add(venda);
-            }
-        }
-        return resultado;
-    }
-
-    /**
-     * Busca todos os agendamentos associados a um ID de cliente específico.
-     *
-     * O método recarrega os dados ({@code carregar()}) antes da busca.
-     *
-     * @param clienteId O ID do cliente a ser filtrado.
-     * @return Uma lista de {@link Agendamento} do cliente.
-     */
     public List<Agendamento> buscarAgendamentosPorCliente(int clienteId) {
-        List<Agendamento> resultado = new ArrayList<>();
-
         gerenciarAgendamento.carregar();
-        List<Agendamento> todos = gerenciarAgendamento.listarAgendamentosOrdenadosPorData();
-        if (todos == null) {
-            return resultado;
-        }
-
-        for (Agendamento agendamento : todos) {
-            Cliente cliente = agendamento.getCliente();
-            if (cliente != null && cliente.getId() == clienteId) {
-                resultado.add(agendamento);
-            }
-        }
-        return resultado;
+        return gerenciarAgendamento.listarAgendamentosOrdenadosPorData().stream()
+                .filter(ag -> ag.getCliente() != null && ag.getCliente().getId() == clienteId)
+                .collect(Collectors.toList());
     }
 
-    /**
-     * Busca todas as vendas associadas a um ID de cliente específico.
-     *
-     * O método recarrega os dados ({@code carregar()}) antes da busca.
-     *
-     * @param clienteId O ID do cliente a ser filtrado.
-     * @return Uma lista de {@link Venda} do cliente.
-     */
     public List<Venda> buscarVendasPorCliente(int clienteId) {
-        List<Venda> resultado = new ArrayList<>();
-
         gerenciarVenda.carregar();
-        List<Venda> todas = gerenciarVenda.listar();
-        if (todas == null) {
-            return resultado;
-        }
-
-        for (Venda venda : todas) {
-            Cliente cliente = venda.getCliente();
-            if (cliente != null && cliente.getId() == clienteId) {
-                resultado.add(venda);
-            }
-        }
-        return resultado;
+        return gerenciarVenda.listar().stream()
+                .filter(venda -> venda.getCliente() != null && venda.getCliente().getId() == clienteId)
+                .collect(Collectors.toList());
     }
 
     /**
-     * Consolida e imprime no console todos os agendamentos e vendas
-     * filtrados por uma data específica.
-     *
-     * @param data A string de filtro de data (ex: "11/2025").
+     * Imprime no console as Ordens de Serviço (na nova estrutura)
+     * para uma data específica, carregando do JSON.
      */
     public void imprimirPorData(String data) {
-        List<Agendamento> agendamentos = buscarAgendamentosPorData(data);
-        List<Venda> vendas = buscarVendasPorData(data);
+        carregar();
+        List<OrdemDeServico> todasOS = listar();
 
-        System.out.println("=== Ordem de serviço na data: " + data + " ===");
-        imprimirAgendamentos(agendamentos);
-        imprimirVendas(vendas);
+        System.out.println("=== RELATÓRIO DE ORDENS DE SERVIÇO POR DATA (" + data + ") ===");
+
+        List<OrdemDeServico> ossFiltradas = todasOS.stream()
+                .filter(os -> os.getDataDoServico() != null && os.getDataDoServico().contains(data))
+                .collect(Collectors.toList());
+
+        if (ossFiltradas.isEmpty()) {
+            System.out.println("Nenhuma Ordem de Serviço encontrada para o filtro: " + data);
+        } else {
+            ossFiltradas.forEach(System.out::println);
+        }
     }
 
     /**
-     * Consolida e imprime no console todos os agendamentos e vendas
-     * filtrados por um ID de cliente específico.
-     *
-     * @param clienteId O ID do cliente.
+     * Imprime no console as Ordens de Serviço (na nova estrutura)
+     * para um ID de cliente específico, gerando a partir dos agendamentos/vendas.
      */
     public void imprimirPorCliente(int clienteId) {
         List<Agendamento> agendamentos = buscarAgendamentosPorCliente(clienteId);
-        List<Venda> vendas = buscarVendasPorCliente(clienteId);
+        List<Venda> vendasCliente = buscarVendasPorCliente(clienteId);
 
-        System.out.println("=== Ordem de serviço para o cliente ID " + clienteId + " ===");
-        imprimirAgendamentos(agendamentos);
-        imprimirVendas(vendas);
-    }
+        System.out.println("=== RELATÓRIO DE ORDENS DE SERVIÇO POR CLIENTE (ID " + clienteId + ") ===");
 
-    /**
-     * Método auxiliar para formatar e imprimir a lista de agendamentos.
-     *
-     * @param agendamentos A lista a ser impressa.
-     */
-    private void imprimirAgendamentos(List<Agendamento> agendamentos) {
-        System.out.println("-- Agendamentos --");
-        if (agendamentos.isEmpty()) {
-            System.out.println("Nenhum agendamento encontrado.");
+        if (agendamentos.isEmpty() && vendasCliente.isEmpty()) {
+            System.out.println("Nenhuma Ordem de Serviço encontrada para o cliente ID: " + clienteId + " (Agendamentos e Vendas vazias).");
             return;
         }
-        for (Agendamento agendamento : agendamentos) {
-            System.out.println(agendamento);
-        }
-    }
 
-    /**
-     * Método auxiliar para formatar e imprimir a lista de vendas.
-     *
-     * @param vendas A lista a ser impressa.
-     */
-    private void imprimirVendas(List<Venda> vendas) {
-        System.out.println("-- Vendas --");
-        if (vendas.isEmpty()) {
-            System.out.println("Nenhuma venda encontrada.");
-            return;
-        }
-        for (Venda venda : vendas) {
-            System.out.println(venda);
+        for (Agendamento ag : agendamentos) {
+            String agendamentoDate = ag.getDataHora().split(" ")[0];
+            List<Venda> vendasDoAgendamento = vendasCliente.stream()
+                    .filter(v -> v.getDataVenda() != null && v.getDataVenda().equals(agendamentoDate))
+                    .collect(Collectors.toList());
+
+            List<OrdemDeServico> novasOS = extrairNovasOS(ag, vendasDoAgendamento);
+            novasOS.forEach(System.out::println);
         }
     }
 }
