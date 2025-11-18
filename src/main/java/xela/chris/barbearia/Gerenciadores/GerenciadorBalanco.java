@@ -63,10 +63,9 @@ public class GerenciadorBalanco {
         double totalServicos = 0.0;
 
         for (Agendamento ag : agendamentos) {
-            // Verifica se a data do agendamento (que é uma string) contém o filtro
+
             if (ag.getDataHora() != null && ag.getDataHora().contains(filtroData)) {
 
-                // Soma o preço de todos os serviços dentro deste agendamento
                 if (ag.getServicos() != null) {
                     for (Servico s : ag.getServicos()) {
                         totalServicos += s.getPreco();
@@ -89,14 +88,13 @@ public class GerenciadorBalanco {
      * @return O valor total (double) dos produtos vendidos que correspondem ao filtro.
      */
     public double calcularTotalProdutos(String filtroData) {
-        // Garante que os dados mais recentes sejam lidos dos arquivos JSON
         gerenciarVenda.carregar();
         List<Venda> vendas = gerenciarVenda.listar();
 
         double totalProdutos = 0.0;
 
         for (Venda v : vendas) {
-            // Verifica se a data da venda (string) contém o filtro
+
             if (v.getDataVenda() != null && v.getDataVenda().contains(filtroData)) {
                 totalProdutos += v.getValorTotal();
             }
@@ -116,7 +114,6 @@ public class GerenciadorBalanco {
      * ou "11/2025" para o mês).
      */
     public void gerarBalanco(String filtroData) {
-        // Calcula os totais separadamente
         double totalServicos = calcularTotalServicos(filtroData);
         double totalProdutos = calcularTotalProdutos(filtroData);
         double totalGeral = totalServicos + totalProdutos;

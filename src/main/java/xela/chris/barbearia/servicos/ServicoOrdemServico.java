@@ -145,7 +145,6 @@ public class ServicoOrdemServico {
             System.out.println("Nenhuma Ordem de Serviço gerada a partir do Agendamento.");
         }
     }
-    // ... (restante dos métodos de busca e impressão) ...
 
     public List<Agendamento> buscarAgendamentosPorData(String data) {
         gerenciarAgendamento.carregar();

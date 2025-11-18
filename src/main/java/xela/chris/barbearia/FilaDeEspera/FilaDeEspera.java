@@ -128,6 +128,4 @@ public class FilaDeEspera {
                 ",\n status=" + status +
                 '}';
     }
-// ...
-
 }

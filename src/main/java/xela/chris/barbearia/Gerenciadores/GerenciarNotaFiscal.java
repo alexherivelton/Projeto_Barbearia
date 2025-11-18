@@ -61,6 +61,11 @@ public class GerenciarNotaFiscal {
      */
     public void adicionar(NotaFiscal nota) {
         notas.add(nota);
+    }
+
+
+
+    public void salvar() {
         repo.salvarTodos(notas);
     }
 
@@ -86,7 +91,6 @@ public class GerenciarNotaFiscal {
      * @return A {@link NotaFiscal} gerada e persistida.
      */
     public NotaFiscal gerarNotaFiscal(List<Venda> vendasProdutos) {
-        // Chama o construtor principal passando 'null' para o agendamento
         return gerarNotaFiscal(null, vendasProdutos);
     }
 
@@ -107,14 +111,13 @@ public class GerenciarNotaFiscal {
      * se tanto o agendamento quanto as vendas forem nulos/vazios.
      */
     public NotaFiscal gerarNotaFiscal(Agendamento agendamento, List<Venda> vendasProdutos) {
-        // Validação: Não pode gerar nota vazia
         if (agendamento == null && (vendasProdutos == null || vendasProdutos.isEmpty())) {
             System.out.println("Erro: Nota fiscal nao pode ser gerada sem agendamento ou sem produtos.");
             return null;
         }
 
         NotaFiscal nota = new NotaFiscal(agendamento, vendasProdutos);
-        adicionar(nota); // O método adicionar já salva
+        adicionar(nota);
         return nota;
     }
 
@@ -137,6 +140,5 @@ public class GerenciarNotaFiscal {
      */
     public void limpar() {
         notas = new ArrayList<>();
-        repo.salvarTodos(new ArrayList<>());
     }
 }

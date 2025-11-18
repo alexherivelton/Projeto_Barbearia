@@ -242,7 +242,6 @@ public class GerenciarAgendamento {
                 }
             }
 
-
             NotaFiscal nota = gerenciarNotaFiscal.gerarNotaFiscal(ag, vendasCliente);
             if (nota != null) {
                 System.out.println("Agendamento finalizado e Nota Fiscal gerada automaticamente!");
@@ -259,29 +258,11 @@ public class GerenciarAgendamento {
                     .filter(venda -> venda.getDataVenda() != null && venda.getDataVenda().equals(agendamentoDate))
                     .collect(Collectors.toList());
 
-            servicoOrdemServico.criarEsalvarOS(ag, vendasNoDia); // SALVA A OS NO JSON
+            servicoOrdemServico.criarEsalvarOS(ag, vendasNoDia);
         } else {
             System.out.println("Nao foi possivel gerar e salvar a Ordem de Servico, faltando cliente ou ServicoOrdemServico.");
         }
 
         return true;
     }
-
-    /**
-     * Finaliza um agendamento ao marcar o status como atendido (versão sem geração automática de nota fiscal).
-     *
-     * @param idAgendamento identificador do agendamento a ser finalizado
-     * @return {@code true} se o agendamento foi finalizado, {@code false} caso contrário
-     */
-    public boolean finalizarAgendamento(int idAgendamento) {
-        Agendamento ag = buscarPorId(idAgendamento);
-        if (ag == null) {
-            System.out.println("Agendamento não encontrado para finalizar!");
-            return false;
-        }
-        ag.setStatusCliente(StatusAtendimentoCliente.ATENDIDO);
-        repo.salvarTodos(agendamentos);
-        return true;
-    }
-
 }

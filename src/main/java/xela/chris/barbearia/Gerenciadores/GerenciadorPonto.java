@@ -68,7 +68,6 @@ public class GerenciadorPonto {
      */
     public synchronized void baterPonto(Funcionario funcionario) {
         String dataAtual = LocalDate.now().toString();
-        // Carrega a lista do repositório para esta operação
         List<RegistroPonto> registros = repo.listar();
 
         RegistroPonto pontoHoje = null;
@@ -82,7 +81,6 @@ public class GerenciadorPonto {
             }
         }
 
-        // Se for o primeiro registro do dia -> ENTRADA
         if (pontoHoje == null) {
             RegistroPonto novoRegistro = new RegistroPonto();
             novoRegistro.setIdFuncionario(funcionario);
@@ -94,20 +92,17 @@ public class GerenciadorPonto {
             System.out.println("Ponto registrado com sucesso! " +
                     funcionario.getNome() + " no horário: " + novoRegistro.getHoraEntrada());
         }
-        // Se já existe entrada mas ainda não existe saída -> SAÍDA
         else if (pontoHoje.getHoraSaida() == null) {
             pontoHoje.setHoraSaida(LocalTime.now().withNano(0).toString());
 
             System.out.println("Registro de saída salvo com sucesso! " +
                     funcionario.getNome() + " no horário: " + pontoHoje.getHoraSaida());
         }
-        // Se já registrou entrada e saída
         else {
             System.out.println("O funcionário " + funcionario.getNome() +
                     " já registrou entrada e saída hoje.");
         }
 
-        // Atualiza a lista em memória com a lista modificada
         pontos = registros;
     }
 

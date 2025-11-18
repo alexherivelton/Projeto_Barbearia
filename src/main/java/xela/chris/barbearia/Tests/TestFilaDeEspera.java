@@ -16,13 +16,13 @@ public class TestFilaDeEspera {
         GerenciarCliente cliente = new GerenciarCliente();
         GerenciarServico servico = new GerenciarServico();
 
-//         Criando objetos apenas para teste
+
         Cliente c1 = new Cliente("Roberto Souza", "12345678900", "33998487867", StatusAtendimentoCliente.AGENDADO );
         Cliente c2 = new Cliente("Gustavo Nascimento", "09876543211", "31998769756", StatusAtendimentoCliente.AGENDADO);
         Cliente c3 = new Cliente("Hugo Loures", "09876543222", "21998377645", StatusAtendimentoCliente.AGENDADO);
         cliente.salvarTodosClientes();
 
-//         Adicionando 3 clientes na fila
+
         fila.adicionarClienteNaFila(new FilaDeEspera(servico.buscarPorId(1), c1, "14/11/25 - 14:30", StatusAtendimentoCliente.EM_ESPERA));
         fila.adicionarClienteNaFila(new FilaDeEspera(servico.buscarPorId(1), c2, "14/11/25 - 15:30", StatusAtendimentoCliente.EM_ESPERA));
         fila.adicionarClienteNaFila(new FilaDeEspera(servico.buscarPorId(1), c3, "14/11/25 - 16:30", StatusAtendimentoCliente.EM_ESPERA));
@@ -40,10 +40,9 @@ public class TestFilaDeEspera {
         System.out.println("Fila após chamada 1:");
         fila.getFilaDeEspera().forEach(System.out::println);
 
-        // ============================
-        // SEGUNDA CHAMADA FIFO
-        // ============================
 
+
+        // segunda chamada para teste
         System.out.println("\nChamando o próximo da fila (2)...");
         FilaDeEspera p2 = fila.buscarComFIFONaLista();
         System.out.println("Chamado: " + p2 + "\n");

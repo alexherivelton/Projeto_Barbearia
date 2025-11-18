@@ -320,6 +320,7 @@ public class QuestoesRespondidas {
         gerenciadorProduto.salvarTodosProdutos();
         gerenciadorFuncionario.salvarTodosFuncionarios();
         servicoOrdemServico.salvarTodos();
+        gerenciarNotaFiscal.salvar();
 
 
         System.out.println("\n### RESUMO DAS ORDENS DE SERVIÇO PERSISTIDAS ###");

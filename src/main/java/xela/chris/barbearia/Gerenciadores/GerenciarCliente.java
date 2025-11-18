@@ -141,9 +141,15 @@ public class GerenciarCliente {
             return false;
         }
 
-        if (novoNome != null) cliente.setNome(novoNome);
-        if (novoCpf != null) cliente.setCpf(novoCpf);
-        if (novoTelefone != null) cliente.setTelefone(novoTelefone);
+        String nomeAtual = cliente.getNome();
+        String cpfAtual = cliente.getCpf();
+        String telefoneAtual = cliente.getTelefone();
+
+        cliente.setNome(novoNome != null ? novoNome : nomeAtual);
+        cliente.setCpf(novoCpf != null ? novoCpf : cpfAtual);
+        cliente.setTelefone(novoTelefone != null ? novoTelefone : telefoneAtual);
+
+
         if (status != null) cliente.setStatusAtendimentoCliente(status);
 
         System.out.println("Sucesso em atualizar!");
@@ -160,7 +166,7 @@ public class GerenciarCliente {
      * @return Uma {@link List} vazia.
      */
     public List<Cliente> listar() {
-        System.out.println("➡ Clientes carregados: " + clientes.size());
+        System.out.println("Clientes carregados: " + clientes.size());
         for (Cliente c : clientes) {
             System.out.println(c);
         }
@@ -204,15 +210,12 @@ public class GerenciarCliente {
      * for encontrado.
      */
     public Cliente findCliente(Cliente clienteProcurado, Comparator<Cliente> comparator) {
-        // Primeiro, ordena a lista usando o comparator
         List<Cliente> listaOrdenada = new ArrayList<>(clientes);
         listaOrdenada.sort(comparator);
 
-        // Usa iterator para percorrer a lista ordenada
         Iterator<Cliente> iterator = listaOrdenada.iterator();
         while (iterator.hasNext()) {
             Cliente cliente = iterator.next();
-            // Compara usando o comparator (retorna 0 se forem iguais)
             if (comparator.compare(cliente, clienteProcurado) == 0) {
                 return cliente;
             }
@@ -241,44 +244,6 @@ public class GerenciarCliente {
             return listaOrdenada.get(indice);
         }
         return null;
-    }
-
-    /**
-     * (Questão 17) Busca um cliente usando {@link Collections#binarySearch}
-     * com um {@link Comparator} genérico.
-     *
-     * Este método cria uma cópia da lista de clientes, ordena-a
-     * usando o {@code comparator} fornecido, e então realiza uma
-     * busca binária.
-     *
-     * @param clienteProcurado O objeto {@link Cliente} a ser encontrado.
-     * @param comparator O {@link Comparator} usado para ordenar e
-     * realizar a busca.
-     * @return O objeto {@link Cliente} encontrado, ou {@code null} se o
-     * índice da busca for negativo.
-     */
-    public Cliente buscarClienteComBinarySearch(Cliente clienteProcurado, Comparator<Cliente> comparator) {
-        List<Cliente> listaOrdenada = new ArrayList<>(clientes);
-        Collections.sort(listaOrdenada, comparator);
-
-        int indice = Collections.binarySearch(listaOrdenada, clienteProcurado, comparator);
-        if (indice >= 0) {
-            return listaOrdenada.get(indice);
-        }
-        return null;
-    }
-
-    /**
-     * (Questão 17) Retorna uma nova lista contendo os clientes, ordenada
-     * pelo {@link Comparator} fornecido.
-     *
-     * @param comparator O {@link Comparator} usado para a ordenação.
-     * @return Uma nova {@link List} de {@link Cliente} ordenada.
-     */
-    public List<Cliente> getClientesOrdenados(Comparator<Cliente> comparator) {
-        List<Cliente> listaOrdenada = new ArrayList<>(clientes);
-        Collections.sort(listaOrdenada, comparator);
-        return listaOrdenada;
     }
 
     /**
