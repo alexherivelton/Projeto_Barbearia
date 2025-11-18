@@ -125,7 +125,7 @@ public class GerenciarServico {
             s.setNome(novoNome);
             s.setPreco(novoPreco);
             s.setDescricao(novaDescricao);
-            repo.salvarTodos(servicos); // Persistência imediata
+            repo.salvarTodos(servicos);
             return true;
         }
         return false;
@@ -141,7 +141,7 @@ public class GerenciarServico {
      * @return Uma {@link List} vazia.
      */
     public List<Servico> listar() {
-        System.out.println("➡ Serviços carregados: " + servicos.size());
+        System.out.println("Serviços carregados: " + servicos.size());
         for (Servico s : servicos) {
             System.out.println(s);
         }
