@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 /**
  * Serviço responsável por gerar relatórios baseados em um novo conceito
  * simplificado de Ordem de Serviço (OS), utilizando apenas dados brutos
- * (IDs, CPFs, Valores) extraídos de Agendamentos e Vendas.
+ * (IDs, CPFs, Valores) extraídos de Agendamentos.
  *
  * Esta classe também atua como Repositório/Gerenciador para persistir as OS.
  */
@@ -81,6 +81,7 @@ public class ServicoOrdemServico {
     public void adicionarTodos(List<OrdemDeServico> oss) {
         if (oss != null && !oss.isEmpty()) {
             ordensDeServico.addAll(oss);
+            salvarTodos(); // Persiste a cada adição
         }
     }
 
@@ -94,8 +95,9 @@ public class ServicoOrdemServico {
     /**
      * Extrai os dados relevantes de um agendamento e suas vendas
      * para criar uma representação do novo modelo OrdemDeServico.
-     * @param ag O agendamento base.
-     * @param vendasDoAgendamento Lista de vendas associadas à data/cliente.
+     * * **NOTA**: A lista de vendas é completamente ignorada.
+     * * @param ag O agendamento base.
+     * @param vendasDoAgendamento Lista de vendas associadas à data/cliente (IGNORADA).
      * @return Uma lista de objetos OrdemDeServico (um por serviço no agendamento).
      */
     private List<OrdemDeServico> extrairNovasOS(Agendamento ag, List<Venda> vendasDoAgendamento) {
@@ -103,28 +105,26 @@ public class ServicoOrdemServico {
 
         Cliente cliente = ag.getCliente();
         Funcionario funcionario = ag.getFuncionario();
-        String data = ag.getDataHora().split(" ")[0];
+        String data = ag.getDataHora().split(" ")[0]; // Extrai a data (dd/MM/yyyy)
 
         String clienteCpf = (cliente != null) ? cliente.getCpf() : "N/A";
         String funcionarioCpf = (funcionario != null) ? funcionario.getCpf() : "N/A";
 
-        double totalVendas = vendasDoAgendamento.stream().mapToDouble(Venda::getValorTotal).sum();
-
         for (Servico s : ag.getServicos()) {
-            double valorTotalOS = s.getPreco() + totalVendas;
 
+            // VALOR CORRIGIDO: O valor total da OS é APENAS o preço do serviço.
+            double valorTotalOS = s.getPreco();
+
+            // CONSTRUTOR CORRIGIDO: Removido o argumento List<Venda> e usado o construtor de 6 argumentos
             OrdemDeServico novaOs = new OrdemDeServico(
                     s.getId(),
                     clienteCpf,
                     funcionarioCpf,
                     valorTotalOS,
-                    s.getNome(),
-                    data,
-                    totalVendas > 0 ? vendasDoAgendamento : new ArrayList<>()
+                    s.getNome(),    // Usando o nome do serviço como descrição
+                    data            // Passando a data
             );
             novasOS.add(novaOs);
-
-            totalVendas = 0.0;
         }
 
         return novasOS;
@@ -133,7 +133,7 @@ public class ServicoOrdemServico {
     /**
      * **MÉTODO DE PERSISTÊNCIA**: Cria e salva as Ordens de Serviço geradas a partir de um Agendamento.
      * @param ag Agendamento que foi finalizado.
-     * @param vendasDoAgendamento Vendas associadas à data/cliente.
+     * @param vendasDoAgendamento Vendas associadas à data/cliente (A lista é passada, mas é ignorada na OS).
      */
     public void criarEsalvarOS(Agendamento ag, List<Venda> vendasDoAgendamento) {
         List<OrdemDeServico> novasOS = extrairNovasOS(ag, vendasDoAgendamento);
@@ -204,10 +204,7 @@ public class ServicoOrdemServico {
         }
 
         for (Agendamento ag : agendamentos) {
-            String agendamentoDate = ag.getDataHora().split(" ")[0];
-            List<Venda> vendasDoAgendamento = vendasCliente.stream()
-                    .filter(v -> v.getDataVenda() != null && v.getDataVenda().equals(agendamentoDate))
-                    .collect(Collectors.toList());
+            List<Venda> vendasDoAgendamento = new ArrayList<>(); // Vendas são ignoradas na lógica de OS
 
             List<OrdemDeServico> novasOS = extrairNovasOS(ag, vendasDoAgendamento);
             novasOS.forEach(System.out::println);

@@ -306,6 +306,7 @@ public class QuestoesRespondidas {
                 if(notaEmitida != null) {
                     notasFiscaisGeradas.add(notaEmitida);
                     System.out.println("Nota Fiscal emitida (ID: " + notaEmitida.getId() + ").");
+
                 }
 
                 System.out.println("Status finalizado para ATENDIDO.");
@@ -320,11 +321,10 @@ public class QuestoesRespondidas {
         gerenciadorProduto.salvarTodosProdutos();
         gerenciadorFuncionario.salvarTodosFuncionarios();
         servicoOrdemServico.salvarTodos();
-        gerenciarNotaFiscal.salvar();
 
 
         System.out.println("\n### RESUMO DAS ORDENS DE SERVIÇO PERSISTIDAS ###");
-        servicoOrdemServico.carregar(); // Recarrega do JSON o histórico de OS
+        servicoOrdemServico.carregar();
         List<OrdemDeServico> ordensDeServicoPersistidas = servicoOrdemServico.listar();
 
         if (ordensDeServicoPersistidas.isEmpty()) {
@@ -338,10 +338,9 @@ public class QuestoesRespondidas {
 
         System.out.println("\n### NOTAS FISCAIS EMITIDAS POR CLIENTE ###");
         for (NotaFiscal nota : notasFiscaisGeradas) {
-            System.out.println(nota); // NotaFiscal.toString() exibe os detalhes formatados
+            System.out.println(nota);
         }
         System.out.println("\n==========================================");
-        System.out.println("Simulação concluída!");
         System.out.println("Total de clientes atendidos: 10");
         System.out.println("Total de Ordens de Serviço: " + OrdemDeServico.getTotalOS());
         System.out.println("==========================================");

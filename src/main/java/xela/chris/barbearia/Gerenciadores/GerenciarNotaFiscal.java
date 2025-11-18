@@ -118,6 +118,7 @@ public class GerenciarNotaFiscal {
 
         NotaFiscal nota = new NotaFiscal(agendamento, vendasProdutos);
         adicionar(nota);
+        salvar();
         return nota;
     }
 

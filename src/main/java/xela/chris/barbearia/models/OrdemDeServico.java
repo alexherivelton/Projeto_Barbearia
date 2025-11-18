@@ -42,8 +42,6 @@ public class OrdemDeServico {
     /** A data em que o serviço foi realizado (armazenada como String, ex: "dd/MM/yyyy"). */
     private String dataDoServico;
 
-    /** Lista de Vendas de produtos incluídas nesta OS (simplificando o relatório). */
-    private List<Venda> vendas;
 
     /**
      * Construtor padrão (sem argumentos).
@@ -52,7 +50,6 @@ public class OrdemDeServico {
      * </p>
      */
     public OrdemDeServico() {
-        this.vendas = new ArrayList<>();
     }
 
     /**
@@ -62,14 +59,11 @@ public class OrdemDeServico {
      * @param servicoId ID do Serviço.
      * @param clienteCpf CPF do Cliente.
      * @param funcionarioCpf CPF do Funcionário.
-     * @param valorTotal Valor total gasto no serviço (incluindo serviços e produtos).
+     * @param valorTotal Valor total gasto no serviço (apenas valor do serviço).
      * @param descricaoServico Descrição ou notas do profissional.
      * @param dataDoServico Data do serviço no formato "dd/MM/yyyy".
-     * @param vendas Lista de vendas de produtos associadas (se houver).
      */
-    public OrdemDeServico(int servicoId, String clienteCpf, String funcionarioCpf,
-                          double valorTotal, String descricaoServico,
-                          String dataDoServico, List<Venda> vendas) {
+    public OrdemDeServico(int servicoId, String clienteCpf, String funcionarioCpf, double valorTotal, String descricaoServico, String dataDoServico) {
 
         this.id = contador.incrementAndGet();
         this.servicoId = servicoId;
@@ -78,7 +72,6 @@ public class OrdemDeServico {
         this.valorTotal = valorTotal;
         this.descricaoServico = descricaoServico;
         this.dataDoServico = dataDoServico;
-        this.vendas = vendas != null ? new ArrayList<>(vendas) : new ArrayList<>();
     }
 
 
@@ -207,36 +200,12 @@ public class OrdemDeServico {
     public void setDataDoServico(String dataDoServico) { this.dataDoServico = dataDoServico; }
 
     /**
-     * Retorna a lista de vendas de produtos incluídas nesta OS.
-     *
-     * @return A lista de {@link Venda}.
-     */
-    public List<Venda> getVendas() { return vendas; }
-
-    /**
-     * Define a lista de vendas de produtos.
-     *
-     * @param vendas A nova lista de vendas.
-     */
-    public void setVendas(List<Venda> vendas) { this.vendas = vendas; }
-
-    /**
      * Retorna uma representação textual completa da Ordem de Serviço.
      *
      * @return Uma String formatada com todos os dados da OS.
      */
     @Override
     public String toString() {
-        String listaVendas = "";
-        if (vendas != null && !vendas.isEmpty()) {
-            for (Venda v : vendas) {
-                listaVendas += "  - Produto: " + (v.getProduto() != null ? v.getProduto().getNome() : "N/A")
-                        + " (x" + v.getQuantidade() + ") - R$ " +
-                        String.format("%.2f", v.getValorTotal()) + "\n";
-            }
-        } else {
-            listaVendas = "  - Nenhuma venda de produto associada.\n";
-        }
         return "\n===============" +
                 "\n Ordem de Serviço #" + id +
                 "\n Data: " + dataDoServico +
@@ -244,7 +213,6 @@ public class OrdemDeServico {
                 "\n Cliente CPF: " + clienteCpf +
                 "\n Funcionário CPF: " + funcionarioCpf +
                 "\n Valor Total: R$ " + String.format("%.2f", valorTotal) +
-                "\n Descrição/Diagnóstico: " + (descricaoServico != null ? descricaoServico : "N/A") +
-                "\n Vendas de Produtos:\n" + listaVendas;
+                "\n Descrição/Diagnóstico: " + (descricaoServico != null ? descricaoServico : "N/A");
     }
 }

@@ -86,7 +86,6 @@ public class Funcionario extends Pessoa {
                 break;
 
             default:
-                // Nenhuma permissão atribuída caso o cargo seja desconhecido
                 break;
         }
 
