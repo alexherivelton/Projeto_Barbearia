@@ -112,17 +112,16 @@ public class ServicoOrdemServico {
 
         for (Servico s : ag.getServicos()) {
 
-            // VALOR CORRIGIDO: O valor total da OS é APENAS o preço do serviço.
+
             double valorTotalOS = s.getPreco();
 
-            // CONSTRUTOR CORRIGIDO: Removido o argumento List<Venda> e usado o construtor de 6 argumentos
             OrdemDeServico novaOs = new OrdemDeServico(
                     s.getId(),
                     clienteCpf,
                     funcionarioCpf,
                     valorTotalOS,
-                    s.getNome(),    // Usando o nome do serviço como descrição
-                    data            // Passando a data
+                    s.getNome(),
+                    data
             );
             novasOS.add(novaOs);
         }
